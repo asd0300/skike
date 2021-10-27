@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Booking Landing Page</title>
+    <link rel="stylesheet" href="/static/font.css" />
+    <link rel="stylesheet" href="/static/font-awesome.min.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <nav>
+          <div class="menu">
+            <div class="logo">Ski <span>Demo</span> le</div>
+            <ul>
+              <li></li>
+              <li></li>
+            </ul>
+          </div>
+          <div class="myAccount">
+            <div class="ctaGroup">
+              <div class="cta">Sign In</div>
+              <!-- <div class="cta active">Create Account</div> -->
+              <div class="cta active"></div>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="hotel_content">
+        <div class="info">
+          <h2>Book hotels online</h2>
+          <h1>OnlyforDemo</h1>
+        </div>
+
+        <div class="booking_info">
+          <div class="opt">
+            <span class="active">Airplane</span>
+            <span>Hotel</span>
+          </div>
+
+          <div class="booking_details">
+            <div class="item">
+              <i class="fa fa-search"></i>
+              Enter a destination
+            </div>
+
+            <div class="item">
+              <div class="date">
+                <input
+                  id="theDate"
+                  type="date"
+                  required
+                  placeholder="Depart Date"
+                  class="form-control"
+                />
+              </div>
+              <div class="days">出發日期</div>
+            </div>
+
+            <div class="item">
+              <div class="date">
+                <input
+                  id="theDate"
+                  type="date"
+                  required
+                  placeholder="Return Date"
+                  class="form-control"
+                />
+              </div>
+              <div class="days">抵達日期</div>
+            </div>
+
+            <div class="item">
+              <div class="people">
+                2 adults, 0 children <i class="fa fa-angle-down"></i>
+              </div>
+              <div class="days">1 room</div>
+            </div>
+
+            <div class="item">
+              <div class="cta active">Search</div>
+            </div>
+          </div>
+        </div>
+        <main>{% block content %}{% endblock %}</main>
+      </div>
+      <!-- <img src="/static/assets/cartoon/hotel.png" class="hotel" /> -->
+      <!-- <img src="/static/assets/cartoon/car1.png" class="car1" />
+      <img src="/static/assets/cartoon/car2.png" class="car2" />
+      <img src="/static/assets/cartoon/car3.png" class="car3" />
+      <img src="/static/assets/cartoon/car4.png" class="car4" /> -->
+      <!-- <img src="/static/assets/cartoon/dog.gif" class="dog_1" /> -->
+      <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud" /> -->
+      <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_2" /> -->
+      <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_3" /> -->
+      <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_4" /> -->
+      <img src="/static/assets/cartoon/megaman.gif" class="dog_1" />
+      <script>
+        var date = new Date();
+
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
+
+        var today = year + "-" + month + "-" + day + "T00:00";
+        document.getElementById("theDate").value = today;
+      </script>
+    </div>
+  </body>
+</html>

@@ -1,44 +1,26 @@
 from collections import defaultdict
 from flask import request, render_template
 import os
-import random
+import random,datetime,time,json
+import pymysql
 from server import app
-from server.models.product_model import get_products, get_products_variants, create_product
+from server.models.product_model import get_products, get_products_variants
 from werkzeug.utils import secure_filename
+from pymongo import MongoClient
+##########
+import sys
+sys.path[0] += '\\..'
+from env import config
 
 PAGE_SIZE = 6
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
-@app.route('/admin/product.html', methods=['GET'])
-def admin_product():
-    return render_template('product_create.html')
-
+@app.route('/')
 @app.route('/admin/main.html', methods=['GET'])
 def main_index():
     return render_template('skike_main2.html')
 
 
-@app.route('/')
-@app.route('/admin/recommendation.html')
-def product_recommendation_page():
-    res = get_products(100, 0, {"source": "amazon"},)
-    return render_template('product_recommendation.html', products = [{"id": p["id"], "title": p["title"]} for p in res["products"]])
-
-def find_product(category, paging):
-    if (category == 'all') :
-        return get_products(PAGE_SIZE, paging, {"category": category})
-    elif (category in ['men', 'women', 'accessories']):
-        return get_products(PAGE_SIZE, paging, {"category": category})
-    elif (category == 'search'):
-        keyword = request.values["keyword"]
-        if (keyword):
-            return get_products(PAGE_SIZE, paging, {"keyword": keyword})
-    elif (category == 'details'):
-        product_id = request.values["id"]
-        return get_products(PAGE_SIZE, paging, {"id": product_id})
-    elif (category == 'recommend'):
-        product_id = request.values["id"]
-        return get_products(3, paging, {"recommend": product_id})
 
 def find_airticket(destination, paging):
     if (destination == 'all') :
@@ -99,7 +81,7 @@ def get_products_with_detail(url_root, products):
 def api_get_airticket(destination):
     paging = request.values.get('paging') or 0
     paging = int(paging)
-    res = find_product(destination, paging)
+    res = find_airticket(destination, paging)
 
     if (not res):
         return {"error":'Wrong Request'}
@@ -136,7 +118,7 @@ def api_get_airticket(destination):
 def api_get_products(category):
     paging = request.values.get('paging') or 0
     paging = int(paging)
-    res = find_product(category, paging)
+    res = find_airticket(category, paging)
 
     if (not res):
         return {"error":'Wrong Request'}
@@ -189,49 +171,194 @@ def save_file(folder, file):
     else:
         return None
 
-@app.route('/api/1.0/product', methods=['POST'])
-def api_create_product():
-    form = request.form.to_dict()
-    product_id = form["product_id"]
-    main_image = request.files.get("main_image")
-    main_image_name = save_file(product_id, main_image)
-    other_images = request.files.getlist('other_images')
-    other_images_names = []
-    for file in other_images:
-        other_images_names.append(save_file(product_id, file))
-    print(1)
-    print(form)
-    print(main_image_name)
-    print(other_images_names)
-    product = {
-        'id': form['product_id'],
-        'category': form['category'],
-        'title': form['title'],
-        'description': form['description'],
-        'price': int(form['price']),
-        'texture': form['texture'],
-        'wash': form['wash'],
-        'place': form['place'],
-        'note': form['note'],
-        'story': form['story'],
-        'main_image': main_image_name,
-        'images': ','.join(other_images_names),
-        'source': 'native'
-    }
-    print(2)
-    variants = [   
-        {
-            "size": size,
-            "color_code": color_code,
-            "color_name": color_name,
-            "stock": random.randint(1,10),
-            "product_id": product_id
+@app.route('/api/1.0/ticket', methods=['GET'])
+def api_create_ticket():
+    rdsDB = pymysql.connect(host=config.RDSHOSTNAME,\
+                            user="admin",password=config.RDSMASTERPASSWORD,\
+                            port=3306,database="skike",\
+                            cursorclass = pymysql.cursors.DictCursor)
+    cursor = rdsDB.cursor()
+    conn = MongoClient("mongodb://localhost:{}/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false".format(config.MONGO_PASS_SKIKE_LOCAL))
+    mydatabase = conn['skike'] 
+    # Access collection of the database 
+    mycollection=mydatabase['(2021-10-23)skike_ticket_to_JP']
+    # mycollection=mydatabase['(2021-10-23)_ticket_to_Taiwan']
+    # mycollection=mydatabase['(2021-10-25)skike_ticket_to_JP_child']
+    pipetest = [
+    {
+        '$match': {
+            'lowestPrice': {
+                '$ne': None
+            }
         }
-        for (color_code, color_name) 
-        in zip(form["color_codes"].split(','), form["color_names"].split(','))
-        for size
-        in form["sizes"].split(',')
-    ]
+    }
+]
+    result =mycollection.aggregate(pipetest)
+    results = [doc for doc in result]
+    for i in results:
+        # nowTime = int(time.time())
+        for product in i['productInfoList']:
+            duration_hour = product["durationInfo"]['hour'] #int 20
+            duration_min = product["durationInfo"]['min'] #int 5
+            # avbTickets = product["avbTickets"] #int 9
+            # dDateTime = product["dDateTime"] #int 1641300000
+            # aDateTime = product["aDateTime"] #1641375900
+            filter_info_list_depart_time = product["filterInfoList"][0]['dTimeStr'] #str
+            filter_info_list_arrive_time = product["filterInfoList"][0]['aTimeStr']+"+{}d".format(str(product['arrivalDays'])) #str
+            flight_info_list = product["flightInfoList"] #list
+            # print(flight_info_list)
+            depart_city = flight_info_list[0]['dCityInfo']['name']
+            arrive_city = flight_info_list[-1]['aCityInfo']['name']
+            # print(flight_info_list[0]['dCityInfo']['name'])
+            # print(flight_info_list[-1]['aCityInfo']['name'])
+            stopover_minutes = product["stopoverMinute"] #int 960
+            flight_info_list = product["flightInfoList"]
+            # dataCreateTime = i["dataCreateTime"]
+            data_query_time = i["dataQueryTime"]
+            # shoppingId = str(dDateTime)+str(airplane_company_name)+str(aDateTime)
+            
+            #8000000118H4Z2dR0a1YGn800000000020000000000101V_m510G000O8YwW02Gx0800MTiYGmXL
+            # if product['policyInfoList'][0]['priceDetailInfo']['adult'] != None:
+            #     flightPriceAdult = product['policyInfoList'][0]['priceDetailInfo']['adult']['totalPrice'] #int
+            #     # print(flightPriceAdult)
+            # if product['policyInfoList'][0]['priceDetailInfo']['child'] != None:
+            #     flightPriceChild = product['policyInfoList'][0]['priceDetailInfo']['child']['totalPrice'] #int
+            #     # print(flightPriceChild)
+            total_price = product['policyInfoList'][0]['priceDetailInfo']['viewTotalPrice']
+            policy_info_list = product['policyInfoList']
+            # print(policy_info_list)
+            # print(shoppingId)
+        
+            for item in flight_info_list:
+                terninal_arrive_time = item['aDateTime']#str
+                # print(terninal_arrive_time)
+                terninal_depart_city = str(item['dCityInfo']['name'])+" "+str(item['dPortInfo']['code'])+" "+\
+                    str(item['dPortInfo']['name'])+" "+str(item['dPortInfo']['terminal']) #台北 TPE 桃園機場
+                # print(terninal_depart_city)
+                terninal_arrive_city = str(item['aCityInfo']['name'])+" "+str(item['aPortInfo']['code'])+" "+\
+                    str(item['aPortInfo']['name'])+" "+str(item['aPortInfo']['terminal']) #台北 TPE 桃園機場
+                # print(terninal_arrive_city)
+                flight_company_and_number = str(item['airlineInfo']['name'])+" "+str(item['flightNo']) #真航空 LJ211
+                # print(flight_company_and_number)
+                flight_type_class = str(item['craftInfo']['name'])+" "+str(product['policyInfoList'][0]['productClass'][0]) #波音737-800 經濟艙
+                # print(flight_type_class)
+                stayover_times = str(product["filterInfoList"][0]['stopType'])+"個中轉站"# 1個中轉站 str
+                # print(stayover_times)
+                stayover_airport = str(item['dPortInfo']['code'])+'-'+str(stayover_times)+'-'+str(item['aPortInfo']['code'])# ICN-1個中轉站-KIX str
+                # print(stayover_airport)
+                airplane_company_name = str(item['airlineInfo']['name']) #真 航空
+                shoppingId = product['policyInfoList'][0]['productKeyInfo']['shoppingId']
+            # duratime = str(duration_hour)+"小時"+str(duration_min)+"分鐘"
+            # shoppingId = str(dDateTime)+str(airplane_company_name)+str(aDateTime)
+            print(data_query_time)
+            print("-------------------------")
 
-    create_product(product, variants)
+            
+            id =shoppingId
+            depart_city = depart_city
+            arrive_City = arrive_city
+            data_query_time = data_query_time
+            duration_hour =duration_hour 
+            duration_min =int(duration_hour*60+duration_min)
+            depart_time = filter_info_list_depart_time 
+            arrive_time = filter_info_list_arrive_time 
+            stopover_minutes = stopover_minutes 
+            aircraft_registration = flight_type_class
+            stayover_times = stayover_times
+            flight_company = flight_company_and_number
+            if product['policyInfoList'][0]['priceDetailInfo']['adult'] != None:
+                category = "adult"
+            elif product['policyInfoList'][0]['priceDetailInfo']['chile'] != None:
+                category = "child"
+            sql_flyticket = "INSERT INTO skike.flight_ticket (`id`, `depart_city`, `arrive_City`, `data_query_time`, `duration_min`, `depart_time`, `arrive_time`, `stopover_minutes`, `aircraft_registration`, `stayover_times`, `flight_company`, `category`)VALUES (%s,  %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            try:                    
+                cursor.execute(sql_flyticket, (id, depart_city, arrive_City, data_query_time, duration_min, depart_time, arrive_time, stopover_minutes, aircraft_registration, stayover_times, flight_company, category))
+                rdsDB.commit()
+            except Exception as e:
+                print("Exeception occured:{}".format(e))
+
+            for item in flight_info_list:
+                terminal_arrive_time =  item['aDateTime']
+                flight_depart_terminal =  str(item['dCityInfo']['name'])+" "+str(item['dPortInfo']['code'])+" "+\
+                    str(item['dPortInfo']['name'])+" "+str(item['dPortInfo']['terminal'])
+                flight_arrive_terminal =  str(item['aCityInfo']['name'])+" "+str(item['aPortInfo']['code'])+" "+\
+                    str(item['aPortInfo']['name'])+" "+str(item['aPortInfo']['terminal'])
+                flight_company_and_number =  str(item['airlineInfo']['name'])+" "+str(item['flightNo'])
+                flight_type_class = str(item['craftInfo']['name'])+" "+str(product['policyInfoList'][0]['productClass'][0])
+                stayover_times = str(product["filterInfoList"][0]['stopType'])+"個中轉站"
+                stayover_airport =  str(item['dPortInfo']['code'])+'-'+str(stayover_times)+'-'+str(item['aPortInfo']['code'])
+                airplane_company_name = str(item['airlineInfo']['name'])
+
+
+                sql_stopover = "INSERT INTO skike.flight_stopover (`terminal_arrive_time`, `flight_depart_terminal`, `flight_arrive_terminal`, `flight_id`)VALUES (%s, %s, %s, %s)"
+                try:                    
+                    cursor.execute(sql_stopover, (terminal_arrive_time, flight_depart_terminal, flight_arrive_terminal, shoppingId))
+                    rdsDB.commit()
+                except Exception as e:
+                    print("Exeception occured:{}".format(e))
+            
+            if product['policyInfoList'][0]['priceDetailInfo']['adult'] != None:
+                for policy_item in policy_info_list:
+                    product_flag =  policy_item['productFlag'],
+                    price = policy_item['priceDetailInfo']['viewTotalPrice'],
+                    adult_price = str(policy_item['priceDetailInfo']['adult']['totalPrice']),
+                    # "child_price":str(policy_item['priceDetailInfo']['child']['totalPrice']),
+                    # "infantPrice":str(policy_item['priceDetailInfo']['infant']['totalPrice']),
+                    flight_class = str(policy_item['productClass'][0]),
+                    available_tickets = policy_item['availableTickets'],
+                    flight_ticket_feature = str(policy_item['descriptionInfo']['productName']),
+                    flight_category = str(policy_item['descriptionInfo']['productCategory']),
+                    ticket_description = str(policy_item['descriptionInfo']['ticketDescription']),
+                    flight_id = shoppingId
+
+                    sql_flightprice = "INSERT INTO skike.flight_price (`product_flag`, `price`, `adult_price`, `flight_class`, `available_tickets`, `flight_ticket_feature`, `flight_category`, `ticket_description`, `flight_id`\
+                    )VALUES (%s,  %s, %s, %s, %s, %s, %s, %s, %s)"
+                    try:                    
+                        cursor.execute(sql_flightprice, (product_flag, price, adult_price,  flight_class, available_tickets, flight_ticket_feature, flight_category, ticket_description, flight_id))
+                        rdsDB.commit()
+                    except Exception as e:
+                        print("Exeception occured:{}".format(e))
+
+            elif product['policyInfoList'][0]['priceDetailInfo']['child'] != None:
+                for policy_item in policy_info_list:
+                    product_Flag =  policy_item['productFlag']
+                    view_total_price = policy_item['priceDetailInfo']['viewTotalPrice']
+                    # adultPrice = str(policy_item['priceDetailInfo']['adult']['totalPrice']),
+                    child_price = str(policy_item['priceDetailInfo']['child']['totalPrice'])
+                    # "infantPrice":str(policy_item['priceDetailInfo']['infant']['totalPrice']),
+                    product_class = str(policy_item['productClass'][0])
+                    available_tickets = policy_item['availableTickets']
+                    product_name = str(policy_item['descriptionInfo']['productName'])
+                    product_category = str(policy_item['descriptionInfo']['productCategory'])
+                    ticket_description = str(policy_item['descriptionInfo']['ticketDescription'])
+                    flight_id = shoppingId
+
+                    sql_flightpriceChild = "INSERT INTO skike.flightpriceChild (`product_Flag`,\
+                    `view_total_price`, `child_price`, `product_class`, `available_tickets`, \
+                    `product_name`, `product_category`, `ticket_description`, `flight_id`\
+                    )VALUES (%s,  %s, %s, %s, %s, %s, %s, %s, %s)"
+                    try:                    
+                        cursor.execute(sql_flightpriceChild, (product_Flag, view_total_price, child_price, product_class, available_tickets, product_name, product_category, ticket_description, shoppingId))
+                        rdsDB.commit()
+                    except Exception as e:
+                        print("Exeception occured:{}".format(e))
     return "Ok"
+
+@app.route('/api/1.0/products/tokyo', methods=['get'])
+def tokyo():
+    paging = request.args.get('paging')
+    if paging == None or paging == '':
+        paging = 0
+    rdsDB = pymysql.connect(host=config.RDSHOSTNAME,\
+                        user="admin",password=config.RDSMASTERPASSWORD,\
+                        port=3306,database="skike",\
+                        cursorclass = pymysql.cursors.DictCursor)
+    cursor = rdsDB.cursor()
+    sql = "SELECT * FROM skike.flight_ticket where arrive_City = '東京' and data_query_time = '2021-10-24' LIMIT {},{}".format(str(int(paging)*6),6)
+    cursor.execute(sql)
+    sql_result = cursor.fetchall()
+    sql_result =[]
+    for data in sql_result:
+        value = json.dumps(data)
+        print(value)
+    return "OK"
