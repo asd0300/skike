@@ -1,0 +1,13 @@
+db.createUser(
+  {
+    user: "superAdmin",
+    pwd: "admin",
+    roles: [ { role: "root", db: "admin" } ]
+  })
+
+db.createUser(
+  {
+   user: "skike",
+   pwd: "skike1",
+   roles: [ "readWrite"]}
+)
