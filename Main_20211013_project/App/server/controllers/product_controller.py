@@ -1,5 +1,5 @@
 from collections import defaultdict
-from flask import request, render_template
+from flask import request, render_template, jsonify
 import os
 import random,datetime,time,json
 import pymysql
@@ -344,7 +344,7 @@ def api_create_ticket():
                         print("Exeception occured:{}".format(e))
     return "Ok"
 
-@app.route('/api/1.0/products/tokyo', methods=['get'])
+@app.route('/api/1.0/tickets/tokyo', methods=['get'])
 def tokyo():
     paging = request.args.get('paging')
     if paging == None or paging == '':
@@ -354,11 +354,19 @@ def tokyo():
                         port=3306,database="skike",\
                         cursorclass = pymysql.cursors.DictCursor)
     cursor = rdsDB.cursor()
-    sql = "SELECT * FROM skike.flight_ticket where arrive_City = '東京' and data_query_time = '2021-10-24' LIMIT {},{}".format(str(int(paging)*6),6)
+    sql = "SELECT * FROM skike.flight_ticket where data_query_time ='{}' order by data_query_time asc LIMIT {},{}".\
+        format('2021-10-24',str(int(paging)*6),6)
     cursor.execute(sql)
     sql_result = cursor.fetchall()
-    sql_result =[]
+    # sql1 = [data for data in sql_result]
+    # print(sql1) 
+    sql_get =[]
     for data in sql_result:
-        value = json.dumps(data)
-        print(value)
-    return "OK"
+        sql_sub = "SELECT distinct (price) FROM skike.flight_ticket INNER JOIN skike.flight_price on flight_ticket.id = flight_price.flight_id where flight_ticket.id = '{}';".format(data['id'])
+        cursor.execute(sql_sub)
+        result_sub = cursor.fetchall()
+        # print([data['price'] for data in result_sub])
+        data['alternative_flight'] = result_sub
+        # print(result_sub)
+        sql_get.append(data)
+    return render_template('skike_main2.html', flight_list=sql_get)

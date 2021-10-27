@@ -40,7 +40,7 @@ header nav .myAccount .ctaGroup .cta,
   display: -ms-flexbox;
   display: flex;
   position: relative;
-  overflow: hidden;
+  overflow: scroll;
   background-image: -webkit-gradient(
     linear,
     left top,
@@ -258,6 +258,11 @@ header nav .myAccount .ctaGroup .cta.active {
   border-left: 1px solid #f6685e;
 }
 
+.flight_item {
+  border-left: 1px solid #f6685e;
+  float: left;
+}
+
 .booking_details .item:nth-last-child(1) {
   border-left: none;
 }
@@ -473,3 +478,47 @@ header nav .myAccount .ctaGroup .cta.active {
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+.product_title {
+  font-size: 14 px;
+  background-color: #fff;
+  height: 150px;
+  border-radius: 15px;
+  position: relative;
+  z-index: 2;
+  -webkit-box-shadow: 1px 1px 20px 0px rgba(50, 50, 50, 0.3);
+  box-shadow: 1px 1px 20px 0px rgba(50, 50, 50, 0.3);
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0 15px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 10px;
+  text-align: left;
+}
+
+.price_container {
+  font-size: 14 px;
+  background-color: #fff;
+  height: 150px;
+  border-radius: 15px;
+  position: relative;
+  z-index: 2;
+  -webkit-box-shadow: 1px 1px 20px 0px rgba(50, 50, 50, 0.3);
+  box-shadow: 1px 1px 20px 0px rgba(50, 50, 50, 0.3);
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0 15px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 10px;
+  text-align: left;
+}
