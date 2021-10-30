@@ -3,7 +3,7 @@
 {% if flight_list!=[]%}
 <div id="product-container">
   {% for list in flight_list %}
-  <a class="product_details">
+  <div class="product_details">
     <div class="product_colors"></div>
     <div class="product_title">
       <div class="flight_item">
@@ -35,27 +35,42 @@
       <div class="flight_item">
         <i class=""></i>
         DepartDay:{{list['data_query_time']}}
+        <button onclick="myFunction()" class="product_details">更多價格</button>
       </div>
     </div>
-  </a>
-  {% for prices in list['alternative_flight'] %}
-  <div class="price_container">
-    <div class="price_item">
-      <i class=""></i>
-      Price:${{prices['price']}}
-    </div>
+    {% for prices in list['alternative_flight'] %}
+      <!-- <div id="myDropdown_{{id_count}}" style="display: none"> -->
+      <!-- <div id="myDropdown_{{i}}"> -->
+        <div class="price_container">
+          <div class="price_item">
+            <i class=""></i>
+            Price:${{prices['price']}}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    <a></a>
+    {% endfor %}
+    <a></a>
   </div>
-  {% endfor %}
-  <a></a>
-  {% endfor %}
-  <a></a>
-
-  <a></a>
-  {%elif flight_list == [] %}
-  <div class="price_container">
-    <div class="price_item">
-      <a>Sorry, please search other date or place</a>
+    <a></a>
+    <script type="text/javascript">
+      jQuery(function(){
+        jQuery('#showall').click();
+        jQuery('.target').show();
+      });
+      jQuery('.product_details').click(function(){
+        jQuery('.target').hide();
+        jQuery('#div'+$(this).attr('target')).show()
+      })
+      
+    </script>
+    {%elif flight_list == [] %}
+    <div class="price_container">
+      <div class="price_item">
+        <a>Sorry, please search other date or place</a>
+      </div>
+      {%endif%} {% endblock content %}
     </div>
-    {%endif%} {% endblock content %}
   </div>
 </div>

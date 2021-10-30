@@ -1,0 +1,61 @@
+{% extends "layout.html" %} {%block content%}
+<div id="campaigns"></div>
+{% if hotel_list!=[]%}
+<div id="product-container">
+  {% for list in hotel_list %}
+  <a class="product_details">
+    <div class="product_colors"></div>
+    <div class="product_title">
+      <div class="flight_item">
+        <i class=""></i>
+        {{list['depart_time']}} - {{list['arrive_time']}}
+        <div class="flight_name">{{list['flight_company']}}</div>
+      </div>
+      <div class="flight_item">
+        <i class=""></i>
+        {{(list['duration_min']/60)|int}} 小時 {{list['duration_min']%60}} 分鐘
+      </div>
+      <div class="flight_item">
+        <i class=""></i>
+        {{list['arrive_City']}}
+      </div>
+      <div class="flight_item">
+        <i class=""></i>
+        {% if list['stayover_times'] == '0個中轉站' %}
+        <a>直航／不停站</a>
+        {% endif %} {% if list['stayover_times'] != '0個中轉站' %}
+        <a>{{list['stayover_times']}}</a>
+        {% endif %}
+        <div class="terminal_information">{{list['flight_company']}}</div>
+      </div>
+      <div class="flight_item">
+        <i class=""></i>
+        {{list['depart_city']}}-{{list['arrive_City']}}
+      </div>
+      <div class="flight_item">
+        <i class=""></i>
+        DepartDay:{{list['data_query_time']}}
+      </div>
+    </div>
+  </a>
+  {% for prices in list['alternative_flight'] %}
+  <div class="price_container">
+    <div class="price_item">
+      <i class=""></i>
+      Price:${{prices['price']}}
+    </div>
+  </div>
+  {% endfor %}
+  <a></a>
+  {% endfor %}
+  <a></a>
+
+  <a></a>
+  {%elif hotel_list == [] %}
+  <div class="price_container">
+    <div class="price_item">
+      <a>Sorry, please search other date or place</a>
+    </div>
+    {%endif%} {% endblock content %}
+  </div>
+</div>

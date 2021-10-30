@@ -108,23 +108,22 @@ def create_tb_hotel(cursor, TABLES, TBNAME=None):
         `image_url` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
         `geocode_lat` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
         `geocode_lng` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
-        `hotel_feature` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
-        `price` INT(10) COLLATE utf8mb4_bin NOT NULL, \
-        `hotel_url` varchar(255) COLLATE utf8mb4_bin  NULL, \
-        PRIMARY KEY (`id`) \
+        PRIMARY KEY (`id`, `data_query_time`) \
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(TBNAME))
 
 
 def create_tb_hotel_alter(cursor, TABLES, TBNAME=None):
     TABLES[TBNAME] = ("CREATE TABLE IF NOT EXISTS {}( \
         `id` INT(10) COLLATE utf8mb4_bin NOT NULL AUTO_INCREMENT, \
+        `data_query_time` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
         `hotel_agency` varchar(255) COLLATE utf8mb4_bin NOT NULL,    \
+        `agency_logo` varchar(255) COLLATE utf8mb4_bin NOT NULL,    \
         `hotel_feature` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
         `price` INT(10) COLLATE utf8mb4_bin NOT NULL, \
         `hotel_url` varchar(255) COLLATE utf8mb4_bin  NULL, \
         `hotel_id` INT(10) COLLATE utf8mb4_bin NOT NULL, \
-        PRIMARY KEY (`id`), \
-        FOREIGN KEY (`hotel_id`) REFERENCES hotel(id) \
+        PRIMARY KEY (`id`,`hotel_feature`,`price`), \
+        FOREIGN KEY (`hotel_id`,`data_query_time`) REFERENCES hotel(`id`,`data_query_time`) \
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(TBNAME))
     
     for table_name in TABLES:

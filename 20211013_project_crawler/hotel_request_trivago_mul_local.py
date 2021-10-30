@@ -17,7 +17,7 @@ def daterange(start_date, end_date):
 conn = MongoClient("mongodb://localhost:{}/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false".format(config.MONGO_PASS_SKIKE_LOCAL))
 mydatabase = conn['skike'] 
 # Access collection of the database 
-mycollection=mydatabase['skike_hotel_v2']
+mycollection=mydatabase['({})skike_hotel_v2'.format(str(date.today()))]
 
 with open('Webshare 10 proxies.txt') as f:
     # data = json.load(f)
@@ -675,7 +675,7 @@ for i in range(1,19):
 
     end_time = time.time()
     print(f"{end_time - start_time} 秒爬取, now i is at "+str(i))
-    time.sleep(300)
+    time.sleep(200)
     start_date = date.today()+timedelta(5*(i))
     end_date = date.today()+ timedelta(5*(i+1))
     datelistNoSave = [ single_date for single_date in daterange(start_date, end_date)]
@@ -683,7 +683,7 @@ for i in range(1,19):
     with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
         
         executor.map(getJPhotelSigleThNoSave, datelistNoSave)
-    time.sleep(300)
+    time.sleep(200)
 
 
 

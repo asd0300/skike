@@ -503,7 +503,7 @@ header nav .myAccount .ctaGroup .cta.active {
 
 .price_container {
   font-size: 14 px;
-  background-color: #fff;
+  background-color: hsl(249, 33%, 96%);
   height: 150px;
   border-radius: 15px;
   position: relative;
