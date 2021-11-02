@@ -134,7 +134,7 @@ for i in range(1,4):
 
     end_time = time.time()
     print(f"{end_time - start_time} 秒爬取")
-    # time.sleep(600)
+    time.sleep(120)
 # print(datelist)
 # def dateCrawler():
 #     for single_date in daterange(start_date, end_date):
@@ -255,4 +255,4 @@ for i in range(1,4):
 
     end_time = time.time()
     print(f"{end_time - start_time} 秒爬取")
-    # time.sleep(600)
+    time.sleep(120)

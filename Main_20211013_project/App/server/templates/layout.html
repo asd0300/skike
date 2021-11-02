@@ -7,6 +7,25 @@
     <link rel="stylesheet" href="/static/font.css" />
     <link rel="stylesheet" href="/static/font-awesome.min.css" />
     <link rel="stylesheet" href="/static/style.css" />
+    <style type="text/css">
+      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
+    </style>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcncmKczTtjQ0Xer1AU2BEQzbL7xRNcoc">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: { lat: -34.397, lng: 150.644},
+          zoom: 8
+        };
+        var map = new google.maps.Map(
+            document.getElementById('map-canvas'),
+            mapOptions);
+      }
+      google.maps.event.addDomListener(
+          window, 'load', initialize);
+    </script>
   </head>
 
   <body>
@@ -14,7 +33,9 @@
       <header>
         <nav>
           <div class="menu">
-            <div class="logo">Ski <span>Demo</span> le</div>
+            <a href="{{url_for('main_index')}}">
+              <div class="logo">Ski <span>Demo</span> lke</div>
+            </a>
             <ul>
               <li></li>
               <li></li>
@@ -37,21 +58,25 @@
 
         <div class="booking_info">
           <div class="opt">
-            <span class="active">Airplane</span>
-            <span>Hotel</span>
+            <!-- <span class="active">Airplane</span>
+            <span>Hotel</span> -->
           </div>
-
+        <form method="POST" action="{{ url_for('hotel_search') }}">
           <div class="booking_details">
+            <select name="booking_category" class="booking_category">
+              <option >Hotel</option>
+              <option >Airplane</option>
+            </select>
             <div class="item">
               <i class="fa fa-search"></i>
-              Enter a destination
+              <input type="text" name="location" placeholder="Please enter destination" size="20" />
             </div>
-
             <div class="item">
               <div class="date">
                 <input
                   id="theDate"
                   type="date"
+                  name="start_date"
                   required
                   placeholder="Depart Date"
                   class="form-control"
@@ -59,12 +84,12 @@
               </div>
               <div class="days">出發日期</div>
             </div>
-
             <div class="item">
               <div class="date">
                 <input
                   id="theDate"
                   type="date"
+                  name="end_date"
                   required
                   placeholder="Return Date"
                   class="form-control"
@@ -72,21 +97,48 @@
               </div>
               <div class="days">抵達日期</div>
             </div>
-
             <div class="item">
               <div class="people">
-                2 adults, 0 children <i class="fa fa-angle-down"></i>
+                adults
+                <select name="adults_number" class="select_adult">
+                  <option >0</option>
+                  <option >1</option>
+                  <option >2</option>
+                  <option >3</option>
+                  <option >4</option>
+                  <option >5</option>
+                  <option >6</option>
+                  <option >7</option>
+                  <option >8</option>
+                  <option >9</option>
+                </select>
+                and rooms
+                <select name="rooms" class="select_room">
+                  <option >0</option>
+                  <option >1</option>
+                  <option >2</option>
+                  <option >3</option>
+                  <option >4</option>
+                  <option >5</option>
+                  <option >6</option>
+                  <option >7</option>
+                  <option >8</option>
+                  <option >9</option>
+                </select>
+                <!-- 2 adults, 0 children <i class="fa fa-angle-down"></i> -->
               </div>
-              <div class="days">1 room</div>
+              <!-- <div class="days">1 room</div> -->
             </div>
-
             <div class="item">
-              <div class="cta active">Search</div>
+              <input type = "submit" value="Submit" class="cta active">
+              <!-- <div class="cta active">Search</div> -->
             </div>
           </div>
         </div>
-        <main>{% block content %}{% endblock %}</main>
+        </form>
       </div>
+        <main>{% block content %}{% endblock %}</main>
+      
       <!-- <img src="/static/assets/cartoon/hotel.png" class="hotel" /> -->
       <!-- <img src="/static/assets/cartoon/car1.png" class="car1" />
       <img src="/static/assets/cartoon/car2.png" class="car2" />
@@ -97,7 +149,7 @@
       <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_2" /> -->
       <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_3" /> -->
       <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_4" /> -->
-      <img src="/static/assets/cartoon/megaman.gif" class="dog_1" />
+      <!-- <img src="/static/assets/cartoon/megaman.gif" class="dog_1" /> -->
       <script>
         var date = new Date();
 

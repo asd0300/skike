@@ -1,0 +1,445 @@
+{
+  "geocoded_waypoints": [
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJEUtLGts1aDQRDDvTtbzcCdQ",
+      "types": ["colloquial_area", "locality", "political"]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJi73bYWusQjQRgqQGXK260bw",
+      "types": ["administrative_area_level_1", "political"]
+    }
+  ],
+  "routes": [
+    {
+      "bounds": {
+        "northeast": {
+          "lat": 25.075773,
+          "lng": 121.565452
+        },
+        "southwest": {
+          "lat": 24.7889301,
+          "lng": 121.0013037
+        }
+      },
+      "copyrights": "Map data ©2021 Google",
+      "legs": [
+        {
+          "arrival_time": {
+            "text": "下午10:43",
+            "time_zone": "Asia/Taipei",
+            "value": 1635777820
+          },
+          "departure_time": {
+            "text": "下午8:50",
+            "time_zone": "Asia/Taipei",
+            "value": 1635771056
+          },
+          "distance": {
+            "text": "82.3 公里",
+            "value": 82330
+          },
+          "duration": {
+            "text": "1 小時 53 分鐘",
+            "value": 6764
+          },
+          "end_address": "台灣台北市",
+          "end_location": {
+            "lat": 25.0331333,
+            "lng": 121.565452
+          },
+          "start_address": "台灣新竹市新竹",
+          "start_location": {
+            "lat": 24.7953466,
+            "lng": 121.0019042
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "75.1 公里",
+                "value": 75058
+              },
+              "duration": {
+                "text": "1 小時 3 分鐘",
+                "value": 3805
+              },
+              "end_location": {
+                "lat": 25.0492386,
+                "lng": 121.5179493
+              },
+              "html_instructions": "公車 開往臺北轉運站",
+              "polyline": {
+                "points": "}yivC{dpaV@S@?\\?j@A~@CPAFAh@CH?b@I@?d@M~@vBJPDHTZLNJMl@}@jCkE~BuDzAgCf@w@Vg@R[x@qAP[nCgEXGLCLCBAD?H?D?D?JBHBRFHNBHDJBLBJ?LALAJCLCFEHEHA@GFIFGB?@IBKBG?E?C?KAKAo@IkAc@OEMEwDmAiF_BMEuKaDgBe@qA[Q?GA{@Qi@Oq@Qy@Uw@QuAWmDm@m@Mu@Ow@KcAOiAMSESCkAQeAOe@I[IYGi@Ek@EoAIGA]CI?y@EeEUG?{@EG?m@IuHo@{Fi@yAOUAUB{@MiBUk@IcBUiEm@KCOCMCQCQEeASc@KsAWyEgA_@GuD}@mAY_Ba@oCs@GCKEUGeCw@mBu@QIEAYKwDyAiCeASKoAk@_@Q_@QiHqDWM}A{@iDkB_@S_@S}DwB[QYOeH}DMIOISKgDgBkAi@}CyAYMWMoCiAcC_ACA]MAAMGeA[sA_@eAYmBg@yA_@[IkCi@oB]k@Ic@GCA]I}BWGAaBUG?c@Ga@EyCSgAIOAQAkBEeEMeEAqCAgCFoBHc@DU?QB{CP}CV_BP_BXO@[DE@c@Ha@FWFsAXmAXeAZaA\\_A^_Ab@SJSLUL[R]TwA`AmCtB}@|@e@b@_@h@OP_@h@o@x@ORyAdBo@x@s@x@cAtAo@z@m@r@SVCBOTWZiB~BmAvAcArA]`@MNuA~AaA`AuChC_CfBaAh@u@\\SHm@Ru@XuA^i@Le@HKBMBOB{@Jg@Du@HcABY?}@?u@?cAAeAGaAI_AMKA_@GWEKCA?_@IC?MCQGA?a@M}Bk@eBk@uBy@gBs@cBaAgCgAsAu@_B_AgAs@cAu@SOMKWS]YaBoAw@m@c@_@g@_@QOSSQOu@o@e@e@kAkA}@cAaBqBY]KSUYUYOSMQKOKMuAqBWa@OQ_@o@q@oAiAyBw@}AiAaC}@oBe@kAYu@_@cAc@mAu@cC?Ao@qBo@aCc@eBSw@a@iB_BeIKg@Ke@AG}@mFGg@McAOaAK{@_@eDEYQkBGo@CYCe@AIAIM{AMcBIaBK_BGmAIeBIkBEeBGqCEoEBqMP{LD}AD{A@c@D}@B_A@WL{DFwAFsANcE@QJkCPgEHkDJ}CF_C@e@Bi@@]FkCHmCFwCBwC@sC?Q?O?W?MCwBAeCAc@AYIgEGoBIeBMkCIaAEk@CWC[Gk@OiAS{ASwAWoAa@kBo@wCk@sBo@{Bq@oBw@wBIUQa@u@gBc@aAMYYm@m@iAu@uAS_@GKMSi@_AWe@mCoEcBqCk@}@k@cAiA{Bw@gB_@aAKWKWIQ]cAq@yBAAMg@Me@k@aCc@gBY}A[cB[oBQkACQGe@QeBKkAW{CKmBKcDEyBK{FE_DAg@EiBKaDOaCUcCE]E]?AoAmHoAgFa@iAGOGQeA}CCISa@u@eBm@uAIOcNsWSa@S_@Sa@{@aBS_@Q[AEOa@a@eAQc@a@cA?AuCkJmAyECKCKe@iBiA}GeAiIKiACWCWUgDGkAMsCKsCCoAAmB?Y?[HuJV}INqEJmCFuB?K?YFcCFkCBeC?qB?GAa@AmAEiDKgCMwCWwFEe@Eg@CS[mDAE?GGc@I{@Iu@Go@Io@Kw@MiAOkAOcAO{@G]Ii@u@mDCKAMcCmNKe@SkAIe@uAcI]oBeCyMu@aEKg@Ii@o@}DIe@o@yDGUGWMq@COCOCQGYCSKi@GYEUIe@SiA_@wBIe@Ke@k@gDcAwFsBsLY{Ak@aDy@yEgD}RO}@Y{AIc@Ia@[eBk@oDm@{CCGGWMc@CKu@qCc@wAM_@AAKW?ACGe@iAkBwDQ]?AU]U]S]mAkB_@e@a@e@Y]WY_AcAs@u@k@i@y@m@ECa@WWO}@i@s@c@_Ai@i@UuCcAgA]a@M]MgAWi@Oi@OgBa@yBk@}A_@}Cq@eAYaCm@e@MaAWaAU}MiDUGQGWGYI{Bk@OGWKGAa@OcBa@GCcAYiIuBuA_@mIoCg@UEA_@QA?iCmAgFgDIGKGYSIESOm@i@CCeC}BsBuBo@o@yAaB_B{Bs@_AcBaCmBcDqBoEoBqFGUmAaEy@mDa@kBw@eEQu@Qo@m@}Bg@kBe@sAgDyJyAcDy@aB_@u@gBiCQUeAyAaDsDy@aASQaB}AOMMMqAmAqGoEyC_BwA{@eCkA}DwAaD{@c@QgBa@o@KgEq@qMgCa@IWEYCg@Gi@IWG_@Ii@Oc@MYGiDm@i@Ki@Ke@I{@Qy@SQGUGu@Q{@Qa@Me@Mq@QeAYUEKEQG]MQGSIKGOGMEKCMEMEOCQESGWKWMQISKUMOI[Mc@S{@e@oAm@w@c@}@e@k@]CA_Ai@oD_Ck@e@IIUS_@_@QMoAaA]W[WaCuBaCuB_AcAaAkA{AiBa@i@gAyA{CuEg@u@s@uAU_@S_@wBwDKQIQsAaCmFoJcBqCS_@k@_AsDmGuCuEkIsKkBcCOQ[c@eB_Cc@m@_@i@iFuGCEoCeDk@s@m@q@{HmJUYUYeFiGa@g@a@e@qJkL{@_AkHqIyAiByBwCYYYYUYi@u@W_@i@o@cAoAW[_AqAQUOSaD}DqEqFuBaCkBqBoEuEmDmDyA{A}@{@qNqNcCeCqAqAeBkBaCcCqDmD_G{FmBmBCCMMEEeDiDcAcAuDeEq@s@kAsAuA_BiAsAqCeDkA}AgB{Bm@u@_DuEq@aAW]W_@m@y@qCwD}B}Ci@u@y@iA]c@]c@eA{AW]uCaEqFyHU]U]gIcLaLyO]c@]c@}I}MaAuA}GmJmCcDoI{LsBmCkEeGW]m@y@iH{IaPcREGEEMMSWEEOOqCaDkEsFeIsJaCkCIK_BsBaBsBuAeBY[U[EGu@eAeDoEeE{FIIEIOUi@{@KOIOIOs@aA_GsJ_H{KS[KOc@u@SYQYWe@wAiCKUS_@oA_CwCsFUc@Q]IOeBkD}@cBe@cAq@{Ag@iAUi@Uk@g@cAs@cBAACEQe@aEeJQc@cB}DKWGQCEAEKUqG{QCEM]iA_D_CkHaBwEiBwGEQ?AGSIUAGACACACAE?CGUCKCMCEAECK}@yCkC}JyCoLsBoHK_@IWOa@_@cAOa@i@{AOc@cAwBm@qAA?S_@]s@mAeBMQIIU]W[KMe@m@]]k@m@GGY[CA{AyAu@k@wAcA]SoCmBIEMI]U}@i@{BuAsH}Eg@_@[UeE_DuEcEoEoEQOGIW[W[[]c@i@_@e@W[EGIKGIEGoBuCeC}DoCyEg@eAACi@mAMYgBoEa@iAMc@e@qAqAkE}@aEw@yDGc@QmA[cCc@yEAIGcAW{EUmI?Q?GAuDBuC@iAFiFJsCb@}LHcCLiBT_GD_BNwFB}AFgGDkD?{A?e@?e@?qCAuBEqGKqGI{Be@wNMoDC]E}@A_@M_CE_AA_@ASAKC]C_@I_Am@kIEo@YkF?IGcAAaACuA?_A@m@?[DuAHw@Hs@Ho@?ARmATiAVkA`@cB`@}ADQDQd@sBVkADQBSF_@@EDc@?A?AFe@D_@?EDg@?E@a@@[?K?q@AmAEqAO_Bs@aIAEMaCEqAAy@?W?OByDHaBNcBTmBTuABKF[Ja@DQF]Rs@Rm@Rg@Pa@@?^s@d@}@n@aA\\k@T]x@iALOXYX[FGPSjAmAZ[Z]\\_@bA{@nA{@`DaC\\YZU\\Y\\SBAZWtA}@\\WpA}@vBgBz@y@v@_Ar@eAt@iA`@o@b@{@z@wB^{AZwATuATmBHeABaAD{@AqCI}AAYCM?IOcAM}@i@iCaAuC]}@oAiCeEgHWa@cDeGa@y@Oa@EKIWIUaDgGOWk@gAsCoFMWg@aA}@aBSa@S_@i@aACIqAaCqBsDc@aAKOWg@Uc@ACuBgE[g@oAcCAEGMKSoAyBeAqB_AaB_A_Bq@kAq@qA_@{@EIgAkCOa@Oc@s@iCY_AWiAACa@cCWiCMsAA[Cg@ImAAs@CeAAg@?g@Ae@Ag@CwBAe@Aq@A]Ag@AoAAmAAg@Ag@?ESkGAWGiBE{AAg@MeCG}AI{@Gq@OuBIy@Gw@UoB?CGi@Ec@AKMaAKu@WcBGe@My@YgBIc@Ia@k@wCa@oBw@{DSaAc@uBKk@cAaFeBqIw@}DeBqI_@iBq@{CIc@Ke@qAqGQ_Am@uCe@{B}@sEsAuGa@oBEUGUI]I]g@gCEYEYgAwH[{CE[C[QeCKeB?QAUEmAGwCAiC?kA@w@BmCFuBD}@Be@@QBy@JwAFcA?EJiAHaANgAJw@D_@RqANaABKFe@ZoBXoBbAeGd@wCXeB\\mBBQTaBRsA^sCJ}@XgDPmDDmBDmB?o@BqAAs@As@KeE?IC]SgEGe@Ee@m@uFk@wDOcAQeAu@gFo@cEGg@CUM}@OiAIk@@m@Io@CUCQCSAGCWE[Cc@CUCWCWAW?QAO?IAgA?U@O@O@O@I@I@I@E@EBGBKFK@CBEHKHK@AHGJGLGNE`@ERCHAFAHCXBVD^Dt@PZLXJRDZPPHTNPJHHJJRPxB`BZV@@`@Xh@\\NLTNnA~@jChBj@`@tAdAdBlALQ\\i@Xg@xAoCn@mAb@o@Ve@FKJQFIP[Zm@f@gA^_AFOJ]Rq@HYF[Hg@Hq@@U@S?k@?u@CaAIuATEv@Kj@Ml@Mn@O~@QpBa@jA[@A`AQPCf@Mx@Mh@I`AQXGl@MFAFCq@oCc@aBc@}A[iA[uAy@eDsAyEI]GUEQK[EUEQCSASASAS?Q@O@W@U@QBQDs@Ds@@WBWBWH}@ReCDm@HgABQFm@HgALyADk@Di@Di@B[JgAHy@B]J_AHu@LmAJ{@Da@@IBWB[FW@K@K@M@M?K?Q?]Aw@?o@AS?SK{ECu@Cw@?K?I?G?KDuA?[?[BcE?E@E@G@E@E@E@EAE?E?G?K@W?K?_B@gABcB?a@?_Ax@@ZB|B@h@?bB@|A@nA?tDBlDGF?~@@d@Jh@?~@?`ABrB?bCCxA?lBA~G`BRDr@NZFZFXBNBTBpAVJ@~@PNBvB`@DYRuAHk@ReBn@qEJq@TwAPBJBNDNFJHTNHHXTh@b@ShAe@|DlA\\"
+              },
+              "start_location": {
+                "lat": 24.7953466,
+                "lng": 121.0019042
+              },
+              "transit_details": {
+                "arrival_stop": {
+                  "location": {
+                    "lat": 25.0492386,
+                    "lng": 121.5179493
+                  },
+                  "name": "臺北轉運站"
+                },
+                "arrival_time": {
+                  "text": "下午10:10",
+                  "time_zone": "Asia/Taipei",
+                  "value": 1635775808
+                },
+                "departure_stop": {
+                  "location": {
+                    "lat": 24.7953466,
+                    "lng": 121.0019042
+                  },
+                  "name": "和欣客運新竹站"
+                },
+                "departure_time": {
+                  "text": "下午8:50",
+                  "time_zone": "Asia/Taipei",
+                  "value": 1635771056
+                },
+                "headsign": "臺北轉運站",
+                "line": {
+                  "agencies": [
+                    {
+                      "name": "和欣客運",
+                      "url": "http://www.ebus.com.tw/"
+                    }
+                  ],
+                  "name": "台北-台南",
+                  "short_name": "7500F經新竹、麻豆",
+                  "vehicle": {
+                    "icon": "//maps.gstatic.com/mapfiles/transit/iw2/6/bus2.png",
+                    "name": "公車",
+                    "type": "BUS"
+                  }
+                },
+                "num_stops": 2
+              },
+              "travel_mode": "TRANSIT"
+            },
+            {
+              "distance": {
+                "text": "0.4 公里",
+                "value": 369
+              },
+              "duration": {
+                "text": "8 分鐘",
+                "value": 485
+              },
+              "end_location": {
+                "lat": 25.0478072,
+                "lng": 121.5170185
+              },
+              "html_instructions": "步行到台北車站",
+              "polyline": {
+                "points": "kl{wCwvtdV@?@??A@?B?NFLDD?J?N?@?J@PFB@FBDDDa@BITsCNuBRIpAhF"
+              },
+              "start_location": {
+                "lat": 25.0491752,
+                "lng": 121.51676
+              },
+              "steps": [
+                {
+                  "distance": {
+                    "text": "24 公尺",
+                    "value": 24
+                  },
+                  "duration": {
+                    "text": "1 分鐘",
+                    "value": 32
+                  },
+                  "end_location": {
+                    "lat": 25.0489764,
+                    "lng": 121.5166998
+                  },
+                  "html_instructions": "往\u003cb\u003e南\u003c/b\u003e\u003cdiv style=\"font-size:0.9em\"\u003e走樓梯\u003c/div\u003e",
+                  "polyline": {
+                    "points": "kl{wCwvtdV@?@??A@?B?NFLD"
+                  },
+                  "start_location": {
+                    "lat": 25.0491752,
+                    "lng": 121.51676
+                  },
+                  "travel_mode": "WALKING"
+                },
+                {
+                  "distance": {
+                    "text": "49 公尺",
+                    "value": 49
+                  },
+                  "duration": {
+                    "text": "1 分鐘",
+                    "value": 77
+                  },
+                  "end_location": {
+                    "lat": 25.0485601,
+                    "lng": 121.5165912
+                  },
+                  "html_instructions": "使用行人天橋",
+                  "polyline": {
+                    "points": "ck{wCkvtdVD?J?N?@?J@PFB@FBDD"
+                  },
+                  "start_location": {
+                    "lat": 25.0489764,
+                    "lng": 121.5166998
+                  },
+                  "travel_mode": "WALKING"
+                },
+                {
+                  "distance": {
+                    "text": "23 公尺",
+                    "value": 23
+                  },
+                  "duration": {
+                    "text": "1 分鐘",
+                    "value": 30
+                  },
+                  "end_location": {
+                    "lat": 25.0485146,
+                    "lng": 121.5168115
+                  },
+                  "html_instructions": "向\u003cb\u003e左\u003c/b\u003e轉，朝\u003cb\u003e市民大道一段\u003c/b\u003e前進\u003cdiv style=\"font-size:0.9em\"\u003e走樓梯\u003c/div\u003e",
+                  "maneuver": "turn-left",
+                  "polyline": {
+                    "points": "oh{wCuutdVDa@BI"
+                  },
+                  "start_location": {
+                    "lat": 25.0485601,
+                    "lng": 121.5165912
+                  },
+                  "travel_mode": "WALKING"
+                },
+                {
+                  "distance": {
+                    "text": "0.1 公里",
+                    "value": 146
+                  },
+                  "duration": {
+                    "text": "2 分鐘",
+                    "value": 106
+                  },
+                  "end_location": {
+                    "lat": 25.0483164,
+                    "lng": 121.5181405
+                  },
+                  "html_instructions": "於\u003cb\u003e市民大道一段\u003c/b\u003e靠\u003cb\u003e右\u003c/b\u003e行駛\u003cdiv style=\"font-size:0.9em\"\u003e目的地在右邊\u003c/div\u003e",
+                  "maneuver": "turn-slight-right",
+                  "polyline": {
+                    "points": "eh{wCawtdVTsCNuB"
+                  },
+                  "start_location": {
+                    "lat": 25.0485146,
+                    "lng": 121.5168115
+                  },
+                  "travel_mode": "WALKING"
+                },
+                {
+                  "distance": {
+                    "text": "0.1 公里",
+                    "value": 127
+                  },
+                  "duration": {
+                    "text": "4 分鐘",
+                    "value": 240
+                  },
+                  "end_location": {
+                    "lat": 25.0478072,
+                    "lng": 121.5170185
+                  },
+                  "html_instructions": "從\u003cspan class=\"location\"\u003eM1\u003c/span\u003e入口進站",
+                  "polyline": {
+                    "points": "kf{wCu_udVpAhF"
+                  },
+                  "start_location": {
+                    "lat": 25.048223,
+                    "lng": 121.518193
+                  },
+                  "travel_mode": "WALKING"
+                }
+              ],
+              "travel_mode": "WALKING"
+            },
+            {
+              "distance": {
+                "text": "6.6 公里",
+                "value": 6616
+              },
+              "duration": {
+                "text": "15 分鐘",
+                "value": 876
+              },
+              "end_location": {
+                "lat": 25.0330304,
+                "lng": 121.5627598
+              },
+              "html_instructions": "捷運 開往象山站",
+              "polyline": {
+                "points": "yc{wCkxtdVjB}EpDhBXLb@NbFbAxPhDdB\\|@R\\FNDPDfBZp@Jl@Fr@Bh@?VAxHOzAC`FUfA]@?ZS~EaDdEoC\\Sv@i@BAlA{@LKj@c@v@o@VSBE\\]b@k@Rm@d@_CD{AEm@[oAy@kBSYc@m@eAe@wA]yBu@_CsBaAoAUe@MSSa@CGSm@W}ABoABG?AT}@t@gBPa@HUr@oCb@}FDe@?ABO@W@CNgBVaDR_D@M?YDwA?AHgE?}F@mF?g@D_JFaI@yCBmF?g@BmF?g@?SDqC@gAB_ADcHJcO@wB@g@?e@DoFHsL?g@@cCBiB@uBB_DBmFDeE?iA@?DeM?g@?g@AiOA?"
+              },
+              "start_location": {
+                "lat": 25.0478072,
+                "lng": 121.5170185
+              },
+              "transit_details": {
+                "arrival_stop": {
+                  "location": {
+                    "lat": 25.0330304,
+                    "lng": 121.5627598
+                  },
+                  "name": "台北101/世貿站"
+                },
+                "arrival_time": {
+                  "text": "下午10:38",
+                  "time_zone": "Asia/Taipei",
+                  "value": 1635777527
+                },
+                "departure_stop": {
+                  "location": {
+                    "lat": 25.0478072,
+                    "lng": 121.5170185
+                  },
+                  "name": "台北車站"
+                },
+                "departure_time": {
+                  "text": "下午10:24",
+                  "time_zone": "Asia/Taipei",
+                  "value": 1635776651
+                },
+                "headsign": "象山站",
+                "line": {
+                  "agencies": [
+                    {
+                      "name": "台北捷運",
+                      "url": "http://www.trtc.com.tw/"
+                    }
+                  ],
+                  "color": "#e4022a",
+                  "name": "淡水信義線",
+                  "text_color": "#ffffff",
+                  "vehicle": {
+                    "icon": "//maps.gstatic.com/mapfiles/transit/iw2/6/subway2.png",
+                    "local_icon": "//maps.gstatic.com/mapfiles/transit/iw2/6/tw-taipei-mrt.png",
+                    "name": "捷運",
+                    "type": "SUBWAY"
+                  }
+                },
+                "num_stops": 7
+              },
+              "travel_mode": "TRANSIT"
+            },
+            {
+              "distance": {
+                "text": "0.3 公里",
+                "value": 287
+              },
+              "duration": {
+                "text": "5 分鐘",
+                "value": 293
+              },
+              "end_location": {
+                "lat": 25.0331333,
+                "lng": 121.565452
+              },
+              "html_instructions": "步行到台灣台北市",
+              "polyline": {
+                "points": "mgxwCgv}dV[{G@?D{E?Q?O"
+              },
+              "start_location": {
+                "lat": 25.0330304,
+                "lng": 121.5627598
+              },
+              "steps": [
+                {
+                  "distance": {
+                    "text": "0.1 公里",
+                    "value": 144
+                  },
+                  "duration": {
+                    "text": "3 分鐘",
+                    "value": 180
+                  },
+                  "end_location": {
+                    "lat": 25.0331717,
+                    "lng": 121.5641845
+                  },
+                  "html_instructions": "從\u003cspan class=\"location\"\u003e4\u003c/span\u003e出口出站",
+                  "polyline": {
+                    "points": "mgxwCgv}dV[{G"
+                  },
+                  "start_location": {
+                    "lat": 25.0330304,
+                    "lng": 121.5627598
+                  },
+                  "travel_mode": "WALKING"
+                },
+                {
+                  "distance": {
+                    "text": "0.1 公里",
+                    "value": 124
+                  },
+                  "duration": {
+                    "text": "1 分鐘",
+                    "value": 89
+                  },
+                  "end_location": {
+                    "lat": 25.0331333,
+                    "lng": 121.565452
+                  },
+                  "html_instructions": "往\u003cb\u003e東\u003c/b\u003e朝\u003cb\u003e松智路\u003c/b\u003e前進",
+                  "polyline": {
+                    "points": "ghxwCc_~dVD{E?Q?O"
+                  },
+                  "start_location": {
+                    "lat": 25.0331617,
+                    "lng": 121.5641841
+                  },
+                  "travel_mode": "WALKING"
+                },
+                {
+                  "distance": {
+                    "text": "19 公尺",
+                    "value": 19
+                  },
+                  "duration": {
+                    "text": "1 分鐘",
+                    "value": 24
+                  },
+                  "end_location": {
+                    "lat": 25.0331333,
+                    "lng": 121.565452
+                  },
+                  "html_instructions": "向\u003cb\u003e右\u003c/b\u003e轉進入\u003cb\u003e松智路\u003c/b\u003e",
+                  "maneuver": "turn-right",
+                  "polyline": {
+                    "points": "ahxwCag~dV"
+                  },
+                  "start_location": {
+                    "lat": 25.0331333,
+                    "lng": 121.565452
+                  },
+                  "travel_mode": "WALKING"
+                }
+              ],
+              "travel_mode": "WALKING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        }
+      ],
+      "overview_polyline": {
+        "points": "}yivC{dpaVBShAAbCKtAWfBnDX@xDiGzG}KnFqIx@QZ?r@^HdBk@r@oBEw_@kLuJyBy[aFcMq@iX_C_OsBmUeF_P_FeOiGgr@s^wJ_EmI}BqJqBaJmA{RcAoQLgFZuM~A_GvAuElBcBdAiIxGmIlKkIrK}D|EwC`DuGpFyDdB{EpAaHj@}FImDa@kB_@{J_DgLsFeLcIwGwFmI{JuFuIiGiMcCsGuCyJyDmQiCmPkAoLsAgWMaJTm[R{G`AaX~@k[VySs@eZwAkMuCgMcDyJkGsMaLiRmD}HeBgF_EkRo@iF{@yNY}Pw@qO{AkJaCsIsCoHoP{[{CgGuAoDkF}QoBgKqAsKe@cH_@eN`@iWv@q[CiFw@aU_A}JeBcNqRufAgEaVuUgsAgC{IiEaJkHoJ_DqCkDuBgIaDqDcAuVeGck@aOqMgEsKgGeGeF}IcKwCaE_FsJwBgGgCoJ}BwKcHwTsCeGgC_EsHeJsCkCcJ}GqF{CcIcDeEmAqXgF{B[}K{B_JoBiKaDaDoA}JgFqJ}GkGgF_JoJmHoKuEmIoTu_@aNiR{BuCeE{F_Yi]in@wu@cGyHcS{Tuf@_g@aX}WyWa[sf@yq@qf@ur@oZ{a@{PyTwVoYo]ib@}M_RqTy]iUyb@kQoa@oHuSuK{\\_@qAyPgn@qEkKcFkHkBoBmFkEqUeO_NyKaGeGgDcEkKuPaBqD}DoKoEkRsAuLu@_SB}K`A_]x@aUPmRAsIaAwc@q@_PaB{VM{GPwExCkO|AoHXaDB{BkAaQWsGLcI`BaLlAkDvBsDvDaFtC{CrIyGhGmE|H_HnD{FzAsEp@mDh@qHQwGgAuG_BsEuGqLmFcKyKiTaU}b@}IaP_DcHmBoGsA{I]eFQuLMkJeAqXmA{MmBsMuUojAgHw]aA}EoBiOs@_T\\wPjAmMnEcYpAgIxAmM\\yLK_K_@uGoBwOkDcVs@cKHkDb@aAtBu@t@ChCj@xC~A|GbF|IpGdBlALQv@qAdEsHl@cA|CkIVcCMyFtMmC|HwAt@Oi@sC_C_J}DiOC_Dd@qGbCyYz@wHDgDUwLJqJNqMdUNzPH|EClBA~G`BfATv@NpCb@rEx@v@aGz@cGf@sAv@ZbBrAy@fGlA\\JlFB?@Af@Lh@@b@Rn@uHRIpAhFjB}EpDhB|@\\|WlFpE~@xEt@nLM|HYhA]~MyIvCsB~BmB`AiAx@mD?iCuA{Dw@gA}CcAyBu@_CsBwAuBe@}@k@kCFwA|AiE|@eDh@cHFm@|@wLN{HTer@z@knAVag@AqP]{GF}F"
+      },
+      "summary": "",
+      "warnings": [
+        "步行路線指示目前為測試版。 使用注意事項 – 此路線可能沒有人行道或行人徒步路徑。"
+      ],
+      "waypoint_order": []
+    }
+  ],
+  "status": "OK"
+}

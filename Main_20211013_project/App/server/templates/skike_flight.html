@@ -9,14 +9,16 @@
       <div class="flight_item">
         <i class=""></i>
         {{list['depart_time']}} - {{list['arrive_time']}}
-        <div class="flight_name">{{list['flight_company']}}</div>
+        <!-- <div class="flight_name">{{list['flight_company']}}</div> -->
       </div>
       <div class="flight_item">
         <i class=""></i>
+        <p>旅程</p>
         {{(list['duration_min']/60)|int}} 小時 {{list['duration_min']%60}} 分鐘
       </div>
       <div class="flight_item">
         <i class=""></i>
+        <p>目的地城市</p>
         {{list['arrive_City']}}
       </div>
       <div class="flight_item">

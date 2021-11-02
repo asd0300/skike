@@ -103,11 +103,16 @@ def create_tb_hotel(cursor, TABLES, TBNAME=None):
         `id` INT(10) COLLATE utf8mb4_bin NOT NULL, \
         `data_query_time` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
         `name` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
+        `hotel_near_location` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
+        `hotel_near_location_meter` INT(10) COLLATE utf8mb4_bin NOT NULL, \
+        `hotel_rating_count` INT(10) COLLATE utf8mb4_bin NOT NULL, \
+        `hotel_rating_avg_score` float(10) COLLATE utf8mb4_bin NOT NULL, \
+        `hotel_best_price_per_stay` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
         `category` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
         `locality` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
         `image_url` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
-        `geocode_lat` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
-        `geocode_lng` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
+        `geocode_lat` float(10) COLLATE utf8mb4_bin NOT NULL, \
+        `geocode_lng` float(10) COLLATE utf8mb4_bin NOT NULL, \
         PRIMARY KEY (`id`, `data_query_time`) \
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(TBNAME))
 
@@ -120,7 +125,7 @@ def create_tb_hotel_alter(cursor, TABLES, TBNAME=None):
         `agency_logo` varchar(255) COLLATE utf8mb4_bin NOT NULL,    \
         `hotel_feature` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
         `price` INT(10) COLLATE utf8mb4_bin NOT NULL, \
-        `hotel_url` varchar(255) COLLATE utf8mb4_bin  NULL, \
+        `hotel_url` Text COLLATE utf8mb4_bin  NULL, \
         `hotel_id` INT(10) COLLATE utf8mb4_bin NOT NULL, \
         PRIMARY KEY (`id`,`hotel_feature`,`price`), \
         FOREIGN KEY (`hotel_id`,`data_query_time`) REFERENCES hotel(`id`,`data_query_time`) \

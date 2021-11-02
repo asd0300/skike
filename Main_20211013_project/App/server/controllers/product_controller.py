@@ -16,6 +16,7 @@ from werkzeug.utils import secure_filename
 
 from jinja2 import Template
 from itertools import count
+import polyline
 
 sys.path[0] += '\\..'
 from env import config
@@ -425,14 +426,24 @@ def api_create_hotel():
             except Exception as e:
                 print("Exeception occured:{}".format(e))
             hotel_name = hotel_product['name']['value']
-            hotel_category = hotel_product['accommodationType']['value']
-            hotel_location =  hotel_product['locality']['value']
-            hotel_image = hotel_product['images']['mainUri']
-            hotel_geo_lat = hotel_product['geocode']['lat']
-            hotel_geo_lng = hotel_product['geocode']['lng']
-            data_list.append((hotel_id,data_query_time,hotel_name,hotel_category,hotel_location,hotel_image,hotel_geo_lat,hotel_geo_lng))
-        sql_hotel = "INSERT INTO skike.hotel (`id`, `data_query_time`, `name`, `category`, `locality`, `image_url`, `geocode_lat`, `geocode_lng`)VALUES (%s, %s, %s, %s, %s, %s,%s,%s)"
-        print("insert data")
+            if hotel_product['conceptDistance']!=None:
+                for near_station_list in hotel_product['conceptDistance'][0:1]:
+                    hotel_near_location = str(near_station_list['name']['value'])
+                    hotel_near_location_meter =str(near_station_list['distance_meters'])
+            else:
+                hotel_near_location=""
+                hotel_near_location_meter=""
+                hotel_rating_count = hotel_product['rating']['basedOn']
+                hotel_rating_avg_score = hotel_product['rating']['formattedOverallLiking']
+                hotel_best_price_per_stay = hotel_product['deals']['bestPrice']['displayPricePerStay']
+                hotel_category = hotel_product['accommodationType']['value']
+                hotel_location =  hotel_product['locality']['value']
+                hotel_image = hotel_product['images']['mainUri']
+                hotel_geo_lat = hotel_product['geocode']['lat']
+                hotel_geo_lng = hotel_product['geocode']['lng']
+                data_list.append((hotel_id,data_query_time,hotel_name,hotel_near_location,hotel_near_location_meter,hotel_rating_count,hotel_rating_avg_score,hotel_best_price_per_stay,hotel_category,hotel_location,hotel_image,hotel_geo_lat,hotel_geo_lng))
+            sql_hotel = "INSERT INTO skike.hotel (`id`, `data_query_time`, `name`, `hotel_near_location`, `hotel_near_location_meter`, `hotel_rating_count`, `hotel_rating_avg_score`, `hotel_best_price_per_stay`, `category`, `locality`, `image_url`, `geocode_lat`, `geocode_lng`)VALUES (%s, %s, %s, %s, %s, %s,%s,%s,%s, %s, %s, %s, %s)"
+            print("insert data")
         try:
             cursor.executemany(sql_hotel,data_list)
             rdsDB.commit()
@@ -556,9 +567,10 @@ def api_create_hotel():
                         hotel_feature+=features["label"]+", "
                 hotel_feature+= hotel_product_detail['description']
                 price = hotel_product_detail['price']
-                hotel_url = "https://www.trivago.com.tw/"+str(hotel_product_detail['clickoutPath'])
+                hotel_url = "https://www.trivago.com.tw"+str(hotel_product_detail['clickoutPath'])
                 hotel_id = item['id']
                 data_list_hotel_detail.append((data_query_time,hotel_agency, agency_logo, hotel_feature, price, hotel_url, hotel_id))
+                # print(data_list_hotel_detail)
             sql_hotel_detail = "INSERT INTO skike.hotel_alternative (`data_query_time`,`hotel_agency`, `agency_logo`, `hotel_feature`, `price`, `hotel_url`, `hotel_id`)VALUES (%s,%s, %s, %s, %s, %s, %s)"
             try:
                 cursor.executemany(sql_hotel_detail,data_list_hotel_detail)
@@ -570,25 +582,94 @@ def api_create_hotel():
     return "Ok"
 
 
-@app.route('/api/1.0/hotel/tokyo', methods=['GET'])
-def get_api_hotel_tokyo():
+@app.route('/api/1.0/hotel/search', methods=['POST','GET'])
+def hotel_search():
+    form_data = request.form
+    print(form_data)
+    booking_category = form_data['booking_category']
+    location = form_data['location']
+    start_date = form_data['start_date']
+    end_date = form_data['end_date']
+    select_adult2 = form_data['adults_number']
+    select_rooms2 = form_data['rooms']
     paging = request.args.get('paging')
+    
     if paging == None or paging == '':
         paging = 0
     rdsDB = pymysql.connect(host=config.RDSHOSTNAME,\
                         user="admin",password=config.RDSMASTERPASSWORD,\
                         port=3306,database="skike",\
                         cursorclass = pymysql.cursors.DictCursor)
+    if booking_category == "Hotel":
+        cursor = rdsDB.cursor()
+        sql = "SELECT * FROM skike.hotel inner join skike.hotel_alternative on hotel.id =hotel_alternative.hotel_id group by name having locality like '%{}%';".format(location)
+        cursor.execute(sql)
+        sql_result = cursor.fetchall()
+        # print(sql_result)
+        return render_template('skike_hotel.html', hotel_list=sql_result)
+    elif booking_category == "Airplane":
+        cursor = rdsDB.cursor()
+        # sql = "SELECT * FROM skike.flight_ticket where data_query_time ='{}' order by data_query_time asc LIMIT {},{}".\
+        #     format('2021-10-24',str(int(paging)*6),6)
+        # sql = "SELECT * FROM skike.flight_ticket where data_query_time ='{}' order by data_query_time asc".\
+        #     format('2021-10-24')
+        sql = "SELECT * FROM skike.flight_ticket where data_query_time ='{}' order by data_query_time asc".\
+            format(start_date)
+        cursor.execute(sql)
+        sql_result = cursor.fetchall()
+        # sql1 = [data for data in sql_result]
+        # print(sql1) 
+        sql_get =[]
+        for data in sql_result:
+            sql_sub = "SELECT distinct (price) FROM skike.flight_ticket INNER JOIN skike.flight_price on flight_ticket.id = flight_price.flight_id where flight_ticket.id = '{}';".format(data['id'])
+            # sql_sub = "SELECT distinct (price) , depart_city, arrive_City, data_query_time, duration_min, depart_time, arrive_time, stopover_minutes, aircraft_registration, stayover_times, flight_company, category FROM skike.flight_ticket INNER JOIN skike.flight_price on flight_ticket.id = flight_price.flight_id where flight_ticket.arrive_City = '{}';".format(location)
+            cursor.execute(sql_sub)
+            result_sub = cursor.fetchall()
+            data['alternative_flight'] = result_sub
+            sql_get.append(data)
+        return render_template('skike_flight.html', flight_list=sql_get)
+
+@app.route('/api/1.0/hotel/<int:id>', methods=['GET'])
+def hotel_detail(id):
+    rdsDB = pymysql.connect(host=config.RDSHOSTNAME,\
+                        user="admin",password=config.RDSMASTERPASSWORD,\
+                        port=3306,database="skike",\
+                        cursorclass = pymysql.cursors.DictCursor)
     cursor = rdsDB.cursor()
-    sql = "SELECT * FROM skike.hotel inner join skike.hotel_alternative on hotel.id =hotel_alternative.hotel_id group by name;"
-    cursor.execute(sql)
-    sql_result = cursor.fetchall()
     sql_get =[]
-    for data in sql_result:
-        sql_sub = "SELECT * FROM skike.hotel inner join skike.hotel_alternative on hotel.id =hotel_alternative.hotel_id where hotel.id = '{}';".format(data['id'])
-        cursor.execute(sql_sub)
-        result_sub = cursor.fetchall()
-        data['alternative_agency_price'] = result_sub
-        sql_get.append(data)
-        print(sql_get)
-    return render_template('skike_ticket.html', hotel_list=sql_get)
+    # sql_sub = "SELECT * FROM skike.hotel inner join skike.hotel_alternative on hotel.id =hotel_alternative.hotel_id where hotel.id = '{}';".format(str(id))
+    sql_sub = "SELECT * FROM skike.hotel inner join skike.hotel_alternative on hotel.id =hotel_alternative.hotel_id where hotel.id = '{}' order by hotel_alternative.hotel_agency;".format(str(id))
+    cursor.execute(sql_sub)
+    result_sub = cursor.fetchall()
+    # sql_get.append(data)
+    sql_name = result_sub[0:1]
+    with open(r"C:\Users\Ben Fan\Desktop\skike\Main_20211013_project\testmap.json",encoding="utf-8") as f:
+        i= json.load(f)
+        direction_list =[]
+        geo_list = []
+        for item in i['routes'][0:1]:
+            for item2 in item['legs'][0:1]:
+                for item3 in item2['steps']:
+                    geo_list.append(polyline.decode(item3['polyline']['points']))
+                    direction_list.append(item3)
+                    print(direction_list)
+                    print("------------------------------------------------------------------------------------------------")
+                    try:
+                        print(item3["transit_details"])
+                    except Exception as e:
+                        print("Exeception occured:{}".format(e))
+    return render_template('skike_hotel_detail.html',detail_hotel_list = result_sub, sql_name = sql_name, google_api = config.GOOGLE_API_KEY,direction_list = direction_list, test_code = geo_list)
+    # rdsDB = pymysql.connect(host=config.RDSHOSTNAME,\
+    #                     user="admin",password=config.RDSMASTERPASSWORD,\
+    #                     port=3306,database="skike",\
+    #                     cursorclass = pymysql.cursors.DictCursor)
+    # cursor = rdsDB.cursor()
+    # sql = "SELECT * FROM skike.hotel inner join skike.hotel_alternative on hotel.id =hotel_alternative.hotel_id group by name having locality like '%{}%';".format()
+    # cursor.execute(sql)
+    # sql_result = cursor.fetchall()
+    # sql_get =[]
+    # sql_sub = "SELECT * FROM skike.hotel inner join skike.hotel_alternative on hotel.id =hotel_alternative.hotel_id where hotel.id = '{}';".format(['id'])
+    # cursor.execute(sql_sub)
+    # result_sub = cursor.fetchall()
+    # ['alternative_agency_price'] = result_sub
+    # sql_get.append()

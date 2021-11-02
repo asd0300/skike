@@ -3,59 +3,38 @@
 {% if hotel_list!=[]%}
 <div id="product-container">
   {% for list in hotel_list %}
-  <a class="product_details">
+  <div class="product_details">
     <div class="product_colors"></div>
     <div class="product_title">
-      <div class="flight_item">
+      <div class="hotel_item_v2">
+        <a href="{{url_for('hotel_detail',id = list['id'])}}" class="hotel_img">
+          <img
+            src="{{list['image_url']}}"
+            border="0px"
+            width="220"
+            height="120"
+          />
+        </a>
         <i class=""></i>
-        {{list['depart_time']}} - {{list['arrive_time']}}
-        <div class="flight_name">{{list['flight_company']}}</div>
+        <div class="hotel_name"></div>
       </div>
-      <div class="flight_item">
+      <div class="hotel_item">
         <i class=""></i>
-        {{(list['duration_min']/60)|int}} 小時 {{list['duration_min']%60}} 分鐘
+        {{list['category']}} {{list['name']}}&nbsp;
+        <div>
+          {{list['hotel_near_location']}}約{{(list['hotel_near_location_meter']/1000)|float}}公里
+        </div>
       </div>
-      <div class="flight_item">
+      <div class="hotel_item">
         <i class=""></i>
-        {{list['arrive_City']}}
+        推薦{{list['hotel_rating_avg_score']}}分,{{list['hotel_rating_count']}}評價數&nbsp;&nbsp;
       </div>
-      <div class="flight_item">
+      <div class="hotel_item">
         <i class=""></i>
-        {% if list['stayover_times'] == '0個中轉站' %}
-        <a>直航／不停站</a>
-        {% endif %} {% if list['stayover_times'] != '0個中轉站' %}
-        <a>{{list['stayover_times']}}</a>
-        {% endif %}
-        <div class="terminal_information">{{list['flight_company']}}</div>
-      </div>
-      <div class="flight_item">
-        <i class=""></i>
-        {{list['depart_city']}}-{{list['arrive_City']}}
-      </div>
-      <div class="flight_item">
-        <i class=""></i>
-        DepartDay:{{list['data_query_time']}}
+        我們住宿一晚價格{{list['hotel_best_price_per_stay']}}&nbsp;
       </div>
     </div>
-  </a>
-  {% for prices in list['alternative_flight'] %}
-  <div class="price_container">
-    <div class="price_item">
-      <i class=""></i>
-      Price:${{prices['price']}}
-    </div>
+    <a></a>
   </div>
-  {% endfor %}
-  <a></a>
-  {% endfor %}
-  <a></a>
-
-  <a></a>
-  {%elif hotel_list == [] %}
-  <div class="price_container">
-    <div class="price_item">
-      <a>Sorry, please search other date or place</a>
-    </div>
-    {%endif%} {% endblock content %}
-  </div>
+  {% endfor %} {%endif%}{% endblock content %}
 </div>
