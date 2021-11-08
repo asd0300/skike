@@ -10,7 +10,6 @@ body {
   overflow: hidden;
   font-family: "Raleway", sans-serif;
   position: relative;
-  overflow: auto;
 }
 
 .dFlex,
@@ -41,7 +40,7 @@ header nav .myAccount .ctaGroup .cta,
   display: -ms-flexbox;
   display: flex;
   position: relative;
-  /* overflow: scroll; */
+  overflow: scroll;
   background-image: -webkit-gradient(
     linear,
     left top,
@@ -50,7 +49,7 @@ header nav .myAccount .ctaGroup .cta,
     color-stop(white),
     to(white)
   );
-  /* background-image: linear-gradient(to bottom, #03a9f43b, white, white); */
+  background-image: linear-gradient(to bottom, #03a9f43b, white, white);
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   -webkit-box-orient: vertical;
@@ -153,19 +152,24 @@ header nav .myAccount .ctaGroup .cta.active {
   text-align: center;
   /* width: 768px; */
   /* margin: 0 auto; */
-  /* margin-left: 30px;
-  margin-right: 30px; */
+  margin-left: 30px;
+  margin-right: 30px;
   position: relative;
   z-index: 10;
   margin-top: 50px;
-  /* overflow: auto; */
+  overflow: auto;
 }
 
 .map_direction {
   display: block;
   text-align: center;
+  /* width: 768px; */
+  /* margin: 0 auto; */
+  /* margin-left: auto; */
+  /* margin-right: 30px; */
   position: relative;
   z-index: 10;
+  /* margin-top: 50px; */
   width: 46%;
   float: left;
 }
@@ -232,7 +236,7 @@ header nav .myAccount .ctaGroup .cta.active {
 
 .booking_details {
   background-color: #fff;
-  height: 100px;
+  height: 60px;
   border-radius: 15px;
   position: relative;
   z-index: 2;
@@ -247,8 +251,8 @@ header nav .myAccount .ctaGroup .cta.active {
   padding: 0 15px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  margin-left: 0%;
-  margin-right: 0%;
+  margin-left: 30px;
+  margin-right: 30px;
   margin-top: 3%;
 }
 

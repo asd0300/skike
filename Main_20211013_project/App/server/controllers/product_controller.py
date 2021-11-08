@@ -638,6 +638,9 @@ def hotel_detail(id):
     cursor = rdsDB.cursor()
     sql_get =[]
     # sql_sub = "SELECT * FROM skike.hotel inner join skike.hotel_alternative on hotel.id =hotel_alternative.hotel_id where hotel.id = '{}';".format(str(id))
+    sql_agency = "SELECT distinct (hotel_agency) FROM skike.hotel inner join skike.hotel_alternative on hotel.id =hotel_alternative.hotel_id where hotel.id = '{}' order by hotel_alternative.hotel_agency;".format(str(id))
+    cursor.execute(sql_agency)
+    result_agency = cursor.fetchall()
     sql_sub = "SELECT * FROM skike.hotel inner join skike.hotel_alternative on hotel.id =hotel_alternative.hotel_id where hotel.id = '{}' order by hotel_alternative.hotel_agency;".format(str(id))
     cursor.execute(sql_sub)
     result_sub = cursor.fetchall()
@@ -652,13 +655,14 @@ def hotel_detail(id):
                 for item3 in item2['steps']:
                     geo_list.append(polyline.decode(item3['polyline']['points']))
                     direction_list.append(item3)
-                    print(direction_list)
-                    print("------------------------------------------------------------------------------------------------")
-                    try:
-                        print(item3["transit_details"])
-                    except Exception as e:
-                        print("Exeception occured:{}".format(e))
-    return render_template('skike_hotel_detail.html',detail_hotel_list = result_sub, sql_name = sql_name, google_api = config.GOOGLE_API_KEY,direction_list = direction_list, test_code = geo_list)
+                    direction_list.append("-----------------------------------------")
+                    # try:
+                    #     print(item3["transit_details"])
+                    # except Exception as e:
+                    #     print("Exeception occured:{}".format(e))
+        print(direction_list)
+        print("------------------------------------------------------------------------------------------------")
+    return render_template('skike_hotel_detail.html',detail_hotel_list = result_sub, result_agency = result_agency, sql_name = sql_name, google_api = config.GOOGLE_API_KEY,direction_list = direction_list, test_code = geo_list)
     # rdsDB = pymysql.connect(host=config.RDSHOSTNAME,\
     #                     user="admin",password=config.RDSMASTERPASSWORD,\
     #                     port=3306,database="skike",\
@@ -673,3 +677,7 @@ def hotel_detail(id):
     # result_sub = cursor.fetchall()
     # ['alternative_agency_price'] = result_sub
     # sql_get.append()
+
+@app.route('/api/1.0/bootstrap', methods=['GET'])
+def boot():
+    return render_template('user_login.html')
