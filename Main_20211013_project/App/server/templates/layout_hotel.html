@@ -74,13 +74,8 @@
             <div class="item">
               <i class="fa fa-search"></i>
               <!-- <input type="text" name="location" placeholder="Please enter destination" size="20" /> -->
-              <select name="round" class="booking_category">
-                <option >單程</option>
-                <option >來回</option>
-              </select>
               <select name="location" class="booking_category">
                 <option >find a place</option>
-                <option >東京</option>
                 {% for item in KR_location_list %}
                   <option >{{item}}</option>
                 {%endfor%}
@@ -97,7 +92,7 @@
                   class="form-control"
                 />
               </div>
-              <div class="days">出發日期</div>
+              <div class="days">入住日期</div>
             </div>
             <div class="item">
               <div class="date">
@@ -110,7 +105,7 @@
                   class="form-control"
                 />
               </div>
-              <div class="days">抵達日期</div>
+              <div class="days">退房日期</div>
             </div>
             <div class="item">
               <div class="people">

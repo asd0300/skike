@@ -96,7 +96,13 @@ def create_tb_flightprice(cursor, TABLES, TBNAME=None):
 #         FOREIGN KEY (`product_id`) REFERENCES flyticket(id) \
 #         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(TBNAME))
 
-
+def create_tb_airport_geocode(cursor, TABLES, TBNAME=None):
+    TABLES[TBNAME] = ("CREATE TABLE IF NOT EXISTS {}( \
+        `airport_name` varchar(200) COLLATE utf8mb4_bin NOT NULL, \
+        `geocode_lat` float(10) COLLATE utf8mb4_bin NOT NULL, \
+        `geocode_lng` float(10) COLLATE utf8mb4_bin NOT NULL, \
+        PRIMARY KEY (`airport_name`) \
+        )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(TBNAME))
 
 def create_tb_hotel(cursor, TABLES, TBNAME=None):
     TABLES[TBNAME] = ("CREATE TABLE IF NOT EXISTS {}( \

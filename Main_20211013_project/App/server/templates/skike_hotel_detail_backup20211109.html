@@ -209,28 +209,75 @@
                   </div>
                 </form>
                 <div class="map_text">
-                  {%for route in route_flow[0:1]%}
-                    <div class = 'google_depart'>
-                      <div class = 'google_time'></div>
-                        <div class = 'google_point'>&emsp;</div>
-                      <div class = 'google_location'>{{route}}</div>
-                    </div>
-                  {%endfor%}
-                  {%for route in route_flow[1:route_flow|length]%}
+                  {%for texts in direction_list[0:1]%}
+                    {% if texts["transit_details"] %}
+                      <div class = 'google_depart'>
+                        <div class = 'google_time'>{{texts["transit_details"]['departure_time']['text']}}</div>
+                          <div class = 'google_point'>&emsp;</div>
+                        <div class = 'google_location'>{{texts["transit_details"]['departure_stop']['name']}}</div>
+                      </div>
                       <div class = 'google_line'>
-                        <div class = 'google_space1'></div>
+                        <div class = 'google_space1'>{{texts['travel_mode']}}</div>
                           <div class = 'google_line2'>&nbsp;</div>
                         <div class ='google_right_side'>
-                          <div class = 'google_space2'></div>
-                          <div class='google_space2_tool'></div>
-                          <div class='google_space3_tool'></div>
+                          <div class = 'google_space2'>{{texts["transit_details"]['headsign']}}</div>
+                          <div class='google_space2_tool'>{{texts["transit_details"]['line']['short_name']}}</div>
+                          {%for items in texts["transit_details"]['line']['agencies']%}
+                            <div class='google_space3_tool'>{{texts['duration']['text']}}, {{items['name']}}</div>
+                          {%endfor%}
                         </div>
                       </div>
                       <div class = 'google_depart'>
-                        <div class = 'google_time'></div>
+                        <div class = 'google_time'>{{texts["transit_details"]['arrival_time']['text']}}</div>
                           <div class = 'google_point'>&emsp;</div>
-                        <div class = 'google_location'>{{route}}</div>
+                        <div class = 'google_location'>{{texts["transit_details"]['arrival_stop']['name']}}</div>
                       </div>
+                    {% elif texts["legs"]%}
+                      <div class = 'google_depart'>
+                        <div class = 'google_time'>{{texts["steps"][0]['duration']['text']}}</div>
+                        <div class = 'google_point'>&emsp;</div>
+                        <div class = 'google_location'>123</div>
+                      </div>
+                    {% else %}
+                      <div class = 'google_depart'>
+                        <div class = 'google_time'>{{texts["steps"][0]['duration']['text']}}</div>
+                        <div class = 'google_point'>&emsp;</div>
+                        <div class = 'google_location'>456</div>
+                      </div>
+                    {% endif %}
+                  {%endfor%}
+                  {%for texts in direction_list[1:direction_list|length]%}
+                    {% if texts["transit_details"]%}
+                      <div class = 'google_line'>
+                        <div class = 'google_space1'>{{texts['travel_mode']}}</div>
+                          <div class = 'google_line2'>&nbsp;</div>
+                        <div class ='google_right_side'>
+                          <div class = 'google_space2'>{{texts["transit_details"]['headsign']}}</div>
+                          <div class='google_space2_tool'>{{texts["transit_details"]['line']['short_name']}}</div>
+                          {%for items in texts["transit_details"]['line']['agencies']%}
+                            <div class='google_space3_tool'>{{texts['duration']['text']}}, {{items['name']}}</div>
+                          {%endfor%}
+                        </div>
+                      </div>
+                      <div class = 'google_depart'>
+                        <div class = 'google_time'>{{texts["transit_details"]['arrival_time']['text']}}</div>
+                          <div class = 'google_point'>&emsp;</div>
+                        <div class = 'google_location'>{{texts["transit_details"]['arrival_stop']['name']}}</div>
+                      </div>
+                    {% else %}
+                      <div class = 'google_line'>
+                        <div class = 'google_space1'>{{texts['travel_mode']}}123123</div>
+                          <div class = 'google_line2'>&nbsp;</div>
+                        <div class ='google_right_side'>
+                          <div class = 'google_space2'></div>
+                        </div>
+                      </div>
+                      <div class = 'google_depart'>
+                        <div class = 'google_time'>test</div>
+                          <div class = 'google_point'>&emsp;</div>
+                        <div class = 'google_location'></div>
+                      </div>
+                    {%endif%}
                   {%endfor%}  
                 </div>
               </div>

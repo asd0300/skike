@@ -1,0 +1,78 @@
+{% extends "layout_hotel.html" %} {%block content%}
+<div id="campaigns"></div>
+{% if flight_list!=[]%}
+<div id="product-container">
+  {% for list in flight_list %}
+  <div class="product_details">
+    <div class="product_colors"></div>
+    <div class="product_title">
+      <div class="flight_item">
+        <i class=""></i>
+        {{list['depart_time']}} - {{list['arrive_time']}}
+        <!-- <div class="flight_name">{{list['flight_company']}}</div> -->
+      </div>
+      <div class="flight_item">
+        <i class=""></i>
+        <p>旅程</p>
+        {{(list['duration_min']/60)|int}} 小時 {{list['duration_min']%60}} 分鐘
+      </div>
+      <div class="flight_item">
+        <i class=""></i>
+        <p>目的地城市</p>
+        {{list['arrive_City']}}
+      </div>
+      <div class="flight_item">
+        <i class=""></i>
+        {% if list['stayover_times'] == '0個中轉站' %}
+        <a>直航／不停站</a>
+        {% endif %} {% if list['stayover_times'] != '0個中轉站' %}
+        <a>{{list['stayover_times']}}</a>
+        {% endif %}
+        <div class="terminal_information">{{list['flight_company']}}</div>
+      </div>
+      <div class="flight_item">
+        <i class=""></i>
+        {{list['depart_city']}}-{{list['arrive_City']}}
+      </div>
+      <div class="flight_item">
+        <i class=""></i>
+        DepartDay:{{list['data_query_time']}}
+        <button onclick="myFunction()" class="product_details">更多價格</button>
+      </div>
+    </div>
+    {% for prices in list['alternative_flight'] %}
+      <!-- <div id="myDropdown_{{id_count}}" style="display: none"> -->
+      <!-- <div id="myDropdown_{{i}}"> -->
+        <div class="price_container">
+          <div class="price_item">
+            <i class=""></i>
+            Price:${{prices['price']}}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    <a></a>
+    {% endfor %}
+    <a></a>
+  </div>
+    <a></a>
+    <script type="text/javascript">
+      jQuery(function(){
+        jQuery('#showall').click();
+        jQuery('.target').show();
+      });
+      jQuery('.product_details').click(function(){
+        jQuery('.target').hide();
+        jQuery('#div'+$(this).attr('target')).show()
+      })
+      
+    </script>
+    {%elif flight_list == [] %}
+    <div class="price_container">
+      <div class="price_item">
+        <a>Sorry, please search other date or place</a>
+      </div>
+      {%endif%} {% endblock content %}
+    </div>
+  </div>
+</div>

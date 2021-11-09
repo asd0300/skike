@@ -7,7 +7,10 @@
     <div class="product_colors"></div>
     <div class="product_title">
       <div class="hotel_item_v2">
-        <a href="{{url_for('hotel_detail',id = list['id'])}}" class="hotel_img">
+        <a
+          href="{{url_for('hotel_detail',id = list['id'], geocode_lat = list['geocode_lat'], geocode_lng= list['geocode_lng'])}}"
+          class="hotel_img"
+        >
           <img
             src="{{list['image_url']}}"
             border="0px"
