@@ -102,18 +102,25 @@
 
         <div class="booking_info">
           <div class="opt">
-            <!-- <span class="active">Airplane</span>
-            <span>Hotel</span> -->
+            <a href="{{url_for('main_index')}}">
+              <span class="active">Airplane</span>
+            </a>
+            <a href="{{url_for('hotel_search_html')}}">
+              <span>Hotel</span>
+            </a>
           </div>
         <form method="POST" action="{{ url_for('hotel_search') }}">
           <div class="booking_details">
-            <select name="booking_category" class="booking_category">
-              <option >Hotel</option>
-              <option >Airplane</option>
-            </select>
+
             <div class="item">
               <i class="fa fa-search"></i>
-              <input type="text" name="location" placeholder="Please enter destination" size="20" />
+              <!-- <input type="text" name="location" placeholder="Please enter destination" size="20" /> -->
+              <select name="location" class="booking_category">
+                <option >find a place</option>
+                {% for item in KR_location_list %}
+                  <option >{{item}}</option>
+                {%endfor%}
+              </select>
             </div>
             <div class="item">
               <div class="date">
@@ -126,7 +133,7 @@
                   class="form-control"
                 />
               </div>
-              <div class="days">出發日期</div>
+              <div class="days">入住日期</div>
             </div>
             <div class="item">
               <div class="date">
@@ -139,7 +146,7 @@
                   class="form-control"
                 />
               </div>
-              <div class="days">抵達日期</div>
+              <div class="days">退房日期</div>
             </div>
             <div class="item">
               <div class="people">
@@ -195,10 +202,11 @@
                 <div class="hotel_item_v2">
                   <i class=""></i>
                 </div>
-                <form method="POST" }}">
+                <form method="POST" action="" >
                   <div class= "geo_selection_bar">
-                    airplane location
-                    <select name="" class="">
+                  <div class="now_airport">目前所導向的機場: {{geo_result}}</div>
+                    導向其他機場
+                    <select name="airport_alter" class="select_airport">
                       {% for sub_geocode in geocode%}
                         <option >{{sub_geocode["airport_name"]}}</option>
                       {% endfor %}

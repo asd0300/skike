@@ -7,12 +7,12 @@ import requests,re,random
 import json
 import time
 # import pandas as pd
-# from env import config
+from env import config
 from pymongo import MongoClient
 import concurrent.futures
 ###date generator
 from datetime import date, timedelta
-from env import config
+
 
 default_args = {
     'owner': 'airflow',
@@ -26,9 +26,9 @@ default_args = {
 }
 
 dag = DAG(
-    'trip_com_flight',
+    'trip_com_flight_KR',
     default_args = default_args,
-    description= 'Our first DAG with ETL process',
+    description= 'Our first DAG with ETL process2',
     schedule_interval = timedelta(days = 1)
 )
 
@@ -50,7 +50,7 @@ def just_a_function():
 
     mydatabase = conn['skike'] 
     # Access collection of the database 
-    mycollection=mydatabase['({})skike_ticket_to_JP'.format(str(date.today()))]
+    mycollection=mydatabase['({})skike_ticket_to_KR'.format(str(date.today()))]
 
 
     # with open('Webshare 10 proxies.txt') as f:
@@ -145,7 +145,7 @@ def just_a_function():
 
     jpList = ['北海道','尾花澤市','東京','大阪','京都','箱根','和歌山市','金澤','小樽','別府','長崎','宮古島']#查機場,城市名
     cityFList = ['OBO', 'MSJ', 'KMQ', 'NGS', 'HKD', 'TYO', 'TSJ', 'SHM', 'AKJ', 'OKI', 'IBR', 'KUH', 'NGO', 'MMY', 'FUJ', 'TAK', 'IKI', 'SPK', 'SHI', 'OSA']
-    # cityFList = ['OBO', 'MSJ', 'KMQ', 'NGS', 'HKD', 'TYO', 'TSJ', 'SHM', 'AKJ', 'OKI', 'IBR', 'KUH', 'NGO', 'MMY', 'FUJ', 'TAK', 'IKI', 'SPK', 'OSA']
+    cityFList_KR = ['SEL', 'PUS', 'CJU', 'TAE', 'USN', 'KPO', 'HIN', 'RSU', 'YNY','WJU', 'KUV', 'KWJ', 'MWX']
     jpAirport = ['ITM', 'OKD', 'MSJ', 'KMQ', 'OKI', 'TSJ', 'NRT', 'CTS', 'HND', 'UKB', 'NGO', 'SHI', 'SHM', 'IKI', 'MMY', 'FUJ', 'NGS', 'KIX']
     # for item in jpAirport:   
     #     test(item)
@@ -153,7 +153,7 @@ def just_a_function():
     #     time.sleep(3)
 
     def getJPticketpage(date1):
-        for item in cityFList:   
+        for item in cityFList_KR:   
             test(item, date1)
             time.sleep(random.randint(1,5))
         print('------finish-------'+date1)
@@ -180,11 +180,11 @@ def just_a_function():
     #         print("--- %s seconds ---" % (end_time - start_time))
     # dateCrawler()
 
-    conn = MongoClient("mongodb://skike4:Asd7788123@ec2-18-191-175-148.us-east-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false")
+    conn = MongoClient("mongodb://skike4:{}@ec2-18-191-175-148.us-east-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false".format(config.MONGO_PASS_SKIKE_UBUNTU))
 
     mydatabase = conn['skike'] 
     # Access collection of the database 
-    mycollection=mydatabase['({})_ticket_to_Taiwan'.format(str(date.today()))]
+    mycollection=mydatabase['({})_ticket_to_Taiwan_from_KR'.format(str(date.today()))]
 
 
     def daterange(start_date, end_date):
@@ -269,15 +269,16 @@ def just_a_function():
 
 
 
-    jpList = ['北海道','尾花澤市','東京','大阪','京都','箱根','和歌山市','金澤','小樽','別府','長崎','宮古島']#查機場,城市名
+
     cityFList = ['OBO', 'MSJ', 'KMQ', 'NGS', 'HKD', 'TYO', 'TSJ', 'SHM', 'AKJ', 'OKI', 'IBR', 'KUH', 'NGO', 'MMY', 'FUJ', 'TAK', 'IKI', 'SPK', 'SHI', 'OSA']
+    cityFList_KR = ['SEL', 'PUS', 'CJU', 'TAE', 'USN', 'KPO', 'HIN', 'RSU', 'YNY','WJU', 'KUV', 'KWJ', 'MWX']
     jpAirport = ['ITM', 'OKD', 'MSJ', 'KMQ', 'OKI', 'TSJ', 'NRT', 'CTS', 'HND', 'UKB', 'NGO', 'SHI', 'SHM', 'IKI', 'MMY', 'FUJ', 'NGS', 'KIX']
     # for item in jpAirport:   
     #     test(item)
     #     print(item)
     #     time.sleep(3)
     def dateCrawlerBKTW(date1):
-            for item in cityFList:   
+            for item in cityFList_KR:   
                 test(item,'TPE', date1)
                 time.sleep(random.randint(1,5))
             print('------finish-------'+date1) 
