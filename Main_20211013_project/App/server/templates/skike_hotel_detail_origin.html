@@ -4,8 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hotel Booking Landing Page</title>
-    <link rel="stylesheet" href="/static/font.css" />
-    <link rel="stylesheet" href="/static/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/style.css" />
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <!-- <script src="/static/index.js"> -->
@@ -52,6 +56,7 @@
             "#8B8878"
         ];
         var polylineTotal = []
+        {% if test_code%}
         {% for test_code2 in test_code%}
           var polylinePathPoints = []
           {% for tests in test_code2 %}
@@ -59,6 +64,7 @@
           {% endfor %}
           polylineTotal.push(polylinePathPoints);
         {% endfor %}
+        {%endif%}
         for (var i = 0; i < polylineTotal.length; i++) {
           var PathStyle = new google.maps.Polyline({
             path: polylineTotal[i],
@@ -73,31 +79,49 @@
     </script>
   </head>
   <body>
-    <div class="container">
+    <div class="container-fluid">
       <header>
         <nav>
           <div class="menu">
             <a href="{{url_for('main_index')}}">
-              <div class="logo">Ski <span>Demo</span> lke</div>
+              <div class="logo"><span>Skike</span></div>
             </a>
             <ul>
               <li></li>
               <li></li>
             </ul>
           </div>
-          <div class="myAccount">
-            <div class="ctaGroup">
-              <div class="cta">Sign In</div>
-              <!-- <div class="cta active">Create Account</div> -->
-              <div class="cta active"></div>
+          {%if login%}
+          <div class="div" style="width: 249px;">
+          <a href="{{url_for('user_page')}}" onclick="return chk2000()" style="margin-left:60%">
+            <img
+              src="https://us.123rf.com/450wm/rastudio/rastudio1610/rastudio161000130/63343177-user-profile-with-minus-sign-vector-sketch-icon-isolated-on-background-hand-drawn-user-profile-with-.jpg?ver=6"
+              width="30"
+              height="30"
+              style="border-radius: 10px;"
+            />
+          </a>
+          <a href="{{url_for('sign_out')}}"  style="float: right;">
+            <div style=" float: right">log_out</div>
+          </a>
+        </div>
+          {%else%}
+           <div class="myAccount">
+              <div class="ctaGroup">
+                <a href="{{url_for('user_sign_in')}}">
+                  <div class="cta">Sign In</div>
+                </a>
+                <a href="{{url_for('user_sign_up')}}">
+                  <div class="cta active">Create Account</div>
+                </a>
+              </div>
             </div>
-          </div>
+          {%endif%}
         </nav>
       </header>
       <div class="hotel_content">
         <div class="info">
           <h2>Book hotels online</h2>
-          <h1>OnlyforDemo</h1>
         </div>
 
         <div class="booking_info">
@@ -113,43 +137,60 @@
           <div class="booking_details">
 
             <div class="item">
-              <i class="fa fa-search"></i>
-              <!-- <input type="text" name="location" placeholder="Please enter destination" size="20" /> -->
-              <select name="location" class="booking_category">
-                <option >find a place</option>
-                {% for item in KR_location_list %}
-                  <option >{{item}}</option>
-                {%endfor%}
-              </select>
+              <div class="form-group">
+                <select class="form-control" id="exampleFormControlSelect1" name="location">
+                  <option >find a place</option>
+                  <option {%if location=='釜山'%}selected="selected"{%endif%}>釜山</option>
+                  <option {%if location=='首爾'%}selected="selected"{%endif%}>首爾</option>
+                  <option {%if location=='濟州市'%}selected="selected"{%endif%}>濟州市</option>
+                  <option {%if location=='大邱廣域市'%}selected="selected"{%endif%}>大邱廣域市</option>
+                  <option {%if location=='蔚山'%}selected="selected"{%endif%}>蔚山</option>
+                  <option {%if location=='慶州'%}selected="selected"{%endif%}>慶州</option>
+                  <option {%if location=='仁川'%}selected="selected"{%endif%}>仁川</option>
+                  <option {%if location=='全州'%}selected="selected"{%endif%}>全州</option>
+                  <option {%if location=='水原市'%}selected="selected"{%endif%}>水原市</option>
+                  <option {%if location=='江陵'%}selected="selected"{%endif%}>江陵</option>
+                  <option {%if location=='平昌'%}selected="selected"{%endif%}>平昌</option>
+                  <option {%if location=='春川'%}selected="selected"{%endif%}>春川</option>
+                </select>
+              </div>
             </div>
             <div class="item">
               <div class="date">
                 <input
-                  id="theDate"
+                  id="the_date"
+                  {%if start_date%}
+                  value={{start_date}}
+                  {%endif%}
                   type="date"
                   name="start_date"
                   required
                   placeholder="Depart Date"
                   class="form-control"
+                  min = {{today}}
                 />
               </div>
-              <div class="days">入住日期</div>
+              <div class="days">想搜尋日期</div>
             </div>
             <div class="item">
               <div class="date">
                 <input
-                  id="theDate"
+                  id="the_date"
+                  {%if end_date%}
+                  value={{end_date}}
+                  {%endif%}
                   type="date"
                   name="end_date"
                   required
                   placeholder="Return Date"
                   class="form-control"
+                  min = {{tomorrow}}
                 />
               </div>
-              <div class="days">退房日期</div>
+              <div class="days">日期結尾</div>
             </div>
             <div class="item">
-              <div class="people">
+              <!-- <div class="people">
                 adults
                 <select name="adults_number" class="select_adult">
                   <option >0</option>
@@ -176,13 +217,10 @@
                   <option >8</option>
                   <option >9</option>
                 </select>
-                <!-- 2 adults, 0 children <i class="fa fa-angle-down"></i> -->
-              </div>
-              <!-- <div class="days">1 room</div> -->
+              </div> -->
             </div>
             <div class="item">
               <input type = "submit" value="Submit" class="cta active">
-              <!-- <div class="cta active">Search</div> -->
             </div>
           </div>
         </div>
@@ -191,7 +229,7 @@
         <main>
           {% for list_first in sql_name %}
           <div class="sub_title">
-            <h1>{{list_first['name']}}</h1>
+          <h3 style="float: left;"><a href="{{url_for('hotel_search_title_get',location = '首爾')}}">導回搜尋頁面</a></h3><h1>{{list_first['name']}}</h1>
           </div>
           {% endfor%}
           <div class="hotel_detail_content">
@@ -206,25 +244,49 @@
                   <div class= "geo_selection_bar">
                   <div class="now_airport">目前所導向的機場: {{geo_result}}</div>
                     導向其他機場
-                    <select name="airport_alter" class="select_airport">
-                      {% for sub_geocode in geocode%}
-                        <option >{{sub_geocode["airport_name"]}}</option>
-                      {% endfor %}
+                    <select class="form-control" id="exampleFormControlSelect1" name="airport_alter">
+                      <!--{% for sub_geocode in geocode%}
+                      <option >{{sub_geocode["airport_name"]}}</option>
+                      {% endfor %}-->
+                      <option disabled="disabled">選擇想導航的機場</option>
+                      <option disabled="disabled">----------首爾,仁川,水原市附近----------</option>
+                      <option >仁川國際機場</option>
+                      <option >金浦國際機場</option>
+                      <option >清州國際機場</option>
+                      <option disabled="disabled">----------全州市附近----------</option>
+                      <option >群山機場</option>
+                      <option >光州機場</option>
+                      <option >務安國際機場</option>
+                      <option disabled="disabled">----------釜山附近----------</option>
+                      <option >金海國際機場</option>
+                      <option >泗川機場</option>
+                      <option >麗水機場</option>
+                      <option disabled="disabled">----------蔚山附近----------</option>
+                      <option >蔚山機場</option>
+                      <option disabled="disabled">----------大邱,慶州市附近----------</option>
+                      <option >大邱國際機場</option>
+                      <option >浦項機場</option>
+                      <option disabled="disabled">----------春川市,平昌,江陵市附近----------</option>
+                      <option >襄陽國際機場</option>
                     </select>
+                    <div class="alert alert-primary" role="alert">
+                      {{error_msg}}
+                    </div>
+                    <div class="message">{{error_msg}}</div>
                   </div>
                   <div class="item">
-                    <input type = "submit" value="Search" class="cta active">
+                    <!--<input type = "submit" value="Search" class="cta active">-->
+                    <button type="submit" class="btn btn-primary">Search</button>
                   </div>
                 </form>
                 <div class="map_text">
-                  {%for route in route_flow[0:1]%}
-                    <div class = 'google_depart'>
-                      <div class = 'google_time'></div>
-                        <div class = 'google_point'>&emsp;</div>
-                      <div class = 'google_location'>{{route}}</div>
-                    </div>
-                  {%endfor%}
-                  {%for route in route_flow[1:route_flow|length]%}
+                  {%if route_flow2%}
+                  <div class = 'google_depart'>
+                    <div class = 'google_time'>{{start_time}}</div>
+                      <div class = 'google_point'>&emsp;</div>
+                    <div class = 'google_location'>{{geo_result}}</div>
+                  </div>
+                  {%for key, value in route_flow2.items()%}
                       <div class = 'google_line'>
                         <div class = 'google_space1'></div>
                           <div class = 'google_line2'>&nbsp;</div>
@@ -235,16 +297,60 @@
                         </div>
                       </div>
                       <div class = 'google_depart'>
-                        <div class = 'google_time'></div>
+                        <div class = 'google_time'>{{value}}</div>
                           <div class = 'google_point'>&emsp;</div>
-                        <div class = 'google_location'>{{route}}</div>
+                        <div class = 'google_location'>{{key}}</div>
                       </div>
-                  {%endfor%}  
+                  {%endfor%} 
+                  {%endif%}
+                  <div>預估時間約{{need_hour}}小時{{need_min}} 分鐘</div>
                 </div>
               </div>
             </div>
             {% if detail_hotel_list!=[]%}
-            <div id="product-container">
+            <div id="product-container" style=" width: 700px;  float: right;">
+                <div class="form-check mb-2 mr-sm-2">
+                  <!--<div class="row">
+                    <div class="col">
+                      <input class="form-check-input" type="checkbox" id="inlineFormCheck" value="免費早餐">
+                      <label class="breakfast" for="inlineFormCheck">
+                        免費早餐
+                      </label>
+                      <ul></ul>
+                      <input class="form-check-input" type="checkbox" id="inlineFormCheck" value="免費WiFi">
+                      <label class="free_wifi" for="inlineFormCheck">
+                        免費WiFi
+                      </label>
+                      <ul></ul>
+                    </div>
+                    <div class="col">
+                      <input class="form-check-input" type="checkbox" id="inlineFormCheck" value="免費取消">
+                      <label class="free_cancel" for="inlineFormCheck">
+                        免費取消
+                      </label>
+                      <ul></ul>
+                      <input class="form-check-input" type="checkbox" id="inlineFormCheck" value="雙床房">
+                      <label class="two_bed" for="inlineFormCheck">
+                        雙床房
+                      </label>
+                      <ul></ul>
+                    </div>
+                  </div>-->
+                  <div class="row">
+                    <div class="col">                      
+                      <select class="form-control" id="agency_selected" name="agency">
+                        <option disabled="disabled">旅行社</option>
+                        <option >全選</option>
+                        {%for agency in agency_list%}
+                        <option >{{agency}}</option>
+                        {%endfor%}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2" id="btn_2">Submit</button>
+              <div class ="after_query"></div>
+              <h3 class="list_number_result2">為您找到{{num_result_sub_2}}個結果</h3>
               {% for list in detail_hotel_list %}
               <div class="product_details">
                 <div class="product_colors"></div>
@@ -261,11 +367,9 @@
                     <i class=""></i>
                     <div class="hotel_name"></div>
                   </div>
-                  <div class="hotel_item">
-                    <i class=""></i>
-                    <div>{{list['hotel_feature']}}</div>
-                    <div>NT{{list['price']}}$/每晚</div>
-                  </div>
+                  <i class=""></i>
+                  <div class="hotel_detail_feature">{{list['hotel_feature']}}</div>
+                  <div class="hotel_detail_price">NT{{list['price']}}$/每晚</div>
                 </div>
                 <a></a>
               </div>
@@ -301,6 +405,53 @@
             src="https://maps.googleapis.com/maps/api/js?key={{google_api}}&callback=initMap&v=weekly"
             async
           ></script>
+          <script type=text/javascript>
+              $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+            </script>
+          <script language="javascript" type="text/javascript">
+            $('#btn_2').click(
+              function() {
+                var checkbox_value = "";
+              $(":checkbox").each(function () {
+                  var ischecked = $(this).is(":checked");
+                  if (ischecked) {
+                      checkbox_value += $(this).val() + "|";
+                  }
+              });
+            var form_data = new FormData();
+            form_data.append('checkbox', checkbox_value);
+            form_data.append('agency_selected', $("#agency_selected option:selected").text());   
+            form_data.append('start_date', "{{start_date}}");
+            form_data.append('id', "{{id}}");
+            form_data.append('agency_result', "{{agency}}");
+            // form_data.append('two_bed', $(".two_bed").attr('checked', true));
+            // form_data.append('agency_selected', $("#agency_selected option:selected").text());            
+            $.ajax({
+              type: "POST",
+              url: $SCRIPT_ROOT + "/route_function/hotel_detail",
+              data: form_data,
+              success: function (data) {
+                $('.product_item').hide();
+                console.log(data);
+                $('.list_number_result2').hide();
+                var html_data ="<h3 class=\"list_number_result2\">為您找到"+data['num_result_sub_2']+"個結果</h3>"
+                $.each(data['newlist'], function(index,value) {
+                  console.log(value['hotel_url'])
+                  console.log(index)
+                  // html_data +="<div class=super"+index+"><div class='product_colors'></div><div class='product_item'><div class='hotel_item'><a href="+value['hotel_url']+" class='hotel_img'></a></div></div>\n"
+                  html_data +="<div class='product_details'"+index+"><div class= 'product_colors'></div><div class='product_item'><div class='hotel_item'><a href="+value['hotel_url']+" class='hotel_img'><img  src="+value['agency_logo']+" border='0px' width='80' height='30'/></a><i class=''></i><div class=\"hotel_name\"></div></div><i class=\"\"></i><div class=\"hotel_detail_feature\">"+value['hotel_feature']+"</div><div class='hotel_detail_price'>NT"+value['price']+"$/每晚</div></div><a></a></div></div>"
+                  console.log(html_data)
+                  $('.after_query').html(html_data);
+                  });
+
+              },
+              contentType: false,
+              processData: false,
+              // dataType: "json"
+            });
+          }
+          );
+          </script>
           </div>
         </body>
       </html>

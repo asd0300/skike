@@ -4,10 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hotel Booking Landing Page</title>
-    <link rel="stylesheet" href="/static/font.css" />
-    <link rel="stylesheet" href="/static/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/style.css" />
-    <style type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- <style type="text/css">
       html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
     </style>
     <script type="text/javascript"
@@ -25,35 +30,52 @@
       }
       google.maps.event.addDomListener(
           window, 'load', initialize);
-    </script>
+    </script> -->
   </head>
-
   <body>
-    <div class="container">
+    <div class="container-fluid">
       <header>
         <nav>
           <div class="menu">
             <a href="{{url_for('main_index')}}">
-              <div class="logo">Ski <span>Demo</span> lke</div>
+              <div class="logo"><span>Skike</span></div>
             </a>
             <ul>
               <li></li>
               <li></li>
             </ul>
           </div>
-          <div class="myAccount">
+        {%if login%}
+        <div class="div" style="width: 249px;">
+          <a href="{{url_for('user_page')}}" onclick="return chk2000()" style="margin-left:60%">
+            <img
+              src="https://us.123rf.com/450wm/rastudio/rastudio1610/rastudio161000130/63343177-user-profile-with-minus-sign-vector-sketch-icon-isolated-on-background-hand-drawn-user-profile-with-.jpg?ver=6"
+              width="30"
+              height="30"
+              style="border-radius: 10px;"
+            />
+          </a>
+          <a href="{{url_for('sign_out')}}"  style="float: right;">
+            <div style=" float: right">log_out</div>
+          </a>
+        </div>
+        {%else%}
+         <div class="myAccount">
             <div class="ctaGroup">
-              <div class="cta">Sign In</div>
-              <!-- <div class="cta active">Create Account</div> -->
-              <div class="cta active"></div>
+              <a href="{{url_for('user_sign_in')}}">
+                <div class="cta">Sign In</div>
+              </a>
+              <a href="{{url_for('user_sign_up')}}">
+                <div class="cta active">Create Account</div>
+              </a>
             </div>
           </div>
+        {%endif%}
         </nav>
       </header>
       <div class="hotel_content">
         <div class="info">
           <h2>Book hotels online</h2>
-          <h1>OnlyforDemo</h1>
         </div>
 
         <div class="booking_info">
@@ -65,44 +87,60 @@
               <span>Hotel</span>
             </a>
           </div>
-        <form method="POST" action="{{ url_for('airplane_search_func') }}">
+        <form method="POST" action="{{ url_for('airplane_search_func') }}"onsubmit="return chk()" name="send">
           <div class="booking_details">
-            <!-- <select name="booking_category" class="booking_category">
-              <option >Hotel</option>
-              <option >Airplane</option>
-            </select> -->
             <div class="item">
-              <i class="fa fa-search"></i>
-              <!-- <input type="text" name="location" placeholder="Please enter destination" size="20" /> -->
-              <select name="round" class="booking_category">
-                <option >單程</option>
-                <option >來回</option>
-              </select>
-              <select name="location" class="booking_category">
-                <option >find a place</option>
-                <option >東京</option>
-                {% for item in KR_location_list %}
-                  <option >{{item}}</option>
-                {%endfor%}
-              </select>
+              <div class="form-group">
+                <select class="form-control" id="exampleFormControlSelect1" name="round" style="width:100%;">
+                  <option>單程</option>
+                  <!-- <option>來回</option> -->
+                </select>
+                <div class="row custom-row-width">
+                  <div class="col">
+                    <select class="form-control" id="exampleFormControlSelect1" name="location">
+                      <option >Depart_City</option>
+                      <option selected="selected" {%if location=='台北,TPE'%}selected="selected"{%endif%}>台北,TPE</option>
+                      <option {%if location=='首爾,SEL'%}selected="selected"{%endif%}>首爾,SEL</option>
+                      <option {%if location=='濟州市,CJU'%}selected="selected"{%endif%}>濟州市,CJU</option>
+                      <option {%if location=='釜山,PUS'%}selected="selected"{%endif%}>釜山,PUS</option>
+                      <option {%if location=='蔚山,USN'%}selected="selected"{%endif%}>蔚山,USN</option>
+                      <option {%if location=='麗水,RSU'%}selected="selected"{%endif%}>麗水,RSU</option>
+                      <option {%if location=='光州,KWJ'%}selected="selected"{%endif%}>光州,KWJ</option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <select class="form-control" id="exampleFormControlSelect1" name="location_arrive">
+                      <option >Arrive_City</option>
+                      <option {%if location_arrive=='台北,TPE'%}selected="selected"{%endif%}>台北,TPE</option>
+                      <option selected="selected" {%if location_arrive=='首爾,SEL'%}selected="selected"{%endif%}>首爾,SEL</option>
+                      <option {%if location_arrive=='濟州市,CJU'%}selected="selected"{%endif%}>濟州市,CJU</option>
+                      <option {%if location_arrive=='釜山,PUS'%}selected="selected"{%endif%}>釜山,PUS</option>
+                      <option {%if location_arrive=='蔚山,USN'%}selected="selected"{%endif%}>蔚山,USN</option>
+                      <option {%if location_arrive=='麗水,RSU'%}selected="selected"{%endif%}>麗水,RSU</option>
+                      <option {%if location_arrive=='光州,KWJ'%}selected="selected"{%endif%}>光州,KWJ</option>
+                    </select>
+                  </div>
+                </div>
+              </div>      
             </div>
             <div class="item">
               <div class="date">
                 <input
-                  id="theDate"
+                  value="{{tomorrow}}"
                   type="date"
+                  id="the_date"
                   name="start_date"
-                  required
                   placeholder="Depart Date"
                   class="form-control"
+                  min = {{today}}
                 />
               </div>
               <div class="days">出發日期</div>
             </div>
-            <div class="item">
+            <!-- <div class="item">
               <div class="date">
                 <input
-                  id="theDate"
+                  id="the_Date"
                   type="date"
                   name="end_date"
                   required
@@ -111,36 +149,23 @@
                 />
               </div>
               <div class="days">抵達日期</div>
-            </div>
+            </div> -->
             <div class="item">
               <div class="people">
-                adults
-                <select name="adults_number" class="select_adult">
-                  <option >0</option>
-                  <option >1</option>
-                  <option >2</option>
-                  <option >3</option>
-                  <option >4</option>
-                  <option >5</option>
-                  <option >6</option>
-                  <option >7</option>
-                  <option >8</option>
-                  <option >9</option>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">adults numbers</label>
+                <select class="form-control" id="exampleFormControlSelect1" name="adults_number">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
                 </select>
-                and rooms
-                <select name="rooms" class="select_room">
-                  <option >0</option>
-                  <option >1</option>
-                  <option >2</option>
-                  <option >3</option>
-                  <option >4</option>
-                  <option >5</option>
-                  <option >6</option>
-                  <option >7</option>
-                  <option >8</option>
-                  <option >9</option>
-                </select>
-                <!-- 2 adults, 0 children <i class="fa fa-angle-down"></i> -->
               </div>
               <!-- <div class="days">1 room</div> -->
             </div>
@@ -165,7 +190,7 @@
       <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_3" /> -->
       <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_4" /> -->
       <!-- <img src="/static/assets/cartoon/megaman.gif" class="dog_1" /> -->
-      <script>
+      <!-- <script>
         var date = new Date();
 
         var day = date.getDate();
@@ -177,7 +202,69 @@
 
         var today = year + "-" + month + "-" + day + "T00:00";
         document.getElementById("theDate").value = today;
+      </script> -->
+      <script>
+        function chk() {
+          if(document.send.location.value=='find a place'){
+            alert('請選擇一個地點');
+            return false;
+          }
+          let timerInterval;
+            Swal.fire({
+              title: "Auto close alert!",
+              html: "I will close in <b></b> milliseconds.",
+              timer: 4000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+                const b = Swal.getHtmlContainer().querySelector("b");
+                timerInterval = setInterval(() => {
+                  b.textContent = Swal.getTimerLeft();
+                }, 100);
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+              }
+            });
+        }
       </script>
+      <script>
+        function chk2000() {
+          if(document.send.location.value=='find a place'){
+            alert('請選擇一個地點');
+            return false;
+          }
+          let timerInterval;
+            Swal.fire({
+              title: "Auto close alert!",
+              html: "I will close in <b></b> milliseconds.",
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+                const b = Swal.getHtmlContainer().querySelector("b");
+                timerInterval = setInterval(() => {
+                  b.textContent = Swal.getTimerLeft();
+                }, 100);
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+              }
+            });
+        }
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
     </div>
   </body>
 </html>

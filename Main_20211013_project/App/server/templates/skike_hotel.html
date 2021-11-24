@@ -1,43 +1,391 @@
-{% extends "layout.html" %} {%block content%}
+{% extends "layout_hotel.html" %} {%block content%}
 <div id="campaigns"></div>
 {% if hotel_list!=[]%}
 <div id="product-container">
+  <div class="container">
+
+      <div class="product_title2">
+        <div class="row">
+          <div class="col-5">
+            <span class="badge badge-primary" style="width: 90px;
+            height: 20px;
+            border: 1px solid #f6685e;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 35px;
+            cursor: pointer;
+            background-color: #f1c6e4;
+            color: #000;;    
+            ">想搜尋時間:</span><span id='want_time_start' class="badge badge-primary" style="width: 90px;
+              height: 20px;
+              border: 1px solid #f6685e;
+              font-size: 13px;
+              font-weight: 500;
+              border-radius: 35px;
+              cursor: pointer;
+              background-color: #f1c6e4;
+              color: #000;
+              ">{{start_date}}</span>
+          </div>
+          <div class="col-5">
+            <span class="badge badge-primary" style="width: 90px;
+            height: 20px;
+            border: 1px solid #f6685e;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 35px;
+            cursor: pointer;
+            background-color: #f1c6e4;
+            color: #000;">日期結尾:</span>
+            <span id='want_time_end' class="badge badge-primary" style="width: 90px;
+            height: 20px;
+            border: 1px solid #f6685e;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 35px;
+            cursor: pointer;
+            background-color: #f1c6e4;
+            color: #000;">{{end_date}}</span>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">Filters:
+            <div class="col">
+              <span class="badge badge-primar" style="width: 71%;
+              height: 20px;
+              border: 1px solid #f6685e;
+              font-size: 13px;
+              font-weight: 500;
+              border-radius: 35px;
+              cursor: pointer;
+              background-color: #f1c6e4;
+              color: #000;">
+                <a
+                  class="a_filter"
+                  href="{{url_for('hotel_search_get', start_date = start_date, end_date = end_date, location = location, condition = 'hotel_rating_avg_score,desc')}}"
+                  >評價分數高至低</a
+                >
+              </span>
+            </div>
+            <div class="col">
+              <span class="badge badge-primary" style="width: 71%;
+              height: 20px;
+              border: 1px solid #f6685e;
+              font-size: 13px;
+              font-weight: 500;
+              border-radius: 35px;
+              cursor: pointer;
+              background-color: #f1c6e4;
+              color: #000;">
+                <a
+                  class="a_filter"
+                  href="{{url_for('hotel_search_get', start_date = start_date, end_date = end_date, location = location, condition = 'hotel_rating_avg_score,asc')}}"
+                  >評價分數低至高</a
+                >
+              </span>
+            </div>
+            <div class="col">
+              <span class="badge badge-primary" style="width: 71%;
+              height: 20px;
+              border: 1px solid #f6685e;
+              font-size: 13px;
+              font-weight: 500;
+              border-radius: 35px;
+              cursor: pointer;
+              background-color: #f1c6e4;
+              color: #000;">
+                <a
+                  class="a_filter"
+                  href="{{url_for('hotel_search_get', start_date = start_date, end_date = end_date, location = location, condition = 'hotel_rating_count,desc')}}"
+                  >評價數高至低</a
+                >
+              </span>
+            </div>
+            <div class="col">
+              <span class="badge badge-primary" style="width: 71%;
+              height: 20px;
+              border: 1px solid #f6685e;
+              font-size: 13px;
+              font-weight: 500;
+              border-radius: 35px;
+              cursor: pointer;
+              background-color: #f1c6e4;
+              color: #000;">
+                <a
+                  class="a_filter"
+                  href="{{url_for('hotel_search_get', start_date = start_date, end_date = end_date, location = location, condition = 'hotel_rating_count,asc')}}"
+                  >評價數低至高</a
+                >
+              </span>
+            </div>
+            <div class="col">
+              <span class="badge badge-primary" style="width: 71%;
+              height: 20px;
+              border: 1px solid #f6685e;
+              font-size: 13px;
+              font-weight: 500;
+              border-radius: 35px;
+              cursor: pointer;
+              background-color: #f1c6e4;
+              color: #000;">
+                <a
+                  class="a_filter"
+                  href="{{url_for('hotel_search_get', start_date = start_date, end_date = end_date, location = location, condition = 'hotel_best_price_per_stay,desc')}}"
+                  >價格高至低</a
+                >
+              </span>
+            </div>
+            <div class="col">
+              <span class="badge badge-primary" style="width: 71%;
+              height: 20px;
+              border: 1px solid #f6685e;
+              font-size: 13px;
+              font-weight: 500;
+              border-radius: 35px;
+              cursor: pointer;
+              background-color: #f1c6e4;
+              color: #000;">
+                <a
+                  class="a_filter"
+                  href="{{url_for('hotel_search_get', start_date = start_date, end_date = end_date, location = location, condition = 'hotel_best_price_per_stay,asc')}}"
+                  >價格低至高</a
+                >
+              </span>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+  <div class="container">
+  {%if method =="hotel_search_title_get"%}
+    <h2>推薦您{{location}}的飯店</h2>
+  {%endif%}
+    <h3>搜尋到{{sum}}筆結果</h3>
+  </div>
+  {%if message%}
+  <div class="alert alert-warning" role="alert">
+    {{message}}
+  </div>
+  {%endif%}
   {% for list in hotel_list %}
   <div class="product_details">
-    <div class="product_colors"></div>
     <div class="product_title">
+      <button id="more_hotel_pic{{loop.index}}" class="hotel_name" style="float: left;
+      width: 67px;
+      height: 35px;
+      border: 1px solid #f6685e;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 35px;
+      color: #f6685e;
+      cursor: pointer;
+      background-color: #f6685e;
+      color: #fff;
+      z-index: 3;
+      position: absolute;">更多照片</button>
       <div class="hotel_item_v2">
         <a
           href="{{url_for('hotel_detail',id = list['id'], geocode_lat = list['geocode_lat'], geocode_lng= list['geocode_lng'], start_date= start_date)}}"
-          class="hotel_img"
+          class=""
+          id ="hotel_detail{{loop.index}}"
         >
           <img
             src="{{list['image_url']}}"
             border="0px"
             width="220"
             height="120"
+            id="hotel_img{{loop.index}}"
+            onclick="return chk2()"
+            name ="hotel_pic"
+            style="z-index: 2;
+            position: absolute;
+            border-radius: 10px"
           />
         </a>
-        <i class=""></i>
-        <div class="hotel_name"></div>
       </div>
-      <div class="hotel_item">
-        <i class=""></i>
-        {{list['category']}} {{list['name']}}&nbsp;
-        <div>
-          {{list['hotel_near_location']}}約{{(list['hotel_near_location_meter']/1000)|float}}公里
+      <div class="">
+        <div id='theName{{loop.index}}' class="search_hotel_name" style="margin-left: 26%" >{{list['name']}}</div><div id="hotel_id{{list['id']}}" style="font-size: 0.5px;margin-left: 26%">{{list['id']}}</div>
+        <button id='testBTN{{loop.index}}' type='submit' style="float: right"> 
+        <!-- <button class="submit" style="float: right"> -->
+          <img
+          class="icon_empty{{loop.index}}"
+          src="https://cdn-icons-png.flaticon.com/512/30/30571.png"
+          alt=""
+          width="30"
+          height="30"
+          style="display:block"
+          
+        />
+        <img
+          class="icon_plus{{loop.index}}"
+          src="https://cdn-icons-png.flaticon.com/512/833/833472.png"
+          alt=""
+          width="30"
+          height="30"
+          style="display:none"
+          
+        />
+        </button>
+        <div class="hotel_category" style="margin-left: 26%">{{list['category']}}</div>
+        <div class="hotel_item" style="margin-left: 26%">
+          推薦{{list['hotel_rating_avg_score']}}分,{{list['hotel_rating_count']}}評價數
         </div>
+        <!--<div class="hotel_item">
+          {{list['hotel_near_location']}}約{{(list['hotel_near_location_meter']/1000)|float}}公里
+        </div>-->
       </div>
-      <div class="hotel_item">
-        <i class=""></i>
-        推薦{{list['hotel_rating_avg_score']}}分,{{list['hotel_rating_count']}}評價數&nbsp;&nbsp;
-      </div>
-      <div class="hotel_item">
-        <i class=""></i>
-        我們住宿一晚價格{{list['hotel_best_price_per_stay']}}&nbsp;
+      <div id="price_hotel{{loop.index}}"class="search_money">
+        我們住宿一晚價格{{list['hotel_best_price_per_stay']}}起
       </div>
     </div>
-    <a></a>
   </div>
-  {% endfor %} {%endif%}{% endblock content %}
+  <!-- <div class="row"><button id ="x_{{list['id']}}" onclick="listBtn{{list['id']}}()" ><img class ="pic_x"src="https://freesvg.org/img/close-button.png" width=30" height="30" style="border-radius: 10px; vertical-align: unset; margin-top:5px;float:right"/></button></div> -->
+  <div id="button{{list['id']}}"></div>
+  <div id="container_other_pic{{list['id']}}" style="font-size: 14 px;
+  background-color: #fff;
+  height: auto;
+  border-radius: 15px;
+  position: relative;
+  z-index: 2;
+  -webkit-box-shadow: 1px 1px 20px 0px rgb(50 50 50 / 30%);
+  box-shadow: 1px 1px 20px 0px rgb(50 50 50 / 30%);
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0 15px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  /* margin: 10px; */
+  margin-left: 9%;
+  margin-right: 9%;
+  text-align: left;">
+    <div class="row" id='response{{list["id"]}}' style="margin-left: 7px;">
+    </div>
+  </div>
+  <script>
+    function listBtn{{list['id']}}() {
+      var listBtn = document.getElementById('x_{{list["id"]}}');
+      var textlistn = document.getElementById('container_other_pic{{list["id"]}}');
+      if (textlistn.style.display === 'none') {
+        textlistn.style.display = 'block';
+        listBtn.textContent = '關閉圖片';
+        console.log("123")
+      } else {
+        textlistn.style.display = 'none';
+        listBtn.style.display = 'block';
+        listBtn.textContent = '開啟圖片';
+        console.log("456")
+      }
+    }
+  </script>
+  <script type=text/javascript>
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+  <script language="javascript" type="text/javascript">
+    $('.icon_empty{{loop.index}}').click(
+      function() {
+    var form_data = new FormData();
+    var icon_empty2 = document.getElementsByClassName('icon_empty{{loop.index}}');
+    form_data.append('want_time_start', $("#want_time_start").text());
+    form_data.append('want_time_end', $("#want_time_end").text());
+    form_data.append('the_name', $("#theName{{loop.index}}").text());
+    form_data.append('hotel_detail', $("#hotel_detail{{loop.index}}").attr('href'));
+    form_data.append('hotel_img', $("#hotel_img{{loop.index}}").attr('src'));
+    form_data.append('location', $("#location_seletor option:selected").text());
+    form_data.append('price', $("#price_hotel{{loop.index}}").text());
+    $('.icon_empty{{loop.index}}').hide();
+    $('.icon_plus{{loop.index}}').show();
+    
+
+    $.ajax({
+      type: "POST",
+      url: $SCRIPT_ROOT + "/route_function",
+      data: form_data,
+      success: function (data) {
+
+
+      },
+      contentType: false,
+      processData: false,
+      // dataType: "json"
+    });
+  }
+  );
+  </script>
+    <script language="javascript" type="text/javascript">
+      $('.icon_plus{{loop.index}}').click(
+        function() {
+      var form_data = new FormData();
+      var icon_plus2 = document.getElementsByClassName('icon_plus{{loop.index}}');
+      form_data.append('want_time_start', $("#want_time_start").text());
+      form_data.append('want_time_end', $("#want_time_end").text());
+      form_data.append('the_name', $("#theName{{loop.index}}").text());
+      form_data.append('hotel_detail', $("#hotel_detail{{loop.index}}").attr('href'));
+      form_data.append('hotel_img', $("#hotel_img{{loop.index}}").attr('src'));
+      form_data.append('location', $("#location_seletor option:selected").text());
+      form_data.append('price', $("#price_hotel{{loop.index}}").text());
+      form_data.append('status', 'delete');
+      $('.icon_empty{{loop.index}}').show();
+      $('.icon_plus{{loop.index}}').hide();
+      $.ajax({
+        type: "POST",
+        url: $SCRIPT_ROOT + "/route_function",
+        data: form_data,
+        success: function (data) {
+
+  
+        },
+        contentType: false,
+        processData: false,
+        // dataType: "json"
+      });
+    }
+    );
+    </script>
+  <script language="javascript" type="text/javascript">
+    $('#more_hotel_pic{{loop.index}}').click(
+      function() {
+        
+    var form_data = new FormData();
+    form_data.append('hotel_id', $("#hotel_id{{list['id']}}").text());
+    form_data.append('want_time_start', $("#want_time_start").text());
+    form_data.append('want_time_end', $("#want_time_end").text());
+    
+    $.ajax({
+      type: "POST",
+      url: $SCRIPT_ROOT + "/hotel/search/more_picture",
+      data: form_data,
+      success: function (data) {
+        $("#button{{list['id']}}").html(data['pic_list2']);
+        $.each(data['pic_list3'], function(index,value) {
+            $('#more_hotel_pic{{loop.index}}').hide()
+            // $('#more_hotel_2pic{{loop.index}}').show()
+            $("#response{{list['id']}}").html(data['pic_list3']);
+
+        });
+        // $("#response").html(data);
+        // console.log(data)
+
+      },
+      contentType: false,
+      processData: false,
+      // dataType: "json"
+    });
+  }
+  );
+  </script>
+  {% endfor %}
+{%else%}
+<ul></ul>
+<ul></ul>
+<div class="alert alert-warning" role="alert">
+  No search result please search another day or position
+</div>
+{%endif%}
+{% endblock content %}
 </div>

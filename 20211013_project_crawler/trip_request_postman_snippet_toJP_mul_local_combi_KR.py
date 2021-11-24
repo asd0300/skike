@@ -11,7 +11,8 @@ from datetime import date, timedelta
 
 
 # conn = MongoClient("mongodb://localhost:{}/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false".format(config.MONGO_PASS_SKIKE_LOCAL))
-conn = MongoClient("mongodb://skike4:Asd7788123@ec2-18-191-175-148.us-east-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false")
+conn = MongoClient("mongodb://skike4:{}@ec2-18-191-175-148.us-east-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false".format(config.MONGO_PASS_SKIKE_UBUNTU))
+
 
 
 mydatabase = conn['skike'] 
@@ -33,7 +34,7 @@ def daterange(start_date, end_date):
 
 def test(position,date1):
     try:
-        url = "https://hk.trip.com/flights/graphql/intlFlightListSearch"
+        url = "https://hk.trip.com/flights/graphql/intlFlightListSearchAll"
 
         payload = json.dumps({
         "operationName": "intlFlightListSearch",
@@ -148,7 +149,7 @@ for i in range(1,4):
 #         print("--- %s seconds ---" % (end_time - start_time))
 # dateCrawler()
 
-conn = MongoClient("mongodb://localhost:{}/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false".format(config.MONGO_PASS_SKIKE_LOCAL))
+conn = MongoClient("mongodb://skike4:{}@ec2-18-191-175-148.us-east-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false".format(config.MONGO_PASS_SKIKE_UBUNTU))
 
 mydatabase = conn['skike'] 
 # Access collection of the database 
@@ -162,7 +163,7 @@ def daterange(start_date, end_date):
 
 def test(strat_position,arrive_position,date1):
     try:
-        url = "https://hk.trip.com/flights/graphql/intlFlightListSearch"
+        url = "https://hk.trip.com/flights/graphql/intlFlightListSearchAll"
 
         payload = json.dumps({
         "operationName": "intlFlightListSearch",

@@ -8,8 +8,7 @@ import random,time
 import  requests
 import operator
 import urllib.parse
-from server.env import config
-import jwt
+
 def connect_db(host, user, password, db_name=None, port=3306):
     try:
         connect_db = pymysql.connect(host=host,
@@ -351,6 +350,7 @@ def get_hotel_alter(data_query_time, hotel_id,feature_dict=None,agency_result_1s
 
 # def get_flight_ticket_alter(dCity,aCity,data_query_time, low_price, criteria_token,flight_no,airlineCode):
 def get_flight_ticket_alter(data_query_time, low_price, criteria_token,flight_no,airlineCode):
+    # print(data_query_time, low_price, criteria_token,flight_no,airlineCode)
     url = "https://hk.trip.com/flights/graphql/intlFlightMoreGradeSearch"
     payload = json.dumps({
     "operationName": "intlFlightMoreGradeSearch",
@@ -374,7 +374,7 @@ def get_flight_ticket_alter(data_query_time, low_price, criteria_token,flight_no
     "extensions": {
         "persistedQuery": {
         "version": 1,
-        "sha256Hash": "b44346ceeb42be5ea900ba8ac033d12c1d69b5161bbce73c90907fdbb195acfa"
+        "sha256Hash": "286bf26e592e818dba393cfef4cc9108ccdf23c0b832516620cb0bba6b81abd2"
         }
     }
     })
@@ -387,7 +387,7 @@ def get_flight_ticket_alter(data_query_time, low_price, criteria_token,flight_no
 
     response = requests.request("POST", url, headers=headers, data=payload)
     result = response.json()
-    # print(result)
+    print(data_query_time, low_price, criteria_token,flight_no,airlineCode)
     # print(result)
     alter_list = []
     if result['data']['intlFlightMoreGradeSearch']['productInfo']:
@@ -447,6 +447,7 @@ def get_hotel_more_pic(hotel_id, want_time_start, want_time_end):
     ,'45.95.99.20:7580'
     ]
     try:
+        print(123)
         url = "https://www.trivago.com.tw/graphql"
         payload = json.dumps({
         "operationName": "getGallery",
@@ -485,35 +486,37 @@ def get_hotel_more_pic(hotel_id, want_time_start, want_time_end):
         }
         })
         headers = {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36',
-        'authority': 'www.trivago.com.tw',
-        'method': 'POST',
-        'path': '/graphql',
-        'scheme': 'https',
-        'content-type': 'application/json',
-        'origin': 'https://www.trivago.com.tw',
-        'sec-ch-ua': '"Chromium";v="94", "Google Chrome";v="94", ";Not A Brand";v="99"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"Windows"',
-        'sec-fetch-dest': 'empty',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-site': 'same-origin',
-        'x-trv-app-id': 'HS_WEB_APP',
-        'x-trv-cst': '32046,38217,45104,45749,45766,46136,46164,46535,47828,47908,48405,48506,48508,48542,48681,49291,49382,49419,49696,49752,49777,50553,50567,50805,50950,51032,51076,51246,51458,51591,51619,51886,51913,52217,52219,52345,52366,52551,52590,52756,52830,52891,52949,53005,53018,53183,53192,53231,53393,53508,53513,53593,53687,53852,53894,54061,54244,54273,54333,54362,54596,54827,54858,54889,54999,55003,55113,55133,55134,55136,55145,55353,55451,55628,55690,55739,55866,56275-3,56467-1,56477,56578,56633,56861-3,56937-2,57155,57488,57889-2,58038,58205,58324-1,58328-1,58387,58433',
-        'x-trv-language': 'zh-Hant-TW',
-        'x-trv-platform': 'tw',
-        'x-trv-tid': '0882dd417534e3d783b2d8155d',
-        'accept': '*/*',
-        'accept-encoding': 'gzip, deflate, br',
-        'accept-language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
-        'apollographql-client-name': 'hs-web',
-        'apollographql-client-version': 'v93_10_5_ae_f07e1e495a0',
-        'Cookie': 'ak_bmsc=2F85A1AEDFDAF2358CE695956720FCB1~000000000000000000000000000000~YAAQhz7cPfZmFyx9AQAAFS15Sw1px02olyRVYUKlW9tZMyMjRwZiQBdJ1IwBWL1Aw+05iMMUhQyxnBOv7pMrihNjEg0qSKt5k7L/nr7z115Fx4qpCHWyIThEyHbya68co7fYYb4gDp0V3RHb/1t8W3LAVeHyMatFs2NUcO3DSH+zmcW1ifDMU0RR0ORMNj8a8LE3Ev+mhAQP5dy+ipXy7uwt9KDQ/EtiArq57gfemsIzofQON2j4Yv8WBpP4Q/Jh9tCg0TcikYZ3lKaHd2vKNIqxXiQHdiZzMbw3GAdqPjn+/v4g09khMeExxKhxNEwCr3vrd6CNkA7cobBWDQmxa287wYomDUvtUJCs4c+pkQOBCqcOdhAme5SNG448OArW; edge_tid=0882dd417534e3d783b2d8155d; edge_tid_s=0882dd417534e3d783b2d8155d'
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36",
+        "authority": "www.trivago.com.tw",
+        "method": "POST",
+        "path": "/graphql",
+        "scheme": "https",
+        "content-type": "application/json",
+        "origin": "https://www.trivago.com.tw",
+        "sec-ch-ua": "\"Chromium\";v=\"94\", \"Google Chrome\";v=\"94\", \";Not A Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "x-trv-app-id": "HS_WEB_APP",
+        "x-trv-cst": "32046,38217,45104,45749,45766,46136,46164,46535,47828,47908,48405,48506,48508,48542,48681,49291,49382,49419,49696,49752,49777,50553,50567,50805,50950,51032,51076,51246,51458,51591,51619,51886,51913,52217,52219,52345,52366,52551,52590,52756,52830,52891,52949,53005,53018,53183,53192,53231,53393,53508,53513,53593,53687,53852,53894,54061,54244,54273,54333,54362,54596,54827,54858,54889,54999,55003,55113,55133,55134,55136,55145,55353,55451,55628,55690,55739,55866,56275-3,56467-1,56477,56578,56633,56861-3,56937-2,57155,57488,57889-2,58038,58205,58324-1,58328-1,58387,58433",
+        "x-trv-language": "zh-Hant-TW",
+        "x-trv-platform": "tw",
+        "x-trv-tid": "0882dd417534e3d783b2d8155d",
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br",
+        "accept-language": "zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+        "apollographql-client-name": "hs-web",
+        "apollographql-client-version": "v93_10_5_ae_f07e1e495a0",
+        "Cookie": "ak_bmsc=12F4D478A0A2D1A6C56229DD5F0EA7DC~000000000000000000000000000000~YAAQhz7cPXYw/yt9AQAAsPcdNg1TpPgkvd9MBdt036QKhEjx2jbFjdp3WBTcnGTSLpgoBR4FQxk0ykvM/d8JiffgLU3mKXIH+lQbb7AVKhgvalfaonKXsPOrsFmhBwCoxbnh5gjzHZXvAavWSXBGRzCPZ0C/WRkM2XfP8EqrvimSuYmQYONZ3xTRtp9q3CJSmybjoWZK39ZuWPK+5yarCeng3Nwz/77n1q1+iYZhRc0mMwZ+ymTzeu2VDpIkWyDENY0IGfgjitX7EBjVYujoBHivKPESib2k9DWqPTdMcceb2LFtH1dLMOYT4BqEST+1HH1oDty1ABoiRHIKI7xESh3FTVtqAfRMtmzZ6CgWEBl8G8icWteWjslFiuJdnkoc; edge_tid=0882dd417534e3d783b2d8155d; edge_tid_s=0882dd417534e3d783b2d8155d"
         }
         ip = random.choice(m)
         proxies = {'http':"http://{}:{}@{}".format('vvbocpqj','obt7b7ug0dim',ip)}
         response = requests.request("POST", url, headers=headers, data=payload, proxies=proxies)
+        print(456)
         result = response.json()
+        print(789)
         img_url=[]
         if result['data']['getAccommodationDetails']['accommodationDetails']:
             print("ok")
@@ -529,188 +532,3 @@ def get_hotel_more_pic(hotel_id, want_time_start, want_time_end):
     except Exception as e:
         print("Exeception occured:{}".format(e))
     return img_url
-
-def check_exist_user(rdsDB,email):
-    rdsDB = rdsDB
-    print(rdsDB)
-    cursor = rdsDB.cursor()
-    query = 'SELECT * FROM skike.user where email = "{}";'.format(str(email))
-    cursor.execute(query)
-    sign_up_data = cursor.fetchone()
-    print
-    rdsDB.commit()
-    rdsDB.close()
-    return sign_up_data
-
-def insert_register_data(rdsDB,provider, name, email,hashed_password, picture,acceess_expire):
-    tokenSignUp = jwt.encode({'provider':provider,\
-                                  'name':name,\
-                                  'email': email }, config.SECRET_KEY)
-    try:
-        sign_up_data = "INSERT INTO `user` (`provider`, `name`,\
-                                    `email`, `password`, `picture`,\
-                                    `access_token`, `access_expired`) \
-                                    VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        cursor = rdsDB.cursor()
-        cursor.execute(sign_up_data, (provider, name, email,\
-                                    hashed_password, picture, tokenSignUp,\
-                                    acceess_expire))
-        rdsDB.commit()
-    except Exception as e:
-        print("Exeception occured:{}".format(e))
-    rdsDB.close()
-
-
-def insert_signin_data(rdsDB,email):
-    try:
-        cursor = rdsDB.cursor()
-        query = 'SELECT * FROM skike.user WHERE email = "{}" ;'.format(email)
-        cursor.execute(query)
-        sign_data = cursor.fetchone()
-        print(sign_data)
-        rdsDB.commit()
-    except Exception as e:
-        print("Exeception occured:{}".format(e))
-    return sign_data
-
-def get_hotel_search_list(rdsDB,start_date,end_date,location):
-    cursor = rdsDB.cursor()
-    sql = "SELECT * FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' group by name having locality like'{}' order by hotel_rating_count desc limit 1000".format(start_date,end_date,location)
-    cursor.execute(sql)
-    sql_result = cursor.fetchall()
-    return sql_result
-def get_hotel_search_coount(rdsDB,start_date,end_date,location):
-    cursor = rdsDB.cursor()
-    sql_count = "SELECT count(distinct(name)) FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' AND locality ='{}' group by name;".format(start_date,end_date,location)
-    cursor.execute(sql_count)
-    sql_count_result = cursor.fetchall()
-    return sql_count_result
-def get_user_page_data(conn,email):
-    mydatabase = conn['skike_origin']
-    mycollection=mydatabase['skike_favorite']
-    pipeline=[
-    {
-        '$match': {
-            'email': '{}'.format(email)
-        }
-    }
-    ]
-    result =mycollection.aggregate(pipeline)
-    results = [doc for doc in result]
-    return results
-
-def get_hotel_search(rdsDB,start_date,end_date,location):
-    cursor = rdsDB.cursor()
-    sql = "SELECT * FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' group by name having locality like'{}' order by hotel_rating_count desc limit 1000".format(start_date,end_date,location)
-    cursor.execute(sql)
-    sql_result = cursor.fetchall()
-    return sql_result
-
-def get_hotel_search_number(rdsDB,start_date,end_date,location):
-    cursor = rdsDB.cursor()
-    sql_count = "SELECT count(distinct(name)) FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' AND locality ='{}' group by name;".format(start_date,end_date,location)
-    cursor.execute(sql_count)
-    sql_count_result = cursor.fetchall()
-    return sql_count_result
-
-def delete_user_favorite_item(conn, email, hotel_name=None, hotel_detail=None, hotel_img=None):
-    mydatabase = conn['skike_origin']
-    mycollection=mydatabase['skike_favorite']
-    if email and hotel_name:
-        myquery = {"email":email,"hotel_name":hotel_name}
-    elif email and hotel_detail and hotel_img:
-        myquery = {"email":email,"hotel_detail":hotel_detail,"hotel_img":hotel_img}
-    mycollection.remove(myquery)
-
-def add_user_favorite_item(conn, email, want_time_start, want_time_end, hotel_name,hotel_img,hotel_detail,user_name,location,price):
-    mydatabase = conn['skike_origin']
-    mycollection=mydatabase['skike_favorite']
-    result = {"email":email, "want_time_start":want_time_start, "want_time_end":want_time_end, "hotel_name":hotel_name, "hotel_img":hotel_img, "hotel_detail":hotel_detail, "name":user_name,"location":location,"price":price}
-    mycollection.insert_one(result)
-
-def get_re_sort_result(rdsDB, start_date,end_date,location,condition1,condition2):
-    cursor = rdsDB.cursor()
-    sql = "SELECT * FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' group by name having locality like'{}' order by {} {} limit 1000".format(start_date,end_date,location,condition1,condition2)
-    cursor.execute(sql)
-    sql_result = cursor.fetchall()
-    return sql_result
-
-def get_flight_ticket_plan(rdsDB,start_date,location_arrive,location):
-    cursor = rdsDB.cursor()
-    sql = "SELECT * FROM skike.flight_ticket where data_query_time ='{}' and  arrive_City = '{}' and depart_city ='{}';".format(start_date,location_arrive,location)
-    cursor.execute(sql)
-    sql_result = cursor.fetchall()
-    return sql_result
-
-# def add_flight_pic_url(sql_result):
-#     for sql_result_sub in sql_result:
-#         air_pic = sql_result_sub['flight_company'].split(' ')
-#         air_pic = air_pic[1]
-#         air_pic = air_pic[0:2]
-#         air_pic = "https://pic.tripcdn.com/airline_logo/3x/{}.webp".format(air_pic.lower())
-#         sql_result_sub['air_pic'] = air_pic
-
-def get_moregrade_price(rdsDB,sql_get,sql_result,start_date,select_adult):
-    cursor = rdsDB.cursor()
-    for data in sql_result:
-        air_pic = data['flight_company'].split(' ')
-        air_pic = air_pic[1]
-        air_pic = air_pic[0:2]
-        air_pic = "https://pic.tripcdn.com/airline_logo/3x/{}.webp".format(air_pic.lower())
-        data['air_pic'] = air_pic
-        depart_city = data['depart_city'].split(',')
-        depart_city = depart_city[1]
-        arrive_city = data['arrive_City'].split(',')
-        arrive_city = arrive_city[1]
-        lowest_price = data['lowest_price']
-        criteria_token = data['criteria_token']
-        timeString = start_date
-        struct_time = time.strptime(timeString, "%Y-%m-%d")
-        new_timeString = time.strftime("%Y%m%d", struct_time)
-        sql_sub = "SELECT * FROM skike.flight_price inner JOIN skike.flight_ticket  on flight_ticket.id = flight_price.flight_id where flight_ticket.id = '{}' and flight_ticket.data_query_time='{}' and flight_price.group_id like'%{}%'".format(data['id'],start_date,new_timeString)
-        cursor.execute(sql_sub)
-        result_sub = cursor.fetchall()
-        flight_id = result_sub[0]['group_id'].split('-')
-        flight_id = flight_id[0]
-        flight_company_id = flight_id[0:2]
-        alternative_flight_list = []
-        for ticket in get_flight_ticket_alter(start_date, lowest_price, criteria_token ,flight_id,flight_company_id):
-            if int(ticket['available_tickets'])>=int(select_adult):
-                alternative_flight_list.append(ticket)
-        data['alternative_flight'] = alternative_flight_list
-        sql_get.append(data)
-
-def get_nearest_airport(rdsDB,airport_alter):
-    sql_airport_alter = "SELECT * FROM skike.flight_geocode  where airport_name = '{}';".format(airport_alter)
-    cursor = rdsDB.cursor()
-    cursor.execute(sql_airport_alter)
-    airport_result = cursor.fetchone()
-    near_airport_lat = airport_result['geocode_lat']
-    near_airport_lng = airport_result['geocode_lng']
-    geo_result = airport_result['airport_name']
-    sql_geocode = "SELECT * FROM skike.flight_geocode;"
-    cursor.execute(sql_geocode)
-    result_sql_geocode = cursor.fetchall()
-    return {"near_airport_lat":near_airport_lat,"near_airport_lng":near_airport_lng,"geo_result":geo_result,"result_sql_geocode":result_sql_geocode}
-
-def get_airport_list(rdsDB,geocode_lat,geocode_lng,MAX_NUMBER):
-    cursor = rdsDB.cursor()
-    sql_geocode = "SELECT * FROM skike.flight_geocode;"
-    cursor.execute(sql_geocode)
-    result_sql_geocode = cursor.fetchall()
-    geo_result = ""
-    geo_number = MAX_NUMBER
-    for location in result_sql_geocode:
-        euclidean_distance= (location["geocode_lat"]-geocode_lat)**2+(location["geocode_lng"]-geocode_lng)**2
-        if euclidean_distance<geo_number:
-            geo_result = location["airport_name"]
-            geo_number = (location["geocode_lat"]-geocode_lat)**2+(location["geocode_lng"]-geocode_lng)**2
-            near_airport_lat =location["geocode_lat"]
-            near_airport_lng =location["geocode_lng"]
-    return {"geo_result":geo_result,"near_airport_lat":near_airport_lat,"near_airport_lng":near_airport_lng}
-
-def get_hotel_detail_by_id(rdsDB,id):
-    cursor = rdsDB.cursor()
-    sql_sub = "SELECT * FROM skike.hotel where id = '{}'".format(str(id))
-    cursor.execute(sql_sub)
-    result_sub = cursor.fetchall()

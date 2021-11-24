@@ -4,58 +4,63 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hotel Booking Landing Page</title>
-    <link rel="stylesheet" href="/static/font.css" />
-    <link rel="stylesheet" href="/static/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/style.css" />
     <style type="text/css">
       html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
     </style>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcncmKczTtjQ0Xer1AU2BEQzbL7xRNcoc">
-    </script>
-    <script type="text/javascript">
-      function initialize() {
-        var mapOptions = {
-          center: { lat: -34.397, lng: 150.644},
-          zoom: 8
-        };
-        var map = new google.maps.Map(
-            document.getElementById('map-canvas'),
-            mapOptions);
-      }
-      google.maps.event.addDomListener(
-          window, 'load', initialize);
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
-
   <body>
-    <div class="container">
+    <div class="container-fluid">
       <header>
         <nav>
           <div class="menu">
             <a href="{{url_for('main_index')}}">
-              <div class="logo">Ski <span>Demo</span> lke</div>
+              <div class="logo"><span>Skike</span></div>
             </a>
             <ul>
               <li></li>
               <li></li>
             </ul>
           </div>
-          <div class="myAccount">
-            <div class="ctaGroup">
-              <div class="cta">Sign In</div>
-              <!-- <div class="cta active">Create Account</div> -->
-              <div class="cta active"></div>
+          {%if login%}
+          <div class="div" style="width: 249px;">
+            <a href="{{url_for('user_page')}}" onclick="return chk2000()" style="margin-left:60%">
+            <img
+              src="https://us.123rf.com/450wm/rastudio/rastudio1610/rastudio161000130/63343177-user-profile-with-minus-sign-vector-sketch-icon-isolated-on-background-hand-drawn-user-profile-with-.jpg?ver=6"
+              width="30"
+              height="30"
+              style="border-radius: 10px;"
+            />
+          </a>
+          <a href="{{url_for('sign_out')}}"  style="float: right;">
+            <div style=" float: right">log_out</div>
+          </a>
+        </div>
+          {%else%}
+           <div class="myAccount">
+              <div class="ctaGroup">
+                <a href="{{url_for('user_sign_in')}}">
+                  <div class="cta">Sign In</div>
+                </a>
+                <a href="{{url_for('user_sign_up')}}">
+                  <div class="cta active">Create Account</div>
+                </a>
+              </div>
             </div>
-          </div>
+          {%endif%}
         </nav>
       </header>
       <div class="hotel_content">
         <div class="info">
           <h2>Book hotels online</h2>
-          <h1>OnlyforDemo</h1>
         </div>
-
         <div class="booking_info">
           <div class="opt">
             <a href="{{url_for('main_index')}}">
@@ -65,88 +70,69 @@
               <span>Hotel</span>
             </a>
           </div>
-        <form method="POST" action="{{ url_for('hotel_search') }}">
+        <form method="POST" action="{{url_for('hotel_search')}}" onsubmit="return chk2000()" name="send">
           <div class="booking_details">
-            <!-- <select name="booking_category" class="booking_category">
-              <option >Hotel</option>
-              <option >Airplane</option>
-            </select> -->
             <div class="item">
-              <i class="fa fa-search"></i>
-              <!-- <input type="text" name="location" placeholder="Please enter destination" size="20" /> -->
-              <select name="location" class="booking_category">
-                <option >find a place</option>
-                {% for item in KR_location_list %}
-                  <option >{{item}}</option>
-                {%endfor%}
-              </select>
+              <div class="form-group">
+                <select id="location_seletor" class="form-control" id="exampleFormControlSelect1" name="location">
+                  <option disabled="disabled">find a place</option>
+                  <option {%if location=='釜山'%}selected="selected"{%endif%}>釜山</option>
+                  <option {%if location=='首爾'%}selected="selected"{%endif%}>首爾</option>
+                  <option {%if location=='濟州市'%}selected="selected"{%endif%}>濟州市</option>
+                  <option {%if location=='大邱廣域市'%}selected="selected"{%endif%}>大邱廣域市</option>
+                  <option {%if location=='蔚山'%}selected="selected"{%endif%}>蔚山</option>
+                  <option {%if location=='慶州'%}selected="selected"{%endif%}>慶州</option>
+                  <option {%if location=='仁川'%}selected="selected"{%endif%}>仁川</option>
+                  <option {%if location=='全州'%}selected="selected"{%endif%}>全州</option>
+                  <option {%if location=='水原市'%}selected="selected"{%endif%}>水原市</option>
+                  <option {%if location=='江陵'%}selected="selected"{%endif%}>江陵</option>
+                  <option {%if location=='平昌'%}selected="selected"{%endif%}>平昌</option>
+                  <option {%if location=='春川'%}selected="selected"{%endif%}>春川</option>
+                </select>
+              </div>
             </div>
             <div class="item">
               <div class="date">
                 <input
-                  id="theDate"
+                  id="the_date"
+                  value="{{today}}"
                   type="date"
                   name="start_date"
                   required
                   placeholder="Depart Date"
                   class="form-control"
+                  min = {{today}}
                 />
               </div>
-              <div class="days">入住日期</div>
+              <div class="days">想搜尋日期</div>
             </div>
             <div class="item">
               <div class="date">
                 <input
-                  id="theDate"
+                  id="the_date"
+                  value={{next_week}}
                   type="date"
                   name="end_date"
                   required
                   placeholder="Return Date"
                   class="form-control"
+                  min = {{tomorrow}}
                 />
               </div>
-              <div class="days">退房日期</div>
-            </div>
-            <div class="item">
-              <div class="people">
-                adults
-                <select name="adults_number" class="select_adult">
-                  <option >0</option>
-                  <option >1</option>
-                  <option >2</option>
-                  <option >3</option>
-                  <option >4</option>
-                  <option >5</option>
-                  <option >6</option>
-                  <option >7</option>
-                  <option >8</option>
-                  <option >9</option>
-                </select>
-                and rooms
-                <select name="rooms" class="select_room">
-                  <option >0</option>
-                  <option >1</option>
-                  <option >2</option>
-                  <option >3</option>
-                  <option >4</option>
-                  <option >5</option>
-                  <option >6</option>
-                  <option >7</option>
-                  <option >8</option>
-                  <option >9</option>
-                </select>
-                <!-- 2 adults, 0 children <i class="fa fa-angle-down"></i> -->
-              </div>
-              <!-- <div class="days">1 room</div> -->
+              <div class="days">日期結尾</div>
             </div>
             <div class="item">
               <input type = "submit" value="Submit" class="cta active">
-              <!-- <div class="cta active">Search</div> -->
             </div>
           </div>
         </div>
         </form>
       </div>
+      {%if message%}
+      <div class="alert alert-warning" role="alert">
+        {{message}}
+      </div>
+      {%endif%}
         <main>{% block content %}{% endblock %}</main>
       
       <!-- <img src="/static/assets/cartoon/hotel.png" class="hotel" /> -->
@@ -160,7 +146,118 @@
       <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_3" /> -->
       <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_4" /> -->
       <!-- <img src="/static/assets/cartoon/megaman.gif" class="dog_1" /> -->
+      <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
       <script>
+        function chk2000() {
+          console.log(123)
+          let timerInterval;
+            Swal.fire({
+              title: "Auto close alert!",
+              html: "I will close in <b></b> milliseconds.",
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+                const b = Swal.getHtmlContainer().querySelector("b");
+                timerInterval = setInterval(() => {
+                  b.textContent = Swal.getTimerLeft();
+                }, 100);
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+              }
+            });
+        }
+      </script>
+      <!-- for hotel detail -->
+      <script>
+        function favorite_icon() {
+
+          let timerInterval;
+            Swal.fire({
+              title: "新增/刪除我的喜愛",
+              html: "I will close in <b></b> milliseconds.",
+              timer: 1500,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+              }
+            });
+        }
+      </script>
+      <script>
+        function chk2() {
+          let timerInterval;
+            Swal.fire({
+              title: "Auto close alert!",
+              html: "I will close in <b></b> milliseconds.",
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+                const b = Swal.getHtmlContainer().querySelector("b");
+                timerInterval = setInterval(() => {
+                  b.textContent = Swal.getTimerLeft();
+                }, 100);
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+              }
+            });
+        }
+      </script>
+      <script>
+        function bad_date() {
+          let timerInterval;
+            Swal.fire({
+              title: "想搜尋日期不能大於日期結尾,請在搜尋一次",
+              html: "I will close in <b></b> milliseconds.",
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: () => {
+                Swal.showLoading();
+                const b = Swal.getHtmlContainer().querySelector("b");
+                timerInterval = setInterval(() => {
+                  b.textContent = Swal.getTimerLeft();
+                }, 100);
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
+            }).then((result) => {
+              /* Read more about handling dismissals below */
+              if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+              }
+            });
+        }
+      </script>
+      <!-- <script>
         var date = new Date();
 
         var day = date.getDate();
@@ -172,7 +269,7 @@
 
         var today = year + "-" + month + "-" + day + "T00:00";
         document.getElementById("theDate").value = today;
-      </script>
+      </script> -->
     </div>
   </body>
 </html>

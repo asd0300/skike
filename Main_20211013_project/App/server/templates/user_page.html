@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/style.css" />
+    <title>register</title>
+    <style type="text/css"></style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <header>
+        <nav>
+          <div class="menu">
+            <a href="{{url_for('main_index')}}">
+              <div class="logo"><span>Skilke</span></div>
+            </a>
+          </div>
+        </nav>
+      </header>
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-5"></div>
+          <div class="col-xl"><h3>User Information</h3></div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-">
+            <img
+            src="https://www.w3schools.com/w3images/avatar2.png"
+            width="200"
+            height="200"
+            style="border-radius: 10px"
+            />
+          </div>
+          <div class="col">
+            <div id="user_email" style="margin-left:30%">user_email:{{email}}</div>
+          </div>
+          
+        </div>
+        <ul></ul>
+        <div class="row">
+          <div class="col">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Picture</th>
+                  <th scope="col">Hotel_Name</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Recommend Price</th>
+                  <th scope="col">URL</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              {% for item in sql_favorite_result_hotel%}
+                <tbody>
+                  <tr id="item_favorite{{loop.index}}">
+                    <th scope="row">{{loop.index}}</th>
+                    <td><img src="{{item['hotel_img']}}" width="220" height="120" style="border-radius: 10px;"></td>
+                    <td id="hotel_name{{loop.index}}">{{item['hotel_name']}}</td>
+                    <td>{{item['location']}}</td>
+                    <td>{{item['price']}}</td>
+                    <td><button ><a onclick="return chk2()" href="{{item['hotel_detail']}}"><img
+                      src="https://thumbs.dreamstime.com/b/redirect-icon-vector-change-direction-symbolfor-graphic-design-logo-web-site-social-media-mobile-app-ui-illustration-redirect-icon-221915248.jpg"
+                      border="0px"
+                      width="30"
+                      height="30"
+                    />
+                    </a></button></td>
+                    <td><button id="btn{{loop.index}}"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtYOfTxd6aTsMJTuAOiDjfV9Bzn-DYv_QyyPAseWoUbg2DEa7D7Dwu0-GdCbKqkeYoA5M&usqp=CAU" width="30" height="30"></button></td>
+                  </tr>  
+                </tbody>
+              {%endfor%}
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{message}}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+  </body>
+  {% for item in sql_favorite_result_hotel%}
+  <script type=text/javascript>
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+  <script language="javascript" type="text/javascript">
+    $('#btn{{loop.index}}').click(
+      function() {
+    console.log("123")
+    var form_data = new FormData();
+    form_data.append('hotel_name', $("#hotel_name{{loop.index}}").text());
+    form_data.append('email', $("#user_email").text());
+    form_data.append('delete_user_page', 'True');
+    $('#item_favorite{{loop.index}}').hide();
+
+
+    $.ajax({
+      type: "POST",
+      url: $SCRIPT_ROOT + "/route_function",
+      data: form_data,
+      success: function (data) {
+        // alert(data.validate)
+        // alert(data.Rtnfood)
+
+      },
+      contentType: false,
+      processData: false,
+      // dataType: "json"
+    });
+  }
+  );
+  </script>
+  <script>
+    function chk2() {
+      let timerInterval;
+        Swal.fire({
+          title: "Auto close alert!",
+          html: "I will close in <b></b> milliseconds.",
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+            const b = Swal.getHtmlContainer().querySelector("b");
+            timerInterval = setInterval(() => {
+              b.textContent = Swal.getTimerLeft();
+            }, 100);
+          },
+          willClose: () => {
+            clearInterval(timerInterval);
+          },
+        }).then((result) => {
+          /* Read more about handling dismissals below */
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log("I was closed by the timer");
+          }
+        });
+    }
+  </script>
+  {%endfor%}
+</html>

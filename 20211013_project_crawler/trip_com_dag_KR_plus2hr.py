@@ -26,7 +26,7 @@ default_args = {
 }
 
 dag = DAG(
-    'trip_com_flight_KR',
+    'trip_com_flight_KR_2hr',
     default_args = default_args,
     description= 'Our first DAG with ETL process2',
     schedule_interval = timedelta(days = 1)
@@ -50,7 +50,7 @@ def just_a_function():
 
     mydatabase = conn['skike'] 
     # Access collection of the database 
-    mycollection=mydatabase['({})skike_ticket_to_KR'.format(str(date.today()))]
+    mycollection=mydatabase['({})skike_ticket_to_KR_2hr'.format(str(date.today()))]
 
 
     # with open('Webshare 10 proxies.txt') as f:
@@ -119,7 +119,6 @@ def just_a_function():
             ip = random.choice(m)
             proxies = {'http':"http://{}:{}@{}".format('vvbocpqj','obt7b7ug0dim',ip)}
             response = requests.request("POST", url, headers=headers, data=payload,proxies=proxies)
-            time.sleep(random.randint(1,2))
             print("OK------------------position "+str(position)+" date "+date1+" "+proxies['http'])
             # print(response)
             result = response.json()
@@ -185,7 +184,7 @@ def just_a_function():
 
     mydatabase = conn['skike'] 
     # Access collection of the database 
-    mycollection=mydatabase['({})_ticket_to_Taiwan_from_KR'.format(str(date.today()))]
+    mycollection=mydatabase['({})_ticket_to_Taiwan_from_KR_2hr'.format(str(date.today()))]
 
 
     def daterange(start_date, end_date):
@@ -247,7 +246,6 @@ def just_a_function():
             ip = random.choice(m)
             proxies = {'http':"http://{}:{}@{}".format('vvbocpqj','obt7b7ug0dim',ip)}
             response = requests.request("POST", url, headers=headers, data=payload, proxies= proxies)
-            time.sleep(random.randint(1,2))
             print("OK------------------position "+str(strat_position)+" to "+str(arrive_position)+" date "+date1+" "+proxies['http'])
             # print(response)
             result = response.json()

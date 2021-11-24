@@ -5,75 +5,93 @@
   {% for list in flight_list %}
   <div class="product_details">
     <div class="product_colors"></div>
-    <div class="product_title">
-      <div class="flight_item">
-        <i class=""></i>
-        {{list['depart_time']}} - {{list['arrive_time']}}
-        <!-- <div class="flight_name">{{list['flight_company']}}</div> -->
+    <div class="flight_title">
+      <div class="flight_pic">
+        <img src="{{list['air_pic']}}" border="0px" width="50" height="50" />
       </div>
       <div class="flight_item">
-        <i class=""></i>
-        <p>旅程</p>
+        {{list['depart_time']}} - {{list['arrive_time']}}
+        <div class="flight_item">
+          {% if list['stayover_times'] == '0個中轉站' %}
+          <a>直航／不停站</a>
+          {% endif %} {% if list['stayover_times'] != '0個中轉站' %}
+          <a>{{list['stayover_times']}}</a>
+          {% endif %}
+          <div class="terminal_information">{{list['flight_company']}}</div>
+        </div>
+      </div>
+      <div class="flight_item">
+        <p>
+          <img
+            src="https://cdn.icon-icons.com/icons2/2098/PNG/512/clock_icon_128908.png"
+            border="0px"
+            width="15"
+            height="15"
+            class="flight_clock_icon"
+          />
+          旅程
+        </p>
         {{(list['duration_min']/60)|int}} 小時 {{list['duration_min']%60}} 分鐘
       </div>
       <div class="flight_item">
-        <i class=""></i>
         <p>目的地城市</p>
         {{list['arrive_City']}}
       </div>
       <div class="flight_item">
-        <i class=""></i>
-        {% if list['stayover_times'] == '0個中轉站' %}
-        <a>直航／不停站</a>
-        {% endif %} {% if list['stayover_times'] != '0個中轉站' %}
-        <a>{{list['stayover_times']}}</a>
-        {% endif %}
-        <div class="terminal_information">{{list['flight_company']}}</div>
-      </div>
-      <div class="flight_item">
-        <i class=""></i>
         {{list['depart_city']}}-{{list['arrive_City']}}
       </div>
-      <div class="flight_item">
-        <i class=""></i>
-        DepartDay:{{list['data_query_time']}}
-        <div id="listBtn" onclick="listBtn()">Price:${{prices['price']}}</div>
-      </div>
-      {% for prices in list['alternative_flight'] %}
-      <!-- <div id="myDropdown_{{id_count}}" style="display: none"> -->
-      <!-- <div id="myDropdown_{{i}}"> -->
-      <div id="listBtn" onclick="listBtn()">
-        Price:${{prices['price']}}
-        <div id="textlistn" style="display: none">
-          Price:${{prices['price']}}
-        </div>
+      <div class="flight_item">DepartDay:{{list['data_query_time']}}</div>
+    </div>
+    <div
+      id="card-deck"
+      class="d-flex flex-row flex-nowrap overflow-auto"
+      style="height: 250px; margin-left: 10%; margin-right: 10%"
+    >
+      {%if list['alternative_flight']%} {% for prices in
+      list['alternative_flight'] %}
+      <div id="card" class="card col-3 p-2 bg-light border-dark">
+        <div id="card-{{ i }}" class="card-body">
+          <div style="font-size: 16px; list-style-type: none; height: 160px">
+            <div class="alter_class">{{prices['flight_class']}}</div>
+            <div class="alter_class">
+              目前剩餘票數:{{prices['available_tickets']}}
+            </div>
+            <div class="alter_class">{{prices['flight_ticket_feature']}}</div>
+            <div class="alter_class">{{prices['ticket_description']}}</div>
+          </div>
+          <div id="listBtn" class="alter_search_flight_money">
+            Price:${{prices['price']}}
+            <a href="{{prices['url']}}" class="flight_img">
+              <img
+                src="https://thumbs.dreamstime.com/b/redirect-icon-vector-change-direction-symbolfor-graphic-design-logo-web-site-social-media-mobile-app-ui-illustration-redirect-icon-221915248.jpg"
+                border="0px"
+                width="30"
+                height="30"
+              />
+            </a>
+          </div>
 
-        {% endfor %}
-        <a></a>
-        {% endfor %}
-        <a></a>
-      </div>
-      <a></a>
-      <script>
-        function listBtn() {
-          var listBtn = document.getElementById("listBtn");
-          var textlistn = document.getElementById("textlistn");
-          if (textlistn.style.display === "none") {
-            textlistn.style.display = "block";
-            listBtn.innerText = "隱藏";
-          } else {
-            textlistn.style.display = "show";
-            listBtn.innerText = "秀出來";
-          }
-        }
-      </script>
-      {%elif flight_list == [] %}
-      <div class="price_container">
-        <div class="price_item">
-          <a>Sorry, please search other date or place</a>
+          <!-- <div class="d-flex justify-content-end">
+            <button
+              id="change-card-{{ i }}"
+              class="btn-sm btn-primary"
+            ></button>
+          </div> -->
         </div>
-        {%endif%} {% endblock content %}
       </div>
+      {% endfor %} {%else%}
+      <div class="alert alert-warning" role="alert">
+        目前這台班機未找到合適的機票
+      </div>
+      {%endif%}
     </div>
   </div>
+  {%endfor%}
 </div>
+{%else%}
+<ul></ul>
+<ul></ul>
+<div class="alert alert-warning" role="alert">
+  No search result please search another day or position
+</div>
+{%endif%} {% endblock content %}

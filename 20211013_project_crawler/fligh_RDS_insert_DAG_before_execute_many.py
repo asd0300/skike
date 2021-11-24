@@ -1,32 +1,31 @@
 from datetime import timedelta
-# from airflow import DAG
-# from airflow.operators.python_operator import PythonOperator
-# from airflow.utils.dates import days_ago
-# from airflow.models import Variable
+from airflow import DAG
+from airflow.operators.python_operator import PythonOperator
+from airflow.utils.dates import days_ago
+from airflow.models import Variable
 from env import config
 import pymysql
 from pymongo import MongoClient
 ###date generator
 from datetime import date, timedelta
-import urllib.parse
 
-# default_args = {
-#     'owner': 'airflow',
-#     'depends_on_past': False,
-#     'start_date' : days_ago(0,0,0,0,0),
-#     'email' : ['fan0300@gmail.com'],
-#     'email_on_failure': False,
-#     'email_on_retry': False,
-#     'retries' : 1,
-#     'retry_delay': timedelta(minutes =1)
-# }
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'start_date' : days_ago(0,0,0,0,0),
+    'email' : ['fan0300@gmail.com'],
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries' : 1,
+    'retry_delay': timedelta(minutes =1)
+}
 
-# dag = DAG(
-#     'insertRDS_flight',
-#     default_args = default_args,
-#     description= 'Our first DAG with ETL process',
-#     schedule_interval = timedelta(days = 1)
-# )
+dag = DAG(
+    'insertRDS_flight',
+    default_args = default_args,
+    description= 'Our first DAG with ETL process',
+    schedule_interval = timedelta(days = 1)
+)
 
 
 def flight_data_insert():
@@ -37,7 +36,7 @@ def flight_data_insert():
     cursor = rdsDB.cursor()
     conn = MongoClient("mongodb://skike4:{}@ec2-18-191-175-148.us-east-2.compute.amazonaws.com:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false".format(config.MONGO_PASS_SKIKE_UBUNTU))
     mydatabase = conn['skike'] 
-    mycollection=mydatabase['({})skike_ticket_to_KR'.format(str(date.today()))]
+    mycollection=mydatabase['({})skike_ticket_to_JP'.format(str(date.today()))]
     pipetest = [
     {
         '$match': {
@@ -131,36 +130,20 @@ def flight_data_insert():
             
             if product['policyInfoList'][0]['priceDetailInfo']['adult'] != None:
                 for policy_item in policy_info_list:
-                    product_flag =  policy_item['productFlag']
-                    price = policy_item['priceDetailInfo']['viewTotalPrice']
-                    remark_token_key = str(policy_item['remarkTokenKey'])
-                    adult_price = str(policy_item['priceDetailInfo']['adult']['totalPrice'])
-                    flight_class = str(policy_item['productClass'][0])
-                    available_tickets = policy_item['availableTickets']
-                    flight_ticket_feature = str(policy_item['descriptionInfo']['productName'])
-                    flight_category = str(policy_item['descriptionInfo']['productCategory'])
-                    ticket_description = str(policy_item['descriptionInfo']['ticketDescription'])
+                    product_flag =  policy_item['productFlag'],
+                    price = policy_item['priceDetailInfo']['viewTotalPrice'],
+                    adult_price = str(policy_item['priceDetailInfo']['adult']['totalPrice']),
+                    flight_class = str(policy_item['productClass'][0]),
+                    available_tickets = policy_item['availableTickets'],
+                    flight_ticket_feature = str(policy_item['descriptionInfo']['productName']),
+                    flight_category = str(policy_item['descriptionInfo']['productCategory']),
+                    ticket_description = str(policy_item['descriptionInfo']['ticketDescription']),
                     flight_id = shoppingId
-                    shoppingId = policy_item['productKeyInfo']['shoppingId']
-                    groupKey = policy_item['productKeyInfo']['groupKey']
-                    
-                    # print(shoppingId)
-                    # print(groupKey)
-                    url = "https://hk.trip.com/flights/passenger?FlightWay=OW&class=Y&Quantity=1&ChildQty=0&BabyQty=0&dcity=tpe&acity=sel&ddate=2021-12-30&"
-                    criteriaToken =i['resultBasicInfo']['criteriaToken']
-                    # print(remark_token_key)
-                    remark_token_key = urllib.parse.quote_plus(remark_token_key)
-                    criteriaToken = urllib.parse.quote_plus(criteriaToken)
-                    shoppingId = urllib.parse.quote_plus(shoppingId)
-                    groupKey = urllib.parse.quote_plus(groupKey)
-                    a = "remarkTokenKey="+remark_token_key+"&"+"criteriaToken="+criteriaToken+"&"+"shoppingId="+shoppingId+"&"+"groupKey="+groupKey
-                    # b = a.replace(":","%3A").replace("|","%7C").replace("^","%5E").replace(",","")
-                    url+=a
-                    # print(url)
-                    sql_flightprice = "INSERT INTO skike.flight_price (`product_flag`, `price`, `adult_price`, `flight_class`, `available_tickets`, `flight_ticket_feature`, `flight_category`, `ticket_description`, `flight_id`,`url`\
-                    )VALUES (%s,  %s, %s, %s, %s, %s, %s, %s, %s,%s)"
+
+                    sql_flightprice = "INSERT INTO skike.flight_price (`product_flag`, `price`, `adult_price`, `flight_class`, `available_tickets`, `flight_ticket_feature`, `flight_category`, `ticket_description`, `flight_id`\
+                    )VALUES (%s,  %s, %s, %s, %s, %s, %s, %s, %s)"
                     try:                    
-                        cursor.execute(sql_flightprice, (product_flag, price, adult_price,  flight_class, available_tickets, flight_ticket_feature, flight_category, ticket_description, flight_id, url))
+                        cursor.execute(sql_flightprice, (product_flag, price, adult_price,  flight_class, available_tickets, flight_ticket_feature, flight_category, ticket_description, flight_id))
                         rdsDB.commit()
                     except Exception as e:
                         print("Exeception occured:{}".format(e))
@@ -176,25 +159,24 @@ def flight_data_insert():
                     product_category = str(policy_item['descriptionInfo']['productCategory'])
                     ticket_description = str(policy_item['descriptionInfo']['ticketDescription'])
                     flight_id = shoppingId
+
                     sql_flightpriceChild = "INSERT INTO skike.flightpriceChild (`product_Flag`,\
                     `view_total_price`, `child_price`, `product_class`, `available_tickets`, \
                     `product_name`, `product_category`, `ticket_description`, `flight_id`\
                     )VALUES (%s,  %s, %s, %s, %s, %s, %s, %s, %s)"
                     try:                    
                         cursor.execute(sql_flightpriceChild, (product_Flag, view_total_price, child_price, product_class, available_tickets, product_name, product_category, ticket_description, shoppingId))
-                        # rdsDB.commit()
+                        rdsDB.commit()
                     except Exception as e:
                         print("Exeception occured:{}".format(e))
-    
     return "Ok"
 
-flight_data_insert()
-# flight_data_insert1 = PythonOperator(
-#     task_id='insert_flight',
-#     python_callable = flight_data_insert,
-#     dag = dag,
-# )
+flight_data_insert1 = PythonOperator(
+    task_id='insert_flight',
+    python_callable = flight_data_insert,
+    dag = dag,
+)
 
 
 
-# flight_data_insert1
+flight_data_insert1

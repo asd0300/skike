@@ -1,4 +1,4 @@
-{% extends "layout_hotel.html" %} {%block content%}
+{% extends "layout.html" %} {%block content%}
 <main>
   <ul></ul>
   <div class="container">
@@ -140,7 +140,7 @@
             <div class="col-6">
               <div class="pic">
                 <a
-                  href="https://tc.trip.com/travel-guide/attraction/seoul/myeong-dong-10524255/"
+                  href="https://tc.trip.com/travel-guide/attraction/seoul/myeong-dong-10524255/" onclick="return chk2000()"
                 >
                   <img
                     src="https://youimg1.tripcdn.com/target/100s1f000001gx70tD814_C_670_770.jpg_.webp"
@@ -184,6 +184,7 @@
               <div class="pic">
                 <a
                   href="https://tc.trip.com/travel-guide/attraction/seoul/gyeongbokgung-palace-78910/"
+                  onclick="return chk2000()"
                 >
                   <img
                     src="https://youimg1.tripcdn.com/target/10081f000001gqicwC6BC_C_670_770.jpg_.webp"
@@ -229,6 +230,7 @@
               <div class="pic">
                 <a
                   href="https://tc.trip.com/travel-guide/attraction/seoul/n-seoul-tower-83001/"
+                  onclick="return chk2000()"
                 >
                   <img
                     src="https://youimg1.tripcdn.com/target/100n0y000000m3626DC3B_C_670_770.jpg_.webp"
@@ -272,6 +274,7 @@
               <div class="pic">
                 <a
                 href="https://tc.trip.com/travel-guide/attraction/seoul/bukchon-hanok-village-87555/"
+                onclick="return chk2000()"
                 >
                   <img
                     src="https://youimg1.tripcdn.com/target/100p11000000r4rhv9EF4_C_670_770.jpg_.webp"
@@ -364,7 +367,4 @@
   integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
   crossorigin="anonymous"
 ></script>
- {% endblock content %}
-    </div>
-  </div>
-</div>
+{% endblock content %}

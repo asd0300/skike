@@ -1,0 +1,243 @@
+{
+  "geocoded_waypoints": [
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJF6qs-dCcfDURVMw5Ij-Qd6w",
+      "types": ["airport", "establishment", "point_of_interest"]
+    },
+    {
+      "geocoder_status": "OK",
+      "place_id": "ChIJJ15nUsOYfDURg_U42X3dOB8",
+      "types": [
+        "convenience_store",
+        "establishment",
+        "food",
+        "point_of_interest",
+        "store"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "bounds": {
+        "northeast": {
+          "lat": 37.5624526,
+          "lng": 126.923237
+        },
+        "southwest": {
+          "lat": 37.53431,
+          "lng": 126.794
+        }
+      },
+      "copyrights": "Map data \u00a92021 SK telecom",
+      "legs": [
+        {
+          "arrival_time": {
+            "text": "",
+            "time_zone": "Asia/Seoul",
+            "value": 1637427883
+          },
+          "departure_time": {
+            "text": "",
+            "time_zone": "Asia/Seoul",
+            "value": 1637422607
+          },
+          "distance": {
+            "text": "14.7 \u516c\u91cc",
+            "value": 14675
+          },
+          "duration": {
+            "text": "1 \u5c0f\u6642 28 \u5206\u9418",
+            "value": 5276
+          },
+          "end_address": "140 Yanghwa-ro, Donggyo-dong, Mapo-gu, Seoul, \u5357\u97d3",
+          "end_location": {
+            "lat": 37.55540000000001,
+            "lng": 126.922
+          },
+          "start_address": "\u5357\u97d3 Seoul, Gangseo-gu, Haneul-gil, 112\u91d1\u6d66\u570b\u969b\u6a5f\u5834 (GMP)",
+          "start_location": {
+            "lat": 37.559,
+            "lng": 126.794
+          },
+          "steps": [
+            {
+              "distance": {
+                "text": "1.4 \u516c\u91cc",
+                "value": 1355
+              },
+              "duration": {
+                "text": "23 \u5206\u9418",
+                "value": 1356
+              },
+              "end_location": {
+                "lat": 37.562451,
+                "lng": 126.808751
+              },
+              "html_instructions": "\u6b65\u884c\u5230\u673a\u573a\u5e02\u573a",
+              "polyline": {
+                "points": "wvfdFom{dWqTe{A"
+              },
+              "start_location": {
+                "lat": 37.559,
+                "lng": 126.794
+              },
+              "steps": [
+                {
+                  "distance": {
+                    "text": "1.4 \u516c\u91cc",
+                    "value": 1355
+                  },
+                  "duration": {
+                    "text": "23 \u5206\u9418",
+                    "value": 1356
+                  },
+                  "end_location": {
+                    "lat": 37.562451,
+                    "lng": 126.808751
+                  },
+                  "polyline": {
+                    "points": "wvfdFom{dWqTe{A"
+                  },
+                  "start_location": {
+                    "lat": 37.559,
+                    "lng": 126.794
+                  },
+                  "travel_mode": "WALKING"
+                }
+              ],
+              "travel_mode": "WALKING"
+            },
+            {
+              "distance": {
+                "text": "13.2 \u516c\u91cc",
+                "value": 13164
+              },
+              "duration": {
+                "text": "35 \u5206\u9418",
+                "value": 2083
+              },
+              "end_location": {
+                "lat": 37.556415,
+                "lng": 126.923237
+              },
+              "html_instructions": "\u516c\u8eca \u958b\u5f80\u4e2d\u6d6a\u516c\u5171\u8f66\u5e93",
+              "polyline": {
+                "points": "ilgdFui~dWVl@BFbA~BTNT?ZQF]Ds@D_A?EDaANaD?ClA_Wf@kJHeB?CTuDLoBfDmt@?ATeH?ErAeY@Al@mOBo@v@sN@IRgDJ}ALwCd@sKb@_M?CNsCRmBJmC?CLmBVqEPgBf@iCdA_E?AT{@`AyDp@kCbD{Mf@qB?AzBqIfIg[@AdBiFfHyShEaKPo@bAkBZ_@\\k@l@mAlAaCtEmJt@iCr@mD`@sFEoF?CK_FEaCImGi@uFG_AmA}HEo@K]I]Eq@@iALcAT_AVm@@ExByFr@oBrJaVfDyH|DsJxF{L?AR]zBwEnDcG`BmCfB{AtAm@rC}@j@Sd@i@b@qALc@VuCb@qCp@yBJYvDuGPGjDfCrA`AZjC{@xB_GfOsCwAgDaCgQoMgJgHkAoA}IeLqRqVqAwBa@{@]}@o@aBg@cCs@{CUsA?CYy@[eA{@cBEIiXm`@AAi@q@Qs@q@_A}EeH{E_HA?"
+              },
+              "start_location": {
+                "lat": 37.562451,
+                "lng": 126.808751
+              },
+              "transit_details": {
+                "arrival_stop": {
+                  "location": {
+                    "lat": 37.556415,
+                    "lng": 126.923237
+                  },
+                  "name": "\u5f18\u76ca\u5927\u5b66\u7ad9"
+                },
+                "arrival_time": {
+                  "text": "",
+                  "time_zone": "Asia/Seoul",
+                  "value": 1637427726
+                },
+                "departure_stop": {
+                  "location": {
+                    "lat": 37.562451,
+                    "lng": 126.808751
+                  },
+                  "name": "\u673a\u573a\u5e02\u573a"
+                },
+                "departure_time": {
+                  "text": "",
+                  "time_zone": "Asia/Seoul",
+                  "value": 1637425643
+                },
+                "headsign": "\u4e2d\u6d6a\u516c\u5171\u8f66\u5e93",
+                "headway": 1680,
+                "line": {
+                  "agencies": [
+                    {
+                      "name": "\uc11c\uc6b8\ud2b9\ubcc4\uc2dc\ubc84\uc2a4\uc6b4\uc1a1\uc0ac\uc5c5\uc870\ud569",
+                      "url": "http://www.odsay.com/Bus/Seoul_Main.asp?CID=1000&LMenu=1"
+                    }
+                  ],
+                  "color": "#374ff2",
+                  "name": "\uc11c\uc6b8 \uac04\uc120\ubc84\uc2a4",
+                  "short_name": "N26",
+                  "text_color": "#ffffff",
+                  "vehicle": {
+                    "icon": "//maps.gstatic.com/mapfiles/transit/iw2/6/bus2.png",
+                    "name": "\u516c\u8eca",
+                    "type": "BUS"
+                  }
+                },
+                "num_stops": 18
+              },
+              "travel_mode": "TRANSIT"
+            },
+            {
+              "distance": {
+                "text": "0.2 \u516c\u91cc",
+                "value": 156
+              },
+              "duration": {
+                "text": "3 \u5206\u9418",
+                "value": 157
+              },
+              "end_location": {
+                "lat": 37.55540000000001,
+                "lng": 126.922
+              },
+              "html_instructions": "\u6b65\u884c\u5230140 Yanghwa-ro, Donggyo-dong, Mapo-gu, Seoul, \u5357\u97d3",
+              "polyline": {
+                "points": "sffdFguteWjEvF"
+              },
+              "start_location": {
+                "lat": 37.556415,
+                "lng": 126.923237
+              },
+              "steps": [
+                {
+                  "distance": {
+                    "text": "0.2 \u516c\u91cc",
+                    "value": 156
+                  },
+                  "duration": {
+                    "text": "3 \u5206\u9418",
+                    "value": 157
+                  },
+                  "end_location": {
+                    "lat": 37.55540000000001,
+                    "lng": 126.922
+                  },
+                  "polyline": {
+                    "points": "sffdFguteWjEvF"
+                  },
+                  "start_location": {
+                    "lat": 37.556415,
+                    "lng": 126.923237
+                  },
+                  "travel_mode": "WALKING"
+                }
+              ],
+              "travel_mode": "WALKING"
+            }
+          ],
+          "traffic_speed_entry": [],
+          "via_waypoint": []
+        }
+      ],
+      "overview_polyline": {
+        "points": "wvfdFom{dWqTe{AZt@bA~BTNT?ZQF]Ds@DeAbBg^p@qMTyDtD}w@TgHrAkYn@oOpAuUJ}ALwChAsYNwCRmBJmCLqBVqEPgBf@iCdA_ET}@rBeIjEmQdM}e@lKc[hEaKPo@bAkBZ_@\\k@zBoEtEmJt@iCr@mD`@sFEsFQaJImGi@uFG_AmA}HEo@K]I]Eq@@iALcAT_AVm@@ElDiJrJaVfDyH|DsJxF}LnCuFpGqKfB{AtAm@~DqAd@i@b@qALc@VuCb@qCp@yBJYvDuGPGjDfCrA`AZjC{@xB_GfOsCwAoVqQgJgHkAoAo]wc@qAwBa@{@mA_D{A_HUwAu@_CaAmBkXo`@i@q@Qs@oGeJ}E_HjEvF"
+      },
+      "summary": "",
+      "warnings": [
+        "\u6b65\u884c\u8def\u7dda\u6307\u793a\u76ee\u524d\u70ba\u6e2c\u8a66\u7248\u3002 \u4f7f\u7528\u6ce8\u610f\u4e8b\u9805 \u2013 \u6b64\u8def\u7dda\u53ef\u80fd\u6c92\u6709\u4eba\u884c\u9053\u6216\u884c\u4eba\u5f92\u6b65\u8def\u5f91\u3002"
+      ],
+      "waypoint_order": []
+    }
+  ],
+  "status": "OK"
+}
