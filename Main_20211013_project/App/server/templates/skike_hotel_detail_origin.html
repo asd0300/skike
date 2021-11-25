@@ -245,9 +245,6 @@
                   <div class="now_airport">目前所導向的機場: {{geo_result}}</div>
                     導向其他機場
                     <select class="form-control" id="exampleFormControlSelect1" name="airport_alter">
-                      <!--{% for sub_geocode in geocode%}
-                      <option >{{sub_geocode["airport_name"]}}</option>
-                      {% endfor %}-->
                       <option disabled="disabled">選擇想導航的機場</option>
                       <option disabled="disabled">----------首爾,仁川,水原市附近----------</option>
                       <option >仁川國際機場</option>
@@ -350,7 +347,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary mb-2" id="btn_2">Submit</button>
               <div class ="after_query"></div>
-              <h3 class="list_number_result2">為您找到{{num_result_sub_2}}個結果</h3>
+              <h3 class="list_number_result2">為您找到{{result_count_of_agency}}個結果</h3>
               {% for list in detail_hotel_list %}
               <div class="product_details">
                 <div class="product_colors"></div>
@@ -434,7 +431,7 @@
                 $('.product_item').hide();
                 console.log(data);
                 $('.list_number_result2').hide();
-                var html_data ="<h3 class=\"list_number_result2\">為您找到"+data['num_result_sub_2']+"個結果</h3>"
+                var html_data ="<h3 class=\"list_number_result2\">為您找到"+data['result_count_of_agency']+"個結果</h3>"
                 $.each(data['newlist'], function(index,value) {
                   console.log(value['hotel_url'])
                   console.log(index)

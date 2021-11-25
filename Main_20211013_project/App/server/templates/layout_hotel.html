@@ -110,7 +110,7 @@
               <div class="date">
                 <input
                   id="the_date"
-                  value={{next_week}}
+                  value="{{next_week}}"
                   type="date"
                   name="end_date"
                   required
@@ -257,19 +257,34 @@
             });
         }
       </script>
-      <!-- <script>
-        var date = new Date();
-
-        var day = date.getDate();
-        var month = date.getMonth() + 1;
-        var year = date.getFullYear();
-
-        if (month < 10) month = "0" + month;
-        if (day < 10) day = "0" + day;
-
-        var today = year + "-" + month + "-" + day + "T00:00";
-        document.getElementById("theDate").value = today;
-      </script> -->
+      <script>
+        var isClick = true;
+        $("button").on("click",function(){
+            if(isClick) {
+                isClick = false;
+                console.log('我被點擊了');
+                setTimeout(function() {
+                    isClick = true;
+                }, 1000);//
+            }else{
+                 console.log('過快');
+          }
+        });
+      </script>
+      <script>
+        var isClick = true;
+        $("a").on("click",function(){
+            if(isClick) {
+                isClick = false;
+                console.log('我被點擊了');
+                setTimeout(function() {
+                    isClick = true;
+                }, 1000);//
+            }else{
+                 console.log('過快');
+          }
+        });
+      </script>
     </div>
   </body>
 </html>
