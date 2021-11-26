@@ -28,13 +28,6 @@
           map: map,
         });
 
-        
-        // var polylinePathPoints = [
-        //   { lat: 25.0336962, lng: 121.5643673 },
-        //   { lat: 25.033755, lng: 121.565412 },
-        //   { lat: 25.031985, lng: 121.56538 },
-        //   { lat: 25.032083, lng: 121.561324 },
-        // ];
         var Colors = [
             "#FF0000", 
             "#00FF00", 
@@ -91,20 +84,20 @@
               <li></li>
             </ul>
           </div>
-          {%if login%}
+          {% if current_user.is_authenticated %}
           <div class="div" style="width: 249px;">
-          <a href="{{url_for('user_page')}}" onclick="return chk2000()" style="margin-left:60%">
-            <img
-              src="https://us.123rf.com/450wm/rastudio/rastudio1610/rastudio161000130/63343177-user-profile-with-minus-sign-vector-sketch-icon-isolated-on-background-hand-drawn-user-profile-with-.jpg?ver=6"
-              width="30"
-              height="30"
-              style="border-radius: 10px;"
-            />
-          </a>
-          <a href="{{url_for('sign_out')}}"  style="float: right;">
-            <div style=" float: right">log_out</div>
-          </a>
-        </div>
+            <a href="{{url_for('user_page')}}" onclick="return chk2000()" style="margin-left:60%">
+              <img
+                src="https://us.123rf.com/450wm/rastudio/rastudio1610/rastudio161000130/63343177-user-profile-with-minus-sign-vector-sketch-icon-isolated-on-background-hand-drawn-user-profile-with-.jpg?ver=6"
+                width="30"
+                height="30"
+                style="border-radius: 10px;"
+              />
+            </a>
+            <a href="{{url_for('sign_out')}}"  style="float: right;">
+              <div style=" float: right">log_out</div>
+            </a>
+          </div>
           {%else%}
            <div class="myAccount">
               <div class="ctaGroup">
@@ -373,18 +366,6 @@
               {% endfor %} {%endif%}
             </div>
             </main>
-      
-            <!-- <img src="/static/assets/cartoon/hotel.png" class="hotel" /> -->
-            <!-- <img src="/static/assets/cartoon/car1.png" class="car1" />
-            <img src="/static/assets/cartoon/car2.png" class="car2" />
-            <img src="/static/assets/cartoon/car3.png" class="car3" />
-            <img src="/static/assets/cartoon/car4.png" class="car4" /> -->
-            <!-- <img src="/static/assets/cartoon/dog.gif" class="dog_1" /> -->
-            <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud" /> -->
-            <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_2" /> -->
-            <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_3" /> -->
-            <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_4" /> -->
-            <!-- <img src="/static/assets/cartoon/megaman.gif" class="dog_1" /> -->
             <script>
               var date = new Date();
       
@@ -420,24 +401,17 @@
             form_data.append('agency_selected', $("#agency_selected option:selected").text());   
             form_data.append('start_date', "{{start_date}}");
             form_data.append('id', "{{id}}");
-            form_data.append('agency_result', "{{agency}}");
-            // form_data.append('two_bed', $(".two_bed").attr('checked', true));
-            // form_data.append('agency_selected', $("#agency_selected option:selected").text());            
+            form_data.append('agency_result', "{{agency}}");           
             $.ajax({
               type: "POST",
               url: $SCRIPT_ROOT + "/route_function/hotel_detail",
               data: form_data,
               success: function (data) {
                 $('.product_item').hide();
-                console.log(data);
                 $('.list_number_result2').hide();
                 var html_data ="<h3 class=\"list_number_result2\">為您找到"+data['result_count_of_agency']+"個結果</h3>"
                 $.each(data['newlist'], function(index,value) {
-                  console.log(value['hotel_url'])
-                  console.log(index)
-                  // html_data +="<div class=super"+index+"><div class='product_colors'></div><div class='product_item'><div class='hotel_item'><a href="+value['hotel_url']+" class='hotel_img'></a></div></div>\n"
                   html_data +="<div class='product_details'"+index+"><div class= 'product_colors'></div><div class='product_item'><div class='hotel_item'><a href="+value['hotel_url']+" class='hotel_img'><img  src="+value['agency_logo']+" border='0px' width='80' height='30'/></a><i class=''></i><div class=\"hotel_name\"></div></div><i class=\"\"></i><div class=\"hotel_detail_feature\">"+value['hotel_feature']+"</div><div class='hotel_detail_price'>NT"+value['price']+"$/每晚</div></div><a></a></div></div>"
-                  console.log(html_data)
                   $('.after_query').html(html_data);
                   });
 

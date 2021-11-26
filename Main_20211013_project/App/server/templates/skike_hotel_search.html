@@ -313,18 +313,6 @@
     </div>
   </div>
 </main>
-
-<!-- <img src="/static/assets/cartoon/hotel.png" class="hotel" /> -->
-<!-- <img src="/static/assets/cartoon/car1.png" class="car1" />
-      <img src="/static/assets/cartoon/car2.png" class="car2" />
-      <img src="/static/assets/cartoon/car3.png" class="car3" />
-      <img src="/static/assets/cartoon/car4.png" class="car4" /> -->
-<!-- <img src="/static/assets/cartoon/dog.gif" class="dog_1" /> -->
-<!-- <img src="/static/assets/cartoon/cloud.png" class="cloud" /> -->
-<!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_2" /> -->
-<!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_3" /> -->
-<!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_4" /> -->
-<!-- <img src="/static/assets/cartoon/megaman.gif" class="dog_1" /> -->
 <script>
   var date = new Date();
 
@@ -341,7 +329,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
   $(function () {
-    var len = 50; // 超過50個字以"..."取代
+    var len = 50;
     $(".info").each(function (i) {
       if ($(this).text().length > len) {
         $(this).attr("title", $(this).text());

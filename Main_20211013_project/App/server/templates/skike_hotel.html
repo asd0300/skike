@@ -215,7 +215,6 @@
       <div class="">
         <div id='theName{{loop.index}}' class="search_hotel_name" style="margin-left: 26%" >{{list['name']}}</div><div id="hotel_id{{list['id']}}" style="font-size: 0.5px;margin-left: 26%">{{list['id']}}</div>
         <button id='testBTN{{loop.index}}' type='submit' style="float: right"> 
-        <!-- <button class="submit" style="float: right"> -->
           <img
           class="icon_empty{{loop.index}}"
           src="https://cdn-icons-png.flaticon.com/512/30/30571.png"
@@ -239,16 +238,12 @@
         <div class="hotel_item" style="margin-left: 26%">
           推薦{{list['hotel_rating_avg_score']}}分,{{list['hotel_rating_count']}}評價數
         </div>
-        <!--<div class="hotel_item">
-          {{list['hotel_near_location']}}約{{(list['hotel_near_location_meter']/1000)|float}}公里
-        </div>-->
       </div>
       <div id="price_hotel{{loop.index}}"class="search_money">
         我們住宿一晚價格{{list['hotel_best_price_per_stay']}}起
       </div>
     </div>
   </div>
-  <!-- <div class="row"><button id ="x_{{list['id']}}" onclick="listBtn{{list['id']}}()" ><img class ="pic_x"src="https://freesvg.org/img/close-button.png" width=30" height="30" style="border-radius: 10px; vertical-align: unset; margin-top:5px;float:right"/></button></div> -->
   <div id="button{{list['id']}}"></div>
   <div id="container_other_pic{{list['id']}}" style="font-size: 14 px;
   background-color: #fff;

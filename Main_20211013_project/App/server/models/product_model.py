@@ -1,13 +1,34 @@
-import random,time
+import random, time
 import urllib.parse
 import operator
-from datetime import  datetime,timedelta
-import pymysql,json
+from datetime import datetime, timedelta
+import json
 import pymysql.cursors
 from server.env import config
-import  requests
-import jwt
+import requests
 import polyline
+from pymongo import MongoClient
+
+
+def connect_skike_db():
+    rds_db = pymysql.connect(
+             host=config.RDSHOSTNAME,
+             user="admin", password=config.RDSMASTERPASSWORD,
+             port=config.RDSPORT, database="skike",
+             cursorclass=pymysql.cursors.DictCursor)
+    return rds_db
+
+
+def connect_skike_mongo_db():
+    conn = MongoClient(
+                      "mongodb://{}:{}@ec2-18-223-232-121.us-east-2.compute.amazonaws.com:27017/?\
+                      authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl\
+                      =false".format(
+                                config.MONGO_PASS_SKIKE_SKIKE_ORIGIN_ACCOUNT,
+                                config.MONGO_PASS_SKIKE_SKIKE_ORIGIN_PASS))
+    return conn
+
+
 def connect_db(host, user, password, db_name=None, port=3306):
     """connect_db"""
     try:
@@ -21,12 +42,14 @@ def connect_db(host, user, password, db_name=None, port=3306):
         print('Got error {!r}, errno is {}'.format(e, e.args[0]))
         return None
 
+
 def create_db(cursor, DBNAME):
     """create_db"""
     # create database
     try:
         cursor.execute(
-            "CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8mb4' ".format(DBNAME)
+                    "CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8mb4' "
+                    .format(DBNAME)
         )
     except Exception as e:
         print("Exeception occured:{}".format(e))
@@ -39,7 +62,8 @@ def create_db(cursor, DBNAME):
 
     return cursor
 
-def create_tb_flight_ticket( tables, tb_name=None):
+
+def create_tb_flight_ticket(tables, tb_name=None):
     """create_tb_flight_ticket"""
     tables[tb_name] = ("CREATE TABLE IF NOT EXISTS {}( \
         `id` varchar(255) COLLATE utf8mb4_bin NOT NULL, \
@@ -60,7 +84,7 @@ def create_tb_flight_ticket( tables, tb_name=None):
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(tb_name))
 
 
-def create_tb_stopover( tables, tb_name=None):
+def create_tb_stopover(tables, tb_name=None):
     """create_tb_stopover"""
     tables[tb_name] = ("CREATE TABLE IF NOT EXISTS {}( \
         `id` INT(10) COLLATE utf8mb4_bin NOT NULL AUTO_INCREMENT, \
@@ -72,7 +96,8 @@ def create_tb_stopover( tables, tb_name=None):
         FOREIGN KEY (`flight_id`) REFERENCES flight_ticket(id) \
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(tb_name))
 
-def create_tb_flightprice( tables, tb_name=None):
+
+def create_tb_flightprice(tables, tb_name=None):
     """create_tb_flightprice"""
     tables[tb_name] = ("CREATE TABLE IF NOT EXISTS {}( \
         `id` INT(10) COLLATE utf8mb4_bin NOT NULL AUTO_INCREMENT, \
@@ -91,7 +116,8 @@ def create_tb_flightprice( tables, tb_name=None):
         FOREIGN KEY (`flight_id`) REFERENCES flight_ticket(id) \
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(tb_name))
 
-def create_tb_airport_geocode( tables, tb_name=None):
+
+def create_tb_airport_geocode(tables, tb_name=None):
     """create_tb_airport_geocode"""
     tables[tb_name] = ("CREATE TABLE IF NOT EXISTS {}( \
         `airport_name` varchar(200) COLLATE utf8mb4_bin NOT NULL, \
@@ -100,7 +126,8 @@ def create_tb_airport_geocode( tables, tb_name=None):
         PRIMARY KEY (`airport_name`) \
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(tb_name))
 
-def create_tb_hotel( tables, tb_name=None):
+
+def create_tb_hotel(tables, tb_name=None):
     """create_tb_hotel"""
     tables[tb_name] = ("CREATE TABLE IF NOT EXISTS {}( \
         `id` INT(10) COLLATE utf8mb4_bin NOT NULL, \
@@ -119,36 +146,6 @@ def create_tb_hotel( tables, tb_name=None):
         PRIMARY KEY (`id`, `data_query_time`) \
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(tb_name))
 
-def create_tb_user(tables, tb_name=None):
-    """create_tb_user"""
-    tables[tb_name] = ("CREATE TABLE IF NOT EXISTS {}( \
-        `email` varchar(255) NOT NULL,\
-        `id` int NOT NULL AUTO_INCREMENT,\
-        `provider` varchar(15) NOT NULL,\
-        `password` varchar(255) NOT NULL,\
-        `name` varchar(127) NOT NULL,\
-        `picture` varchar(255) DEFAULT NULL,\
-        `access_token` text NOT NULL,\
-        `access_expired` bigint NOT NULL,\
-        `login_at` timestamp NULL DEFAULT NULL,\
-        PRIMARY KEY (`id`,`email`,`password`)\
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(tb_name))
-
-def create_tb_user_favorite(tables, tb_name=None):
-    """create_tb_user_favorite"""
-    tables[tb_name] = ("CREATE TABLE IF NOT EXISTS {}( \
-        `id` int NOT NULL AUTO_INCREMENT,\
-        `email` varchar(255) NOT NULL,\
-        `want_time_start` varchar(255) DEFAULT NULL,\
-        `want_time_end` varchar(255) DEFAULT NULL,\
-        `hotel_name` varchar(255) DEFAULT NULL,\
-        `hotel_img` varchar(255) DEFAULT NULL,\
-        `hotel_detail` varchar(255) DEFAULT NULL,\
-        `name` varchar(127) NOT NULL,\
-        `location` varchar(255) DEFAULT NULL,\
-        `price` int(10) DEFAULT NULL,\
-        PRIMARY KEY (`id`,`email`)\
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(tb_name))
 
 def create_tb_hotel_alter(cursor, tables, tb_name=None):
     """create_tb_hotel_alter"""
@@ -164,7 +161,6 @@ def create_tb_hotel_alter(cursor, tables, tb_name=None):
         PRIMARY KEY (`id`,`hotel_feature`,`price`), \
         FOREIGN KEY (`hotel_id`,`data_query_time`) REFERENCES hotel(`id`,`data_query_time`) \
         )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;".format(tb_name))
-    
     for table_name in tables:
         table_description = tables[table_name]
         try:
@@ -174,22 +170,23 @@ def create_tb_hotel_alter(cursor, tables, tb_name=None):
         except Exception as e:
             print("Exeception occured:{}".format(e))
 
-def get_hotel_alter(data_query_time, hotel_id,feature_dict=None,agency_result_1st=None):
+
+def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
+                    agency_result_1st=None):
     """get_hotel_alter"""
     ip_list = ['209.127.191.180:9279'
-    ,'45.95.96.132:8691'
-    ,'45.95.96.187:8746'
-    ,'45.95.96.237:8796'
-    ,'45.136.228.154:6209'
-    ,'45.94.47.66:8110'
-    ,'45.94.47.108:8152'
-    ,'193.8.56.119:9183'
-    ,'45.95.99.226:7786'
-    ,'45.95.99.20:7580'
-    ]
+               '45.95.96.132:8691',
+               '45.95.96.187:8746',
+               '45.95.96.237:8796',
+               '45.136.228.154:6209',
+               '45.94.47.66:8110',
+               '45.94.47.108:8152',
+               '193.8.56.119:9183',
+               '45.95.99.226:7786',
+               '45.95.99.20:7580']
     url = "https://www.trivago.com.tw/graphql"
     date_1 = datetime.strptime(data_query_time, "%Y-%m-%d")
-    item_add_1 = date_1+ timedelta(days =1)
+    item_add_1 = date_1 + timedelta(days=1)
     item_add_1 = item_add_1.date()
     try:
         payload = json.dumps({
@@ -268,46 +265,50 @@ def get_hotel_alter(data_query_time, hotel_id,feature_dict=None,agency_result_1s
         "apollographql-client-version": "v93_10_5_ae_f07e1e495a0"
         }
         ip = random.choice(ip_list)
-        proxies = {'http':"http://{}:{}@{}".format('vvbocpqj','obt7b7ug0dim',ip)}
-        response = requests.request("POST", url, headers=headers, data=payload, proxies=proxies)
+        proxies = {'http': "http://{}:{}@{}".format('vvbocpqj',
+                                                    'obt7b7ug0dim',
+                                                    ip)}
+        response = requests.request("POST", url, headers=headers, data=payload,
+                                    proxies=proxies)
         result = response.json()
         if result['data']['getAccommodationDeals']['deals']:
             print("ok")
         else:
             print("re-do")
             time.sleep(2)
-            response = requests.request("POST", url, headers=headers, data=payload, proxies=proxies)
+            response = requests.request("POST", url, headers=headers,
+                                        data=payload, proxies=proxies)
             result = response.json()
         print("data_query_time "+str(data_query_time)+" "+"  ip is "+str(ip))
         # mycollection.insert_one(result)
-        # print(result)
+        print(result)
         data_list_hotel_detail = []
-        data_list_dict ={}
-        ##修改取得的價格數量 list 至 10價格
-        list_agency=[]
-        for hotel_product_detail in result['data']['getAccommodationDeals']['deals']:
-            data_list_dict ={}
+        data_list_dict = {}
+        list_agency = []
+        for hotel_product_detail in \
+                result['data']['getAccommodationDeals']['deals']:
+            data_list_dict = {}
             try:
                 data_list_dict['data_query_time'] = data_query_time
-                if feature_dict and feature_dict['agency_selected']!="全選":
-                    if feature_dict['agency_selected'] != hotel_product_detail['advertiser']['name']:
+                if feature_dict and feature_dict['agency_selected'] != "全選":
+                    if feature_dict['agency_selected'] != \
+                        hotel_product_detail['advertiser']['name']:
                         continue
-                # elif feature_dict==None or(feature_dict and feature_dict['agency_selected'] == hotel_product_detail['advertiser']['name']):
-                #     hotel_agency = hotel_product_detail['advertiser']['name']
                 hotel_agency = hotel_product_detail['advertiser']['name']
                 list_agency.append(hotel_agency)
                 data_list_dict['hotel_agency'] = hotel_agency
-                agency_logo = "https:"+str(hotel_product_detail['advertiser']['advertiserLogo']['url'])
+                agency_logo = "https:" + \
+                    str(hotel_product_detail['advertiser']['advertiserLogo']['url'])
                 data_list_dict['agency_logo'] = agency_logo
-                hotel_feature =""
+                hotel_feature = ""
                 for features in hotel_product_detail['priceAttributes']:
                     if features['label'] is not None and feature_dict is None:
-                        hotel_feature+=features["label"]+", "
-                hotel_feature+= hotel_product_detail['description']
+                        hotel_feature += features["label"]+", "
+                hotel_feature += hotel_product_detail['description']
                 if feature_dict is not None:
                     for item in feature_dict['checkbox']:
                         if item in hotel_feature:
-                            print(item,hotel_feature)
+                            print(item, hotel_feature)
                             print(item in hotel_feature)
                             break
                 data_list_dict['hotel_feature'] = hotel_feature
@@ -316,23 +317,23 @@ def get_hotel_alter(data_query_time, hotel_id,feature_dict=None,agency_result_1s
                 hotel_url = "https://www.trivago.com.tw"+str(hotel_product_detail['clickoutPath'])
                 data_list_dict['hotel_url'] = hotel_url
                 data_list_dict['hotel_id'] = hotel_id
-                data_list_hotel_detail.append(data_list_dict)            
+                data_list_hotel_detail.append(data_list_dict)
             except Exception as e:
                 print("Exeception occured:{}".format(e))
     except Exception as e:
-            print("ERROR:", url, e)
+        print("ERROR:", url, e)
     agency_result = set(list_agency)
     agency_result = sorted(agency_result)
     # print(agency_result)
-    newlist = sorted(data_list_hotel_detail, key= operator.itemgetter('hotel_agency'))
+    newlist = sorted(data_list_hotel_detail,
+                     key=operator.itemgetter('hotel_agency'))
     # return data_list_hotel_detail
     if agency_result_1st:
         agency_result = agency_result_1st
-    return {'agency':agency_result,'newlist':newlist}
+    return {'agency': agency_result, 'newlist': newlist}
 
 
-
-def get_flight_ticket_alter(data_query_time, low_price, criteria_token,flight_no,airlineCode):
+def get_flight_ticket_alter(data_query_time, low_price, criteria_token, flight_no, airlineCode):
     """get_flight_ticket_alter"""
     url = "https://hk.trip.com/flights/graphql/intlFlightMoreGradeSearch"
     payload = json.dumps({
@@ -370,15 +371,13 @@ def get_flight_ticket_alter(data_query_time, low_price, criteria_token,flight_no
 
     response = requests.request("POST", url, headers=headers, data=payload)
     result = response.json()
-    # print(result)
-    # print(result)
+    # criteriaToken,remark_token_key,shoppingId,groupKey
+    # criteriaToken相同;remarkTokenKey ,shoppingid,groupkey不同
     alter_list = []
     if result['data']['intlFlightMoreGradeSearch']['productInfo']:
         data = result['data']['intlFlightMoreGradeSearch']['productInfo']
         for product in data['policyInfoList']:
             alter_dict = {}
-            #criteriaToken,remark_token_key,shoppingId,groupKey
-            #criteriaToken相同;remarkTokenKey ,shoppingid,groupkey不同
             try:
                 remark_token_key = product["remarkTokenKey"]
                 main_class = product["mainClass"]
@@ -387,26 +386,27 @@ def get_flight_ticket_alter(data_query_time, low_price, criteria_token,flight_no
                 price = product["priceDetailInfo"]["viewTotalPrice"]
                 group_key = product["productKeyInfo"]["groupKey"]
                 shopping_id = product["productKeyInfo"]["shoppingId"]
-                description = product["descriptionInfo"]['productName']+product["descriptionInfo"]['ticketDescription']
+                description = product["descriptionInfo"]['productName'] + \
+                    product["descriptionInfo"]['ticketDescription']
                 url = "https://hk.trip.com/flights/passenger?FlightWay=OW&class=Y&Quantity=1&ChildQty=0&BabyQty=0&dcity=&acity=&ddate=&"
                 remark_token_key = urllib.parse.quote_plus(remark_token_key)
                 criteria_token = urllib.parse.quote_plus(criteria_token)
                 shopping_id = urllib.parse.quote_plus(shopping_id)
                 group_key = urllib.parse.quote_plus(group_key)
-                url_pre = "remarkTokenKey="+remark_token_key+"&"+"criteriaToken="+criteria_token+"&"+"shoppingId="+shopping_id+"&"+"groupKey="+group_key
-                url+=url_pre
-                ###現在用到組url的部分
+                url_pre = "remarkTokenKey="+remark_token_key+"&" + "criteriaToken=" + criteria_token+"&"+"shoppingId="+shopping_id+"&"+"groupKey="+group_key
+                url += url_pre
+                # 現在用到組url的部分
                 flight_class = product['productClass'][0]
-                alter_dict['remark_token_key']= remark_token_key
-                alter_dict['main_class']= main_class
-                alter_dict['available_tickets']= available_tickets
-                alter_dict['promise_minutes']= promise_minutes
-                alter_dict['price']= price
-                alter_dict['group_key']= group_key
-                alter_dict['shopping_id']= shopping_id
-                alter_dict['description']= description
-                alter_dict['url']= url
-                alter_dict['flight_class']= flight_class
+                alter_dict['remark_token_key'] = remark_token_key
+                alter_dict['main_class'] = main_class
+                alter_dict['available_tickets'] = available_tickets
+                alter_dict['promise_minutes'] = promise_minutes
+                alter_dict['price'] = price
+                alter_dict['group_key'] = group_key
+                alter_dict['shopping_id'] = shopping_id
+                alter_dict['description'] = description
+                alter_dict['url'] = url
+                alter_dict['flight_class'] = flight_class
                 alter_list.append(alter_dict)
                 # print(alter_list)
             except Exception as e:
@@ -513,135 +513,65 @@ def get_hotel_more_pic(hotel_id, want_time_start, want_time_end):
         print("Exeception occured:{}".format(e))
     return img_url
 
-def check_exist_user(rds_db,email):
-    """check_exist_user"""
-    cursor = rds_db.cursor()
-    query = 'SELECT * FROM skike.user where email = "{}";'.format(str(email))
-    cursor.execute(query)
-    sign_up_data = cursor.fetchone()
-    rds_db.commit()
-    return sign_up_data
 
-def insert_register_data(rds_db,provider, name, email,hashed_password, picture,acceess_expire):
-    """insert_register_data"""
-    token_sign_up = jwt.encode({'provider':provider,\
-                                  'name':name,\
-                                  'email': email }, config.SECRET_KEY)
-    try:
-        sign_up_data = "INSERT INTO `user` (`provider`, `name`,\
-                                    `email`, `password`, `picture`,\
-                                    `access_token`, `access_expired`) \
-                                    VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        cursor = rds_db.cursor()
-        cursor.execute(sign_up_data, (provider, name, email,\
-                                    hashed_password, picture, token_sign_up,\
-                                    acceess_expire))
-        rds_db.commit()
-    except Exception as e:
-        print("Exeception occured:{}".format(e))
-def insert_signin_data(rds_db,email):
-    """insert_signin_data"""
-    try:
-        cursor = rds_db.cursor()
-        query = 'SELECT * FROM skike.user WHERE email = "{}" ;'.format(email)
-        cursor.execute(query)
-        sign_data = cursor.fetchone()
-        print(sign_data)
-        rds_db.commit()
-    except Exception as e:
-        print("Exeception occured:{}".format(e))
-    return sign_data
-
-def get_hotel_search_list(rds_db,start_date,end_date,location):
+def get_hotel_search_list(start_date,end_date,location):
     """get_hotel_search_list"""
+    rds_db = connect_skike_db()
     cursor = rds_db.cursor()
     sql = "SELECT * FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' group by name having locality like'{}' order by hotel_rating_count desc limit 1000".format(start_date,end_date,location)
     cursor.execute(sql)
     sql_result = cursor.fetchall()
     return sql_result
-def get_hotel_search_coount(rds_db,start_date,end_date,location):
+def get_hotel_search_coount(start_date,end_date,location):
     """get_hotel_search_coount"""
+    rds_db = connect_skike_db()
     cursor = rds_db.cursor()
     sql_count = "SELECT count(distinct(name)) FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' AND locality ='{}' group by name;".format(start_date,end_date,location)
     cursor.execute(sql_count)
     sql_count_result = cursor.fetchall()
     return sql_count_result
-def get_user_page_data(conn,email):
-    """get_user_page_data"""
-    mydatabase = conn['skike_origin']
-    mycollection=mydatabase['skike_favorite']
-    pipeline=[
-    {
-        '$match': {
-            'email': '{}'.format(email)
-        }
-    }
-    ]
-    print(pipeline)
-    result =mycollection.aggregate(pipeline)
-    print(result)
-    results = [doc for doc in result]
-    return results
 
-def get_hotel_search(rds_db,start_date,end_date,location):
+
+def get_hotel_search(start_date,end_date,location):
     """get_hotel_search"""
+    rds_db = connect_skike_db()
     cursor = rds_db.cursor()
     sql = "SELECT * FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' group by name having locality like'{}' order by hotel_rating_count desc limit 1000".format(start_date,end_date,location)
     cursor.execute(sql)
     sql_result = cursor.fetchall()
     return sql_result
 
-def get_hotel_search_number(rds_db,start_date,end_date,location):
+def get_hotel_search_number(start_date,end_date,location):
     """get_hotel_search_number"""
+    rds_db = connect_skike_db()
     cursor = rds_db.cursor()
     sql_count = "SELECT count(distinct(name)) FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' AND locality ='{}' group by name;".format(start_date,end_date,location)
     cursor.execute(sql_count)
     sql_count_result = cursor.fetchall()
     return sql_count_result
 
-def delete_user_favorite_item(conn, email, hotel_name=None, hotel_detail=None, hotel_img=None):
-    """delete_user_favorite_item"""
-    mydatabase = conn['skike_origin']
-    mycollection=mydatabase['skike_favorite']
-    if email and hotel_name:
-        myquery = {"email":email,"hotel_name":hotel_name}
-    elif email and hotel_detail and hotel_img:
-        myquery = {"email":email,"hotel_detail":hotel_detail,"hotel_img":hotel_img}
-    mycollection.remove(myquery)
 
-def add_user_favorite_item(conn, email, want_time_start, want_time_end, hotel_name,hotel_img,hotel_detail,user_name,location,price):
-    """add_user_favorite_item"""
-    mydatabase = conn['skike_origin']
-    mycollection=mydatabase['skike_favorite']
-    result = {"email":email, "want_time_start":want_time_start, "want_time_end":want_time_end, "hotel_name":hotel_name, "hotel_img":hotel_img, "hotel_detail":hotel_detail, "name":user_name,"location":location,"price":price}
-    mycollection.insert_one(result)
-
-def get_re_sort_result(rds_db, start_date,end_date,location,condition1,condition2):
+def get_re_sort_result(start_date,end_date,location,condition1,condition2):
     """get_re_sort_result"""
+    rds_db = connect_skike_db()
     cursor = rds_db.cursor()
     sql = "SELECT * FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' group by name having locality like'{}' order by {} {} limit 1000".format(start_date,end_date,location,condition1,condition2)
     cursor.execute(sql)
     sql_result = cursor.fetchall()
     return sql_result
 
-def get_flight_ticket_plan(rds_db,start_date,location_arrive,location):
+def get_flight_ticket_plan(start_date,location_arrive,location):
     """get_flight_ticket_plan"""
+    rds_db = connect_skike_db()
     cursor = rds_db.cursor()
     sql = "SELECT * FROM skike.flight_ticket where data_query_time ='{}' and  arrive_City = '{}' and depart_city ='{}';".format(start_date,location_arrive,location)
     cursor.execute(sql)
     sql_result = cursor.fetchall()
     return sql_result
 
-# def add_flight_pic_url(sql_result):
-#     for sql_result_sub in sql_result:
-#         air_pic = sql_result_sub['flight_company'].split(' ')
-#         air_pic = air_pic[1]
-#         air_pic = air_pic[0:2]
-#         air_pic = "https://pic.tripcdn.com/airline_logo/3x/{}.webp".format(air_pic.lower())
-#         sql_result_sub['air_pic'] = air_pic
-
-def get_moregrade_price(rds_db,sql_get,sql_result,start_date,select_adult):
+def get_moregrade_price(sql_get,sql_result,start_date,select_adult):
     """get_moregrade_price"""
+    rds_db = connect_skike_db()
     cursor = rds_db.cursor()
     for data in sql_result:
         air_pic = data['flight_company'].split(' ')
@@ -671,8 +601,9 @@ def get_moregrade_price(rds_db,sql_get,sql_result,start_date,select_adult):
         data['alternative_flight'] = alternative_flight_list
         sql_get.append(data)
 
-def get_nearest_airport(rds_db,airport_alter):
+def get_nearest_airport(airport_alter):
     """get_nearest_airport"""
+    rds_db = connect_skike_db()
     sql_airport_alter = "SELECT * FROM skike.flight_geocode  where airport_name = '{}';".format(airport_alter)
     cursor = rds_db.cursor()
     cursor.execute(sql_airport_alter)
@@ -682,8 +613,9 @@ def get_nearest_airport(rds_db,airport_alter):
     geo_result = airport_result['airport_name']
     return {"near_airport_lat":near_airport_lat,"near_airport_lng":near_airport_lng,"geo_result":geo_result}
 
-def get_airport_list(rds_db,geocode_lat,geocode_lng,max_number):
+def get_airport_list(geocode_lat,geocode_lng,max_number):
     """get_airport_list"""
+    rds_db = connect_skike_db()
     cursor = rds_db.cursor()
     sql_geocode = "SELECT * FROM skike.flight_geocode;"
     cursor.execute(sql_geocode)
@@ -700,8 +632,9 @@ def get_airport_list(rds_db,geocode_lat,geocode_lng,max_number):
             print(near_airport_lat,near_airport_lng)
     return {"geo_result":geo_result,"near_airport_lat":near_airport_lat,"near_airport_lng":near_airport_lng}
 
-def get_hotel_detail_title_info(rds_db,id):
+def get_hotel_detail_title_info(id):
     """get_hotel_detail_title_info"""
+    rds_db = connect_skike_db()
     cursor = rds_db.cursor()
     sql_sub = "SELECT * FROM skike.hotel where id = '{}'".format(str(id))
     cursor.execute(sql_sub)
@@ -743,3 +676,22 @@ def get_google_direction(near_airport_lat,near_airport_lng,geocode_lat,geocode_l
     go_list.append(d_arrival_time)
     route_flow2 = dict(zip(route_flow, go_list))
     return {"route_flow2":route_flow2,"need_hour":need_hour,"need_min":need_min,"date_time_depart":date_time_depart,"result":result,"geo_list":geo_list}
+
+def delete_user_favorite_item(email, hotel_name=None, hotel_detail=None, hotel_img=None):
+    """delete_user_favorite_item"""
+    conn = connect_skike_mongo_db()
+    mydatabase = conn['skike_origin']
+    mycollection=mydatabase['skike_favorite']
+    if email and hotel_name:
+        myquery = {"email":email,"hotel_name":hotel_name}
+    elif email and hotel_detail and hotel_img:
+        myquery = {"email":email,"hotel_detail":hotel_detail,"hotel_img":hotel_img}
+    mycollection.remove(myquery)
+
+def add_user_favorite_item(email, want_time_start, want_time_end, hotel_name,hotel_img,hotel_detail,user_name,location,price):
+    """add_user_favorite_item"""
+    conn =connect_skike_mongo_db()
+    mydatabase = conn['skike_origin']
+    mycollection=mydatabase['skike_favorite']
+    result = {"email":email, "want_time_start":want_time_start, "want_time_end":want_time_end, "hotel_name":hotel_name, "hotel_img":hotel_img, "hotel_detail":hotel_detail, "name":user_name,"location":location,"price":price}
+    mycollection.insert_one(result)

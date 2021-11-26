@@ -12,32 +12,13 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/static/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- <style type="text/css">
-      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
-    </style>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcncmKczTtjQ0Xer1AU2BEQzbL7xRNcoc">
-    </script>
-    <script type="text/javascript">
-      function initialize() {
-        var mapOptions = {
-          center: { lat: -34.397, lng: 150.644},
-          zoom: 8
-        };
-        var map = new google.maps.Map(
-            document.getElementById('map-canvas'),
-            mapOptions);
-      }
-      google.maps.event.addDomListener(
-          window, 'load', initialize);
-    </script> -->
   </head>
   <body>
     <div class="container-fluid">
       <header>
         <nav>
           <div class="menu">
-            <a href="{{url_for('main_index')}}">
+            <a href="/">
               <div class="logo"><span>Skike</span></div>
             </a>
             <ul>
@@ -45,32 +26,32 @@
               <li></li>
             </ul>
           </div>
-        {% if current_user.is_authenticated %}
-        <div class="div" style="width: 249px;">
-          <a href="{{url_for('user_page')}}" onclick="return chk2000()" style="margin-left:60%">
-            <img
-              src="https://us.123rf.com/450wm/rastudio/rastudio1610/rastudio161000130/63343177-user-profile-with-minus-sign-vector-sketch-icon-isolated-on-background-hand-drawn-user-profile-with-.jpg?ver=6"
-              width="30"
-              height="30"
-              style="border-radius: 10px;"
-            />
-          </a>
-          <a href="{{url_for('sign_out')}}"  style="float: right;">
-            <div style=" float: right">log_out</div>
-          </a>
-        </div>
-        {%else%}
-         <div class="myAccount">
-            <div class="ctaGroup">
-              <a href="{{url_for('user_sign_in')}}">
-                <div class="cta">Sign In</div>
-              </a>
-              <a href="{{url_for('user_sign_up')}}">
-                <div class="cta active">Create Account</div>
-              </a>
-            </div>
+          {% if current_user.is_authenticated %}
+          <div class="div" style="width: 249px;">
+            <a href="{{url_for('user_page')}}" onclick="return chk2000()" style="margin-left:60%">
+              <img
+                src="https://us.123rf.com/450wm/rastudio/rastudio1610/rastudio161000130/63343177-user-profile-with-minus-sign-vector-sketch-icon-isolated-on-background-hand-drawn-user-profile-with-.jpg?ver=6"
+                width="30"
+                height="30"
+                style="border-radius: 10px;"
+              />
+            </a>
+            <a href="{{url_for('sign_out')}}"  style="float: right;">
+              <div style=" float: right">log_out</div>
+            </a>
           </div>
-        {%endif%}
+          {%else%}
+           <div class="myAccount">
+              <div class="ctaGroup">
+                <a href="{{url_for('user_sign_in')}}">
+                  <div class="cta">Sign In</div>
+                </a>
+                <a href="{{url_for('user_sign_up')}}">
+                  <div class="cta active">Create Account</div>
+                </a>
+              </div>
+            </div>
+          {%endif%}
         </nav>
       </header>
       <div class="hotel_content">
@@ -80,14 +61,14 @@
 
         <div class="booking_info">
           <div class="opt">
-            <a href="{{url_for('main_index')}}">
+            <a href="/">
               <span class="active">Airplane</span>
             </a>
-            <a href="{{url_for('hotel_search_html')}}">
+            <a href="/admin/main_hotel">
               <span>Hotel</span>
             </a>
           </div>
-        <form method="POST" action="{{ url_for('airplane_search_func') }}"onsubmit="return chk()" name="send">
+        <form method="POST" action="/api/1.0/air_plane/search_get"onsubmit="return chk4000()" name="send">
           <div class="booking_details">
             <div class="item">
               <div class="form-group">
@@ -137,19 +118,6 @@
               </div>
               <div class="days">出發日期</div>
             </div>
-            <!-- <div class="item">
-              <div class="date">
-                <input
-                  id="the_Date"
-                  type="date"
-                  name="end_date"
-                  required
-                  placeholder="Return Date"
-                  class="form-control"
-                />
-              </div>
-              <div class="days">抵達日期</div>
-            </div> -->
             <div class="item">
               <div class="people">
               </div>
@@ -167,102 +135,17 @@
                   <option>9</option>
                 </select>
               </div>
-              <!-- <div class="days">1 room</div> -->
             </div>
             <div class="item">
               <input type = "submit" value="Submit" class="cta active">
-              <!-- <div class="cta active">Search</div> -->
             </div>
           </div>
         </div>
         </form>
       </div>
         <main>{% block content %}{% endblock %}</main>
-      
-      <!-- <img src="/static/assets/cartoon/hotel.png" class="hotel" /> -->
-      <!-- <img src="/static/assets/cartoon/car1.png" class="car1" />
-      <img src="/static/assets/cartoon/car2.png" class="car2" />
-      <img src="/static/assets/cartoon/car3.png" class="car3" />
-      <img src="/static/assets/cartoon/car4.png" class="car4" /> -->
-      <!-- <img src="/static/assets/cartoon/dog.gif" class="dog_1" /> -->
-      <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud" /> -->
-      <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_2" /> -->
-      <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_3" /> -->
-      <!-- <img src="/static/assets/cartoon/cloud.png" class="cloud_4" /> -->
-      <!-- <img src="/static/assets/cartoon/megaman.gif" class="dog_1" /> -->
-      <!-- <script>
-        var date = new Date();
-
-        var day = date.getDate();
-        var month = date.getMonth() + 1;
-        var year = date.getFullYear();
-
-        if (month < 10) month = "0" + month;
-        if (day < 10) day = "0" + day;
-
-        var today = year + "-" + month + "-" + day + "T00:00";
-        document.getElementById("theDate").value = today;
-      </script> -->
-      <script>
-        function chk() {
-          if(document.send.location.value=='find a place'){
-            alert('請選擇一個地點');
-            return false;
-          }
-          let timerInterval;
-            Swal.fire({
-              title: "Auto close alert!",
-              html: "I will close in <b></b> milliseconds.",
-              timer: 4000,
-              timerProgressBar: true,
-              didOpen: () => {
-                Swal.showLoading();
-                const b = Swal.getHtmlContainer().querySelector("b");
-                timerInterval = setInterval(() => {
-                  b.textContent = Swal.getTimerLeft();
-                }, 100);
-              },
-              willClose: () => {
-                clearInterval(timerInterval);
-              },
-            }).then((result) => {
-              /* Read more about handling dismissals below */
-              if (result.dismiss === Swal.DismissReason.timer) {
-                console.log("I was closed by the timer");
-              }
-            });
-        }
-      </script>
-      <script>
-        function chk2000() {
-          if(document.send.location.value=='find a place'){
-            alert('請選擇一個地點');
-            return false;
-          }
-          let timerInterval;
-            Swal.fire({
-              title: "Auto close alert!",
-              html: "I will close in <b></b> milliseconds.",
-              timer: 2000,
-              timerProgressBar: true,
-              didOpen: () => {
-                Swal.showLoading();
-                const b = Swal.getHtmlContainer().querySelector("b");
-                timerInterval = setInterval(() => {
-                  b.textContent = Swal.getTimerLeft();
-                }, 100);
-              },
-              willClose: () => {
-                clearInterval(timerInterval);
-              },
-            }).then((result) => {
-              /* Read more about handling dismissals below */
-              if (result.dismiss === Swal.DismissReason.timer) {
-                console.log("I was closed by the timer");
-              }
-            });
-        }
-      </script>
+      <script src="/static/chk4000sec.js" type="text/javascript"></script>
+      <script src="/static/chk2000.js" type="text/javascript"></script>
       <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
     </div>
