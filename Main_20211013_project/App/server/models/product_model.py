@@ -172,7 +172,7 @@ def create_tb_hotel_alter(cursor, tables, tb_name=None):
 
 
 def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
-                    agency_result_1st=None):
+                    agency_result=None):
     """get_hotel_alter"""
     ip_list = ['209.127.191.180:9279'
                '45.95.96.132:8691',
@@ -207,7 +207,7 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
                 "children": []
                 }
             ],
-            "tid": "0882dd417534e3d783b2d8155d",
+            "tid": "6c8b17226b254c70274413442b",
             "platform": "tw",
             "currency": "TWD",
             "language": "zh-Hant-TW",
@@ -216,13 +216,13 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
             "priceTypeRestrictions": [
                 1
             ],
-            "parentRequestId": "1d8b804f-c77f-4876-bccb-a40e6f43a280",
+            "parentRequestId": "1191d104-1e05-480b-89ea-3892d90e36f8",
             "channel": {
-                "branded": {
-                "isStandardDate": False,
-                "stayPeriodSource": {
-                    "value": 22
-                }
+                "searchEngineMarketing": {
+                    "isStandardDate": True,
+                    "stayPeriodSource": {
+                    "value": 0
+                    }
                 }
             },
             "deviceType": "DESKTOP_CHROME"
@@ -230,7 +230,7 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
             "advertiserLogoUrlParams": {
             "locale": "TW"
             },
-            "pollData": None
+            "pollData": "Dj0xsDiab4mkwP8UsX2rPmMZDocpAiC1RMYZ6Pe0VoTWLlG6135IiUtEz7uf9rcMUsJXP4SUOhK9OAhGS4lpk6kqcVah+m2HBQ/Mzvs5djByc4j8Txjik1bWVxHd5V/bwFAVQxSPuGg/Jq0anANfqHt27U9OeECZ8G2DhK8HTO3oytDX/YWwmcOLRIA="
         },
         "extensions": {
             "persistedQuery": {
@@ -240,29 +240,30 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
         }
         })
         headers = {
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36",
-        "authority": "www.trivago.com.tw",
-        "method": "POST",
-        "path": "/graphql",
-        "scheme": "https",
-        "content-type": "application/json",
-        "origin": "https://www.trivago.com.tw",
-        "sec-ch-ua": "\"Google Chrome\";v=\"95\", \"Chromium\";v=\"95\", \";Not A Brand\";v=\"99\"",
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": "\"Windows\"",
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-origin",
-        "x-trv-app-id": "HS_WEB_APP",
-        "x-trv-cst": "32046,38217,45104,45749,45766,46136,46164,46535,47828,47908,48405,48506,48508,48542,48681,49291,49382,49419,49696,49752,49777,50553,50567,50805,50950,51032,51076,51246,51458,51591,51619,51886,51913,52217,52219,52345,52366,52551,52590,52756,52830,52891,52949,53005,53018,53183,53192,53231,53393,53508,53513,53593,53687,53852,53894,54061,54244,54273,54333,54362,54596,54827,54858,54889,54999,55003,55113,55133,55134,55136,55145,55353,55451,55628,55690,55739,55866,56275-3,56467-1,56477,56578,56633,56861-3,56937-2,57155,57488,57889-2,58038,58131,58205,58433",
-        "x-trv-language": "zh-Hant-TW",
-        "x-trv-platform": "tw",
-        "x-trv-tid": "0882dd417534e3d783b2d8155d",
-        "accept": "*/*",
-        "accept-encoding": "gzip, deflate, br",
-        "accept-language": "zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7",
-        "apollographql-client-name": "hs-web",
-        "apollographql-client-version": "v93_10_5_ae_f07e1e495a0"
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36',
+        'authority': 'www.trivago.com.tw',
+        'method': 'POST',
+        'path': '/graphql',
+        'scheme': 'https',
+        'content-type': 'application/json',
+        'origin': 'https://www.trivago.com.tw',
+        'sec-ch-ua': '"Chromium";v="94", "Google Chrome";v="94", ";Not A Brand";v="99"',
+        'sec-ch-ua-mobile': '?0',
+        'sec-ch-ua-platform': '"Windows"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'x-trv-app-id': 'HS_WEB_APP',
+        'x-trv-cst': '32046,38217,45104,45749,45766,46136,46164,46535,47828,47908,48405,48506,48508,48542,48681,49291,49382,49419,49696,49752,49777,50553,50567,50805,50950,51032,51076,51246,51458,51591,51619,51886,51913,52217,52219,52345,52366,52551,52590,52756,52830,52891,52949,53005,53018,53183,53192,53231,53393,53508,53513,53593,53687,53852,53894,54061,54244,54273,54333,54362,54596,54827,54858,54889,54999,55003,55113,55133,55134,55136,55145,55353,55451,55628,55690,55739,55866,56275-3,56467-1,56477,56578,56633,56861-3,56937-2,57155,57488,57889-2,58038,58205,58324-1,58328-1,58387,58433',
+        'x-trv-language': 'zh-Hant-TW',
+        'x-trv-platform': 'tw',
+        'x-trv-tid': '0882dd417534e3d783b2d8155d',
+        'accept': '*/*',
+        'accept-encoding': 'gzip, deflate, br',
+        'accept-language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
+        'apollographql-client-name': 'hs-web',
+        'apollographql-client-version': 'v93_10_5_ae_f07e1e495a0',
+        'Cookie': 'ak_bmsc=C358B22B18BE83974A2DCDAB5D237021~000000000000000000000000000000~YAAQkz7cPdItXQx9AQAA37PRYQ03iLMdEUXi7f0982OQOWKaEE/ykchzeIZvcawBfwqsZmHPMMNHxxFenWpxqJJa+KgVMzGEIWTyNOdTq10mqrF6ku4ZE7FSSTSunufeZE6hqh345Q/oeNO2NVwNAKDB1cpd30k2YkFsBogx4g5NYb9x237RBcS0nQoHEtPyG8FRl6Y7evRbAa4Akq5zjVHnMTmIYGPsMSQ3FfxXNRhqpR18qnZoHD0ytMYFhmhhlRgKLi5oaoU8v9mMTizgYiUMtL+0Ke3nHFHwy173ehA/lkNeGGYxgYMUHjTqpB0WoX2o17awaxJqZxOfxb7LWaCanfizBiZCtAFCueU9WifF5ld0ExlGAz1zoc/oE+CJb5w=; edge_tid=0882dd417534e3d783b2d8155d; edge_tid_s=0882dd417534e3d783b2d8155d'
         }
         ip = random.choice(ip_list)
         proxies = {'http': "http://{}:{}@{}".format('vvbocpqj',
@@ -281,7 +282,7 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
             result = response.json()
         print("data_query_time "+str(data_query_time)+" "+"  ip is "+str(ip))
         # mycollection.insert_one(result)
-        print(result)
+        # print(result)
         data_list_hotel_detail = []
         data_list_dict = {}
         list_agency = []
@@ -328,8 +329,8 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
     newlist = sorted(data_list_hotel_detail,
                      key=operator.itemgetter('hotel_agency'))
     # return data_list_hotel_detail
-    if agency_result_1st:
-        agency_result = agency_result_1st
+    if agency_result:
+        agency_result = agency_result
     return {'agency': agency_result, 'newlist': newlist}
 
 
@@ -514,19 +515,21 @@ def get_hotel_more_pic(hotel_id, want_time_start, want_time_end):
     return img_url
 
 
-def get_hotel_search_list(start_date,end_date,location):
+def get_hotel_search_list(start_date, end_date, location):
     """get_hotel_search_list"""
     rds_db = connect_skike_db()
     cursor = rds_db.cursor()
-    sql = "SELECT * FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' group by name having locality like'{}' order by hotel_rating_count desc limit 1000".format(start_date,end_date,location)
+    sql = "SELECT * FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND \
+        '{}' group by name having locality like'{}' order by hotel_rating_count desc limit 1000".format(start_date,end_date,location)
     cursor.execute(sql)
     sql_result = cursor.fetchall()
     return sql_result
-def get_hotel_search_coount(start_date,end_date,location):
+def get_hotel_search_coount(start_date, end_date, location):
     """get_hotel_search_coount"""
     rds_db = connect_skike_db()
     cursor = rds_db.cursor()
-    sql_count = "SELECT count(distinct(name)) FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' AND locality ='{}' group by name;".format(start_date,end_date,location)
+    sql_count = "SELECT count(distinct(name)) FROM skike.hotel where DATE(hotel.data_query_time)\
+         BETWEEN '{}' AND '{}' AND locality ='{}' group by name;".format(start_date,end_date,location)
     cursor.execute(sql_count)
     sql_count_result = cursor.fetchall()
     return sql_count_result
@@ -555,22 +558,26 @@ def get_re_sort_result(start_date,end_date,location,condition1,condition2):
     """get_re_sort_result"""
     rds_db = connect_skike_db()
     cursor = rds_db.cursor()
+    print(condition1,condition2)
     sql = "SELECT * FROM skike.hotel where DATE(hotel.data_query_time) BETWEEN '{}' AND '{}' group by name having locality like'{}' order by {} {} limit 1000".format(start_date,end_date,location,condition1,condition2)
     cursor.execute(sql)
     sql_result = cursor.fetchall()
     return sql_result
 
-def get_flight_ticket_plan(start_date,location_arrive,location):
+def get_flight_ticket_plan(start_date, location_arrive, location):
     """get_flight_ticket_plan"""
     rds_db = connect_skike_db()
+    print(456)
     cursor = rds_db.cursor()
-    sql = "SELECT * FROM skike.flight_ticket where data_query_time ='{}' and  arrive_City = '{}' and depart_city ='{}';".format(start_date,location_arrive,location)
+    sql = "SELECT * FROM skike.flight_ticket where data_query_time ='{}' and  arrive_City = '{}' and depart_city ='{}';".format(start_date, location_arrive, location)
     cursor.execute(sql)
     sql_result = cursor.fetchall()
+    print(sql_result)
     return sql_result
 
-def get_moregrade_price(sql_get,sql_result,start_date,select_adult):
+def get_moregrade_price(sql_result, start_date, select_adult):
     """get_moregrade_price"""
+    sql_get = []
     rds_db = connect_skike_db()
     cursor = rds_db.cursor()
     for data in sql_result:
@@ -600,6 +607,7 @@ def get_moregrade_price(sql_get,sql_result,start_date,select_adult):
                 alternative_flight_list.append(ticket)
         data['alternative_flight'] = alternative_flight_list
         sql_get.append(data)
+    return sql_get
 
 def get_nearest_airport(airport_alter):
     """get_nearest_airport"""

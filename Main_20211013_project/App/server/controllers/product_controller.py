@@ -47,12 +47,14 @@ def hotel_search_html(message=None):
                           'skike_hotel_search.html',
                           korea_location_list=config.korea_location_list,
                           today=TODAY,
+                          tomorrow=TOMORROW,
                           next_week=NEXT_WEEK,
                           message=message)
     return render_template(
                           'skike_hotel_search.html',
                           korea_location_list=config.korea_location_list,
                           today=TODAY,
+                          tomorrow=TOMORROW,
                           next_week=NEXT_WEEK)
 
 
@@ -68,31 +70,32 @@ def hotel_search():
         message = "想搜尋日期不能大於日期結尾,請在搜尋一次"
         return redirect(url_for("hotel_search_html", message=message))
     sql_result = get_hotel_search_list(start_date, end_date, location)
-    sql_count_result = get_hotel_search_coount(start_date, end_date, location)
-    sum2 = 0
-    for item in sql_count_result:
-        sum2 += item['count(distinct(name))']
+    sql_count_result_single_hotel = get_hotel_search_coount(start_date, end_date, location)
+    searched_hotel_count = 0
+    for item in sql_count_result_single_hotel:
+        searched_hotel_count += item['count(distinct(name))']
     return render_template(
         'skike_hotel.html',
         hotel_list=sql_result,
         start_date=start_date,
+        tomorrow = TOMORROW,
         end_date=end_date,
         location=location,
-        sum2=sum2)
+        searched_hotel_count=searched_hotel_count)
 
 
 @app.route('/api/1.0/hotel/search/<location>', methods=['GET'])
 @login_required
 def hotel_search_title_get(location):
     """title search"""
-    start_date = date.today()
+    start_date = TOMORROW
     end_date = date.today()+timedelta(7)
     method = "hotel_search_title_get"
     sql_result = get_hotel_search(start_date, end_date, location)
-    sql_count_result = get_hotel_search_number(start_date, end_date, location)
-    sum2 = 0
-    for item in sql_count_result:
-        sum2 += item['count(distinct(name))']
+    sql_count_result_single_hotel = get_hotel_search_number(start_date, end_date, location)
+    searched_hotel_count = 0
+    for item in sql_count_result_single_hotel:
+        searched_hotel_count += item['count(distinct(name))']
     return render_template(
         'skike_hotel.html',
         hotel_list=sql_result,
@@ -100,7 +103,7 @@ def hotel_search_title_get(location):
         end_date=end_date,
         location=location,
         method=method,
-        sum2=sum2,
+        searched_hotel_count=searched_hotel_count,
         next_week=NEXT_WEEK,
         today=TODAY)
 
@@ -109,13 +112,12 @@ def hotel_search_title_get(location):
     <location>/<condition>', methods=['GET'])
 @login_required
 def hotel_search_get(start_date, end_date, location, condition):
-    """get hotel name"""
-    condition1 = condition.split(',')
-    condition1 = condition1[0]
-    condition2 = condition.split(',')
-    condition2 = condition2[1]
+    """sorter"""
+    search_condition = condition.split(',')
+    condition_search = search_condition[0]
+    condition_sort = search_condition[1]
     sql_result = get_re_sort_result(start_date, end_date,
-                                    location, condition1, condition2)
+                                    location, condition_search, condition_sort)
     return render_template(
         'skike_hotel.html',
         hotel_list=sql_result,
@@ -134,14 +136,13 @@ def airplane_search_func():
     location_arrive = form_data['location_arrive']
     start_date = form_data['start_date']
     select_adult = form_data['adults_number']
-
+    
     sql_result = get_flight_ticket_plan(start_date, location_arrive, location)
     # add_flight_pic_url(sql_result)
-    sql_get = []
-    get_moregrade_price(sql_get, sql_result, start_date, select_adult)
-    return render_template(
-                          'skike_flight.html',
-                          flight_list=sql_get,
+    # sql_get = []
+    flight_list = get_moregrade_price(sql_result, start_date, select_adult)
+    return render_template('skike_flight.html',
+                          flight_list=flight_list,
                           today=TODAY,
                           tomorrow=TOMORROW,
                           start_date=start_date,
@@ -161,17 +162,16 @@ def hotel_detail(id, geocode_lat, geocode_lng, start_date):
         near_airport_lat = nearest_result['near_airport_lat']
         near_airport_lng = nearest_result['near_airport_lng']
         geo_result = nearest_result['geo_result']
-    elif request != "POST":
+    elif request.method != "POST":
         airport_result = get_airport_list(geocode_lat, geocode_lng, MAX_NUMBER)
         geo_result = airport_result['geo_result']
         near_airport_lat = airport_result['near_airport_lat']
         near_airport_lng = airport_result['near_airport_lng']
     sql_name = get_hotel_detail_title_info(id)
-    print(start_date, id)
-    result_sub_2 = get_hotel_alter(start_date, id)
-    agency_list = result_sub_2['agency']
-    result_count_of_agency = len(result_sub_2['newlist'])
-    result_sub_2 = result_sub_2['newlist']
+    full_hotel_alter_information = get_hotel_alter(start_date, id)
+    agency_list = full_hotel_alter_information['agency']
+    result_count_of_agency = len(full_hotel_alter_information['newlist'])
+    full_hotel_alter_information = full_hotel_alter_information['newlist']
     google_result = get_google_direction(near_airport_lat, near_airport_lng,
                                          geocode_lat, geocode_lng,
                                          config.GOOGLE_API_KEY,
@@ -181,16 +181,16 @@ def hotel_detail(id, geocode_lat, geocode_lng, start_date):
     need_min = google_result["need_min"]
 
     date_time_depart = google_result["date_time_depart"]
-    route_flow2 = google_result["route_flow2"]
+    google_direction_transit_information = google_result["route_flow2"]
     return render_template(
                         'skike_hotel_detail_origin.html',
-                        detail_hotel_list=result_sub_2,
+                        detail_hotel_list=full_hotel_alter_information,
                         sql_name=sql_name,
                         google_api=config.GOOGLE_API_KEY,
                         test_code=geo_list,
                         geocode_lat=geocode_lat,
                         geocode_lng=geocode_lng,
-                        route_flow2=route_flow2,
+                        google_direction_transit_information=google_direction_transit_information,
                         geo_result=geo_result,
                         today=TODAY,
                         tomorrow=TOMORROW,
@@ -207,29 +207,22 @@ def hotel_detail(id, geocode_lat, geocode_lng, start_date):
 @app.route('/route_function/hotel_detail', methods=["GET", 'POST'])
 def route_function_hotel_detail():
     """recheck agency"""
-    checkbox = request.form.get('checkbox')
+    fetch_checkbox_information = request.form.get('checkbox')
     agency_selected = request.form.get('agency_selected')
     start_date = request.form.get('start_date')
     id = request.form.get('id')
-    agency_result_1st = request.form.get('agency_result')
-    result_feature = checkbox.split('|')
+    agency_result = request.form.get('agency_result')
+    result_feature = fetch_checkbox_information.split('|')
     while '' in result_feature:
         result_feature.remove('')
-    feature_dict = {}
-    feature_dict['checkbox'] = result_feature
-    feature_dict['agency_selected'] = agency_selected
-
-# feature_dict = {
-#     "checkbos": result_feature
-# }
-
-    result_sub_2 = get_hotel_alter(start_date,
+    feature_dict = {'checkbox': result_feature, 'agency_selected': agency_selected}
+    full_hotel_alter_information = get_hotel_alter(start_date,
                                    id,
                                    feature_dict=feature_dict,
-                                   agency_result_1st=agency_result_1st)
-    result_count_of_agency = len(result_sub_2['newlist'])
-    result_sub_2['result_count_of_agency'] = result_count_of_agency
-    return result_sub_2
+                                   agency_result=agency_result)
+    result_count_of_agency = len(full_hotel_alter_information['newlist'])
+    full_hotel_alter_information['result_count_of_agency'] = result_count_of_agency
+    return full_hotel_alter_information
 
 
 @app.route('/route_function', methods=["GET", 'POST'])
@@ -244,7 +237,7 @@ def route_function():
     hotel_name = request.form.get('the_name')
     want_time_start = request.form.get('want_time_start')
     want_time_end = request.form.get('want_time_end')
-    hotel_detail2 = request.form.get('hotel_detail')
+    hotel_feature = request.form.get('hotel_detail')
     hotel_img = request.form.get('hotel_img')
     email = email = current_user.get_id()
     location = request.form.get('location')
@@ -252,10 +245,10 @@ def route_function():
     price = int(''.join([x for x in price if x.isdigit()]))
     user_name = "test"
     if request.form.get('status'):
-        delete_user_favorite_item(email, hotel_detail=hotel_detail2,
+        delete_user_favorite_item(email, hotel_detail=hotel_feature,
                                   hotel_img=hotel_img)
     else:
         add_user_favorite_item(email, want_time_start, want_time_end,
-                               hotel_name, hotel_img, hotel_detail2,
+                               hotel_name, hotel_img, hotel_feature,
                                user_name, location, price)
     return "ok"

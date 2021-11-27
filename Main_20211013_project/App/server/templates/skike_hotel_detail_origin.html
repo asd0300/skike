@@ -270,13 +270,13 @@
                   </div>
                 </form>
                 <div class="map_text">
-                  {%if route_flow2%}
+                  {%if google_direction_transit_information%}
                   <div class = 'google_depart'>
                     <div class = 'google_time'>{{start_time}}</div>
                       <div class = 'google_point'>&emsp;</div>
                     <div class = 'google_location'>{{geo_result}}</div>
                   </div>
-                  {%for key, value in route_flow2.items()%}
+                  {%for key, value in google_direction_transit_information.items()%}
                       <div class = 'google_line'>
                         <div class = 'google_space1'></div>
                           <div class = 'google_line2'>&nbsp;</div>
@@ -366,26 +366,13 @@
               {% endfor %} {%endif%}
             </div>
             </main>
-            <script>
-              var date = new Date();
-      
-              var day = date.getDate();
-              var month = date.getMonth() + 1;
-              var year = date.getFullYear();
-      
-              if (month < 10) month = "0" + month;
-              if (day < 10) day = "0" + day;
-      
-              var today = year + "-" + month + "-" + day + "T00:00";
-              document.getElementById("theDate").value = today;
-            </script>
             <script
             src="https://maps.googleapis.com/maps/api/js?key={{google_api}}&callback=initMap&v=weekly"
             async
           ></script>
           <script type=text/javascript>
               $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-            </script>
+          </script>
           <script language="javascript" type="text/javascript">
             $('#btn_2').click(
               function() {
