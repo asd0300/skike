@@ -263,7 +263,7 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
         'accept-language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
         'apollographql-client-name': 'hs-web',
         'apollographql-client-version': 'v93_10_5_ae_f07e1e495a0',
-        'Cookie': 'ak_bmsc=C358B22B18BE83974A2DCDAB5D237021~000000000000000000000000000000~YAAQkz7cPdItXQx9AQAA37PRYQ03iLMdEUXi7f0982OQOWKaEE/ykchzeIZvcawBfwqsZmHPMMNHxxFenWpxqJJa+KgVMzGEIWTyNOdTq10mqrF6ku4ZE7FSSTSunufeZE6hqh345Q/oeNO2NVwNAKDB1cpd30k2YkFsBogx4g5NYb9x237RBcS0nQoHEtPyG8FRl6Y7evRbAa4Akq5zjVHnMTmIYGPsMSQ3FfxXNRhqpR18qnZoHD0ytMYFhmhhlRgKLi5oaoU8v9mMTizgYiUMtL+0Ke3nHFHwy173ehA/lkNeGGYxgYMUHjTqpB0WoX2o17awaxJqZxOfxb7LWaCanfizBiZCtAFCueU9WifF5ld0ExlGAz1zoc/oE+CJb5w=; edge_tid=0882dd417534e3d783b2d8155d; edge_tid_s=0882dd417534e3d783b2d8155d'
+        'Cookie': 'ak_bmsc=E7CAA55166939806514277A9FAEE82C2~000000000000000000000000000000~YAAQkz7cPT9XXgx9AQAADpRRZA2L+tG0wKR31UeTUJ+hr2Y+R6I6Dl+6oLFw3RSGTj4CNdFpScZCZdsZzC+cnuC9/QEkbTXdyHNjnpsw1NJqkM3B2ex/c6yZ3uCFXi9Uv5AgRqzF90a+m7yp/HuiKsqwleOUcqPcpYe3ghMaO/7ODth9ndjzq4ZDsnV5AXvV3/balQ3fRUAR6sYMoE3/Zs++jxCcyOth5Vct+56t2vnKGH8xAS1uGyj3wyL2BuITTTLy2HdWi0yvP2cwyDb568fcdjimeXPyqw1YM3CRnQTXFxnyttB6WuGooSi0pHc7sB5wy9oir6IGyPypmP1E8afBC25e5OxXNYi+RM/+tkqFQ8Dix04FGhfvspk2pGHzg6o=; edge_tid=0882dd417534e3d783b2d8155d; edge_tid_s=0882dd417534e3d783b2d8155d'
         }
         ip = random.choice(ip_list)
         proxies = {'http': "http://{}:{}@{}".format('vvbocpqj',
@@ -282,7 +282,7 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
             result = response.json()
         print("data_query_time "+str(data_query_time)+" "+"  ip is "+str(ip))
         # mycollection.insert_one(result)
-        # print(result)
+        print(result)
         data_list_hotel_detail = []
         data_list_dict = {}
         list_agency = []
