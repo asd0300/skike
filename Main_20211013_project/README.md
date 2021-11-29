@@ -23,11 +23,17 @@ A travel hotel/flight ticket search website. This website collects famous travel
 ## Cloud Service
 * Elastic Compute Cloud (EC2)
 * Relation Database Service (RDS)
-* Google Cloud Platform - Google API Service
 ## Database
 * Mysqldb
 * Mongodb
-
+## Networking
+* HTTP / HTTPS
+* SSL / Domain Name System (DNS)
+## Others
+* Google Cloud Platform - Google API Service
+* Version Control: Git, GitHub
+* Agile: Trello (Srum)
+* Test: Pytest
 # Architecture
 # Database Schema
 # Main Features
