@@ -567,7 +567,6 @@ def get_re_sort_result(start_date,end_date,location,condition1,condition2):
 def get_flight_ticket_plan(start_date, location_arrive, location):
     """get_flight_ticket_plan"""
     rds_db = connect_skike_db()
-    print(456)
     cursor = rds_db.cursor()
     sql = "SELECT * FROM skike.flight_ticket where data_query_time ='{}' and  arrive_City = '{}' and depart_city ='{}';".format(start_date, location_arrive, location)
     cursor.execute(sql)
@@ -649,6 +648,7 @@ def get_hotel_detail_title_info(id):
     result_sub = cursor.fetchall()
     sql_name = result_sub[0:1]
     return sql_name
+
 def get_google_direction(near_airport_lat,near_airport_lng,geocode_lat,geocode_lng,api_key,hour_in_second,minute_in_second):
     """google direction info"""
     url = "https://maps.googleapis.com/maps/api/directions/json?language=zh-TW&origin={},{}&destination={},{}&mode=transit&key={}".format(near_airport_lat,near_airport_lng,geocode_lat,geocode_lng,api_key)
