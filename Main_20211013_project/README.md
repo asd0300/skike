@@ -9,7 +9,8 @@ A travel hotel/flight ticket search website. This website collects famous travel
 * Main Features
 * Author
 # [Technologies](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#technologies)
-# Architecture
-# Database Schema
-# Main Features
-# Author
+## Backend
+# [Architecture](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#architecture)
+# [Database Schema](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#database-schema)
+# [Main Features](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#database-schema)
+# [Author](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#database-schema)
