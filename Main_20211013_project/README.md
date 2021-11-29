@@ -40,5 +40,6 @@ A travel hotel/flight ticket search website. This website collects famous travel
 ### Data pipeline
 ![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/skike_architecture_data_pipeline.jpg)
 # Database Schema
+![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/skike_database_schema.jpg)
 # Main Features
 # Author
