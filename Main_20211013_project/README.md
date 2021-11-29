@@ -8,7 +8,7 @@ A travel hotel/flight ticket search website. This website collects famous travel
 * Database Schema
 * Main Features
 * Author
-# Technologies
+# Technologies(https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#technologies)
 # Architecture
 # Database Schema
 # Main Features
