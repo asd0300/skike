@@ -9,7 +9,25 @@ A travel hotel/flight ticket search website. This website collects famous travel
 * [Main Features](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#database-schema)
 * [Author](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#database-schema)
 # Technologies
-## Backend
+## Back-end
+* Python
+* Linux
+* Nginx
+* Gunicorn
+## Front-end
+* HTML
+* CSS
+* JavaScript
+* Bootstrap
+* JQuery
+## Cloud Service
+* Elastic Compute Cloud (EC2)
+* Relation Database Service (RDS)
+* Google Cloud Platform - Google API Service
+## Database
+* Mysqldb
+* Mongodb
+
 # Architecture
 # Database Schema
 # Main Features
