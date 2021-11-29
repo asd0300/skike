@@ -8,3 +8,8 @@ A travel hotel/flight ticket search website. This website collects famous travel
 * Database Schema
 * Main Features
 * Author
+# Technologies
+# Architecture
+# Database Schema
+# Main Features
+# Author
