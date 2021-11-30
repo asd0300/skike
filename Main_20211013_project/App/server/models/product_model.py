@@ -263,7 +263,7 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
         'accept-language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
         'apollographql-client-name': 'hs-web',
         'apollographql-client-version': 'v93_10_5_ae_f07e1e495a0',
-        'Cookie': 'ak_bmsc=E7CAA55166939806514277A9FAEE82C2~000000000000000000000000000000~YAAQkz7cPT9XXgx9AQAADpRRZA2L+tG0wKR31UeTUJ+hr2Y+R6I6Dl+6oLFw3RSGTj4CNdFpScZCZdsZzC+cnuC9/QEkbTXdyHNjnpsw1NJqkM3B2ex/c6yZ3uCFXi9Uv5AgRqzF90a+m7yp/HuiKsqwleOUcqPcpYe3ghMaO/7ODth9ndjzq4ZDsnV5AXvV3/balQ3fRUAR6sYMoE3/Zs++jxCcyOth5Vct+56t2vnKGH8xAS1uGyj3wyL2BuITTTLy2HdWi0yvP2cwyDb568fcdjimeXPyqw1YM3CRnQTXFxnyttB6WuGooSi0pHc7sB5wy9oir6IGyPypmP1E8afBC25e5OxXNYi+RM/+tkqFQ8Dix04FGhfvspk2pGHzg6o=; edge_tid=0882dd417534e3d783b2d8155d; edge_tid_s=0882dd417534e3d783b2d8155d'
+        'Cookie': 'ak_bmsc=124F68A0E99A6E780137B6B31FEC19E6~000000000000000000000000000000~YAAQd4pFy9StyzZ9AQAAGY/EcA19/qkK00UQNV367hcWHh9A3wGPOFhXHAY9sUwfrKZrCtOof7nELPCxXDOcN0UdGmFW00poKn4fJ5sHPMfvtAYfMtBySmV83X/kMM7rFjDtezvNxbvUbOqg7oNMnb8lSkARe7Ke8JwVx+iGV7nV7o2ThzeFsapVGsAvJRRuzZKzXGetaEGjlev3Sq4Io/dtf9n/LC5oCJBV3tDYxGyEFZLMGneiKnP58cI/EOooy8K3rVQQQt6XwPtpoMcJ84pDdwtuZE2XXZwF+KSoSUn1zipQCo9cmROhR8Cuavw+O5P6hPIUpEJ6AWUyvG1gzPjEoFAO1pHwPC3MQTST0Fb971Dz1LxBci54oo4DrHHU; edge_tid=0882dd417534e3d783b2d8155d; edge_tid_s=0882dd417534e3d783b2d8155d'
         }
         ip = random.choice(ip_list)
         proxies = {'http': "http://{}:{}@{}".format('vvbocpqj',
