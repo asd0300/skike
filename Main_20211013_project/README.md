@@ -43,3 +43,5 @@ A travel hotel/flight ticket search website. This website collects famous travel
 ![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/skike_database_schema.jpg)
 # Main Features
 # Author
+* Name: Po Ya Fan; Ben Fan
+* Email: fan0300@gmail.com
