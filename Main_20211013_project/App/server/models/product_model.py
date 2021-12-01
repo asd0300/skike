@@ -207,7 +207,7 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
                 "children": []
                 }
             ],
-            "tid": "6c8b17226b254c70274413442b",
+            "tid": "9122e03c48b6348e3df3889553",
             "platform": "tw",
             "currency": "TWD",
             "language": "zh-Hant-TW",
@@ -216,12 +216,12 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
             "priceTypeRestrictions": [
                 1
             ],
-            "parentRequestId": "1191d104-1e05-480b-89ea-3892d90e36f8",
+            "parentRequestId": "c435e2f8-7828-4457-b9a2-ea2510122ef0",
             "channel": {
-                "searchEngineMarketing": {
-                    "isStandardDate": True,
+                "branded": {
+                    "isStandardDate": False,
                     "stayPeriodSource": {
-                    "value": 0
+                    "value": 22
                     }
                 }
             },
@@ -230,7 +230,7 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
             "advertiserLogoUrlParams": {
             "locale": "TW"
             },
-            "pollData": "Dj0xsDiab4mkwP8UsX2rPmMZDocpAiC1RMYZ6Pe0VoTWLlG6135IiUtEz7uf9rcMUsJXP4SUOhK9OAhGS4lpk6kqcVah+m2HBQ/Mzvs5djByc4j8Txjik1bWVxHd5V/bwFAVQxSPuGg/Jq0anANfqHt27U9OeECZ8G2DhK8HTO3oytDX/YWwmcOLRIA="
+            "pollData": None
         },
         "extensions": {
             "persistedQuery": {
@@ -262,8 +262,7 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
         'accept-encoding': 'gzip, deflate, br',
         'accept-language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
         'apollographql-client-name': 'hs-web',
-        'apollographql-client-version': 'v93_10_5_ae_f07e1e495a0',
-        'Cookie': 'ak_bmsc=124F68A0E99A6E780137B6B31FEC19E6~000000000000000000000000000000~YAAQd4pFy9StyzZ9AQAAGY/EcA19/qkK00UQNV367hcWHh9A3wGPOFhXHAY9sUwfrKZrCtOof7nELPCxXDOcN0UdGmFW00poKn4fJ5sHPMfvtAYfMtBySmV83X/kMM7rFjDtezvNxbvUbOqg7oNMnb8lSkARe7Ke8JwVx+iGV7nV7o2ThzeFsapVGsAvJRRuzZKzXGetaEGjlev3Sq4Io/dtf9n/LC5oCJBV3tDYxGyEFZLMGneiKnP58cI/EOooy8K3rVQQQt6XwPtpoMcJ84pDdwtuZE2XXZwF+KSoSUn1zipQCo9cmROhR8Cuavw+O5P6hPIUpEJ6AWUyvG1gzPjEoFAO1pHwPC3MQTST0Fb971Dz1LxBci54oo4DrHHU; edge_tid=0882dd417534e3d783b2d8155d; edge_tid_s=0882dd417534e3d783b2d8155d'
+        'apollographql-client-version': 'v93_10_5_ae_f07e1e495a0'
         }
         ip = random.choice(ip_list)
         proxies = {'http': "http://{}:{}@{}".format('vvbocpqj',
@@ -282,7 +281,7 @@ def get_hotel_alter(data_query_time, hotel_id, feature_dict=None,
             result = response.json()
         print("data_query_time "+str(data_query_time)+" "+"  ip is "+str(ip))
         # mycollection.insert_one(result)
-        print(result)
+        # print(result)
         data_list_hotel_detail = []
         data_list_dict = {}
         list_agency = []
