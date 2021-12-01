@@ -42,6 +42,12 @@ A travel hotel/flight ticket search website. This website collects famous travel
 # Database Schema
 ![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/skike_database_schema.jpg)
 # Main Features
+###### Login
+![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/logging2.gif)
+###### Add favorite
+![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/Add_favorite_browse_pic.gif)
+###### Hotel Map
+![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/hotel_detail_redirect.gif)
 # Author
 * Name: Po Ya Fan
 * Email: fan0300@gmail.com
