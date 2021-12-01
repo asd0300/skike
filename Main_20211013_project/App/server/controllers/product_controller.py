@@ -8,7 +8,7 @@ from server.models.product_model import get_hotel_alter, \
     get_re_sort_result,\
     get_flight_ticket_plan, get_moregrade_price, get_nearest_airport,\
     get_airport_list, get_hotel_detail_title_info, delete_user_favorite_item,\
-    get_google_direction, add_user_favorite_item
+    get_google_direction, add_user_favorite_item, get_hotel_more_pic
 from server.env import config
 from flask_login import login_required, current_user
 # from ..env import config
@@ -252,3 +252,29 @@ def route_function():
                                hotel_name, hotel_img, hotel_feature,
                                user_name, location, price)
     return "ok"
+
+@app.route('/hotel/search/more_picture',methods=[ "GET",'POST'])
+def hotel_more_picture():
+    print(request.form)
+    hotel_id = request.form.get('hotel_id')
+    want_time_start = request.form.get('want_time_start')
+    want_time_end = request.form.get('want_time_end')
+    print(hotel_id,want_time_start,want_time_end)
+    pic_list = get_hotel_more_pic(hotel_id,want_time_start,want_time_end)
+    pic_list2=[]
+    pic_list3=[]
+    print(2)
+    pic_list2.append('<div class="row"><button id ="x_{}" onclick="listBtn{}()"style="float: left; border: 1px solid #f6685e; font-size: 16px;      font-weight: 500; border-radius: 35px; color: #f6685e;      cursor: pointer; background-color: #f6685e; color: #fff;      z-index: 3; position: absolute; margin-left: 10%; margin-top: -39px;"/>關閉相片</button></div>'.format(hotel_id,hotel_id))
+    a =0
+    print(1)
+    for url in pic_list[0:28]:
+        pic_list3.append("<div class='col'><img src='{}' width='236' height='160' style='border-radius: 10px; vertical-align: unset; margin-top:5px'/></div>".format(url))
+        a+=1
+    pic_dict={}
+    pic_dict['pic_list2'] = pic_list2
+    pic_dict['pic_list3'] = pic_list3
+    # print(pic_dict)
+    print("___________________________")
+    # print(pic_dict)
+    # return "<p>123</p>"
+    return pic_dict

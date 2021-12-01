@@ -490,8 +490,7 @@ def get_hotel_more_pic(hotel_id, want_time_start, want_time_end):
         'accept-encoding': 'gzip, deflate, br',
         'accept-language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
         'apollographql-client-name': 'hs-web',
-        'apollographql-client-version': 'v93_10_5_ae_f07e1e495a0',
-        'Cookie': 'ak_bmsc=2F85A1AEDFDAF2358CE695956720FCB1~000000000000000000000000000000~YAAQhz7cPfZmFyx9AQAAFS15Sw1px02olyRVYUKlW9tZMyMjRwZiQBdJ1IwBWL1Aw+05iMMUhQyxnBOv7pMrihNjEg0qSKt5k7L/nr7z115Fx4qpCHWyIThEyHbya68co7fYYb4gDp0V3RHb/1t8W3LAVeHyMatFs2NUcO3DSH+zmcW1ifDMU0RR0ORMNj8a8LE3Ev+mhAQP5dy+ipXy7uwt9KDQ/EtiArq57gfemsIzofQON2j4Yv8WBpP4Q/Jh9tCg0TcikYZ3lKaHd2vKNIqxXiQHdiZzMbw3GAdqPjn+/v4g09khMeExxKhxNEwCr3vrd6CNkA7cobBWDQmxa287wYomDUvtUJCs4c+pkQOBCqcOdhAme5SNG448OArW; edge_tid=0882dd417534e3d783b2d8155d; edge_tid_s=0882dd417534e3d783b2d8155d'
+        'apollographql-client-version': 'v93_10_5_ae_f07e1e495a0'
         }
         ip = random.choice(ip_list)
         proxies = {'http':"http://{}:{}@{}".format('vvbocpqj','obt7b7ug0dim',ip)}

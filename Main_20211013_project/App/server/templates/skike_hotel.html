@@ -357,7 +357,7 @@
     form_data.append('hotel_id', "{{list['id']}}");
     form_data.append('want_time_start', $("#want_time_start").text());
     form_data.append('want_time_end', $("#want_time_end").text());
-    console.log(form_data)
+    console.log(123)
     
     $.ajax({
       type: "POST",
@@ -377,7 +377,7 @@
       },
       contentType: false,
       processData: false,
-      dataType: "json"
+      // dataType: "json"
     });
   }
   );
