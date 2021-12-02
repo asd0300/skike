@@ -131,23 +131,19 @@ def hotel_search_get(start_date, end_date, location, condition):
 def airplane_search_func():
     """airplane_search_func"""
     form_data = request.form
-    # round = form_data['round'] #no use now
     location = form_data['location']
     location_arrive = form_data['location_arrive']
     start_date = form_data['start_date']
     select_adult = form_data['adults_number']
-    
     sql_result = get_flight_ticket_plan(start_date, location_arrive, location)
-    # add_flight_pic_url(sql_result)
-    # sql_get = []
     flight_list = get_moregrade_price(sql_result, start_date, select_adult)
     return render_template('skike_flight.html',
-                          flight_list=flight_list,
-                          today=TODAY,
-                          tomorrow=TOMORROW,
-                          start_date=start_date,
-                          location=location,
-                          location_arrive=location_arrive)
+                           flight_list=flight_list,
+                           today=TODAY,
+                           tomorrow=TOMORROW,
+                           start_date=start_date,
+                           location=location,
+                           location_arrive=location_arrive)
 
 
 @app.route('/api/1.0/hotel/<int:id>/<float:geocode_lat>/<float:geocode_lng>/\
@@ -253,28 +249,23 @@ def route_function():
                                user_name, location, price)
     return "ok"
 
-@app.route('/hotel/search/more_picture',methods=[ "GET",'POST'])
+
+@app.route('/hotel/search/more_picture', methods=["GET", 'POST'])
 def hotel_more_picture():
-    print(request.form)
     hotel_id = request.form.get('hotel_id')
     want_time_start = request.form.get('want_time_start')
     want_time_end = request.form.get('want_time_end')
-    print(hotel_id,want_time_start,want_time_end)
-    pic_list = get_hotel_more_pic(hotel_id,want_time_start,want_time_end)
-    pic_list2=[]
-    pic_list3=[]
-    print(2)
-    pic_list2.append('<div class="row"><button id ="x_{}" onclick="listBtn{}()"style="float: left; border: 1px solid #f6685e; font-size: 16px;      font-weight: 500; border-radius: 35px; color: #f6685e;      cursor: pointer; background-color: #f6685e; color: #fff;      z-index: 3; position: absolute; margin-left: 10%; margin-top: -39px;"/>關閉相片</button></div>'.format(hotel_id,hotel_id))
-    a =0
-    print(1)
+    pic_list = get_hotel_more_pic(hotel_id, want_time_start, want_time_end)
+    pic_list3 = []
+    pic_list2 = [].append('<div class="row"><button id ="x_{}" onclick="listBtn{}()"\
+        style="float: left; border: 1px solid #f6685e; font-size: 16px;      \
+        font-weight: 500; border-radius: 35px; color: #f6685e;      \
+        cursor: pointer; background-color: #f6685e; color: #fff;      \
+        z-index: 3; position: absolute; margin-left: 10%; margin-top: -39px;\
+        "/>關閉相片</button></div>'.format(hotel_id, hotel_id))
     for url in pic_list[0:28]:
-        pic_list3.append("<div class='col'><img src='{}' width='236' height='160' style='border-radius: 10px; vertical-align: unset; margin-top:5px'/></div>".format(url))
-        a+=1
-    pic_dict={}
-    pic_dict['pic_list2'] = pic_list2
-    pic_dict['pic_list3'] = pic_list3
-    # print(pic_dict)
-    print("___________________________")
-    # print(pic_dict)
-    # return "<p>123</p>"
+        pic_list3.append("<div class='col'><img src='{}' width='236' \
+        height='160' style='border-radius: 10px; vertical-align: unset;\
+        margin-top:5px'/></div>".format(url))
+    pic_dict = {'pic_list2': pic_list2, 'pic_list3': pic_list3}
     return pic_dict
