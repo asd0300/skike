@@ -1441,4 +1441,4 @@ flight_data_insert_back_TW_task = PythonOperator(
 
 get_hotel_to_mongo_task >> insert_hotel_mongo_to_RDS_task
 
-get_flight_ticket_mongo_task>>truncate_flight_table_task>>flight_data_insert_task>>flight_data_insert_back_TW_task
+get_flight_ticket_mongo_task >> truncate_flight_table_task >> flight_data_insert_task >> flight_data_insert_back_TW_task
