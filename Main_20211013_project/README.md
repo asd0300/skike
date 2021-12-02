@@ -6,8 +6,8 @@ A travel hotel/flight ticket search website. This website collects famous travel
 * [Technologies](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#technologies)
 * [Architecture](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#architecture)
 * [Database Schema](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#database-schema)
-* [Main Features](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#database-schema)
-* [Author](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#database-schema)
+* [Main Features](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#main-features)
+* [Author](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#author)
 # Technologies
 ## Back-end
 * Python
@@ -43,11 +43,12 @@ A travel hotel/flight ticket search website. This website collects famous travel
 ![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/skike_database_schema.jpg)
 # Main Features
 ###### Login
+* Login as existing user
 ![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/logging2.gif)
 ###### Add favorite
 ![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/Add_favorite_browse_pic.gif)
 ###### Hotel Map
-![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/hotel_detail_redirect.gif)
+![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/hotel_detail_redirect_fastload2.gif)
 # Author
 * Name: Po Ya Fan
 * Email: fan0300@gmail.com
