@@ -364,15 +364,13 @@
       url: $SCRIPT_ROOT + "/hotel/search/more_picture",
       data: form_data,
       success: function (data) {
-        $("#button{{list['id']}}").html(data['pic_list2']);
-        $.each(data['pic_list3'], function(index,value) {
+        $("#button{{list['id']}}").html(data['add_close_button']);
+        $.each(data['add_pictrue_list_html'], function(index,value) {
             $('#more_hotel_pic{{loop.index}}').hide()
-            // $('#more_hotel_2pic{{loop.index}}').show()
-            $("#response{{list['id']}}").html(data['pic_list3']);
+            $("#response{{list['id']}}").html(data['add_pictrue_list_html']);
 
         });
         // $("#response").html(data);
-        // console.log(data)
 
       },
       contentType: false,

@@ -256,16 +256,17 @@ def hotel_more_picture():
     want_time_start = request.form.get('want_time_start')
     want_time_end = request.form.get('want_time_end')
     pic_list = get_hotel_more_pic(hotel_id, want_time_start, want_time_end)
-    pic_list3 = []
-    pic_list2 = [].append('<div class="row"><button id ="x_{}" onclick="listBtn{}()"\
+    add_pictrue_list_html = []
+    add_close_button = [].append('<div class="row"><button id ="x_{}" onclick="listBtn{}()"\
         style="float: left; border: 1px solid #f6685e; font-size: 16px;      \
         font-weight: 500; border-radius: 35px; color: #f6685e;      \
         cursor: pointer; background-color: #f6685e; color: #fff;      \
         z-index: 3; position: absolute; margin-left: 10%; margin-top: -39px;\
         "/>關閉相片</button></div>'.format(hotel_id, hotel_id))
     for url in pic_list[0:28]:
-        pic_list3.append("<div class='col'><img src='{}' width='236' \
+        add_pictrue_list_html.append("<div class='col'><img src='{}' width='236' \
         height='160' style='border-radius: 10px; vertical-align: unset;\
         margin-top:5px'/></div>".format(url))
-    pic_dict = {'pic_list2': pic_list2, 'pic_list3': pic_list3}
+    pic_dict = {'add_close_button': add_close_button,
+                'add_pictrue_list_html': add_pictrue_list_html}
     return pic_dict
