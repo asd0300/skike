@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta,timezone
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
@@ -27,7 +27,7 @@ dag = DAG(
     description= 'mock_data_of_91app',
     schedule_interval = '30 16 * * *'
 )
-
+tz = timezone(timedelta(hours=+8))
 def insert_return_id():
     rds_DB = pymysql.connect(host=config.RDSHOSTNAME,\
                             user="admin",password=config.RDSMASTERPASSWORD,\
@@ -35,7 +35,7 @@ def insert_return_id():
                             cursorclass = pymysql.cursors.DictCursor)
     cursor = rds_DB.cursor()
     return_number = random.randint(700,800)
-    date_yesterday = datetime.now()+timedelta(days=-1)
+    date_yesterday = datetime.now(tz)+timedelta(days=-1)
     datenow_str_yesterday = date_yesterday.strftime("%Y-%m-%d")
     sql = "SELECT distinct(cid) FROM stylish.data91app  where date = '{}' limit {};".format(datenow_str_yesterday, return_number)
     rdsDB = pymysql.connect(host=config.RDSHOSTNAME,\
@@ -46,7 +46,7 @@ def insert_return_id():
     cursor.execute(sql)
     sql_all_return_user = cursor.fetchall()
     sql_tuple_list = []
-    datenow = datetime.now()
+    datenow = datetime.now(tz)
     datenow_str = datenow.strftime("%Y-%m-%d %H:%M:%S")
     datenow_str_date = datenow.strftime("%Y-%m-%d")
     # print(datenow_str_yesterday, datenow_str_date)
@@ -56,19 +56,19 @@ def insert_return_id():
         category_result = str(category_result)
         if category_result == "view":
             for item in category_list[0:1]:
-                sql_tuple = (datenow_str, user, item, datenow_str_date)
+                sql_tuple = (datenow_str, user['cid'], item, datenow_str_date)
                 sql_tuple_list.append(sql_tuple)
         elif category_result == "view_item":
             for item in category_list[0:2]:
-                sql_tuple = (datenow_str, user, item, datenow_str_date)
+                sql_tuple = (datenow_str, user['cid'], item, datenow_str_date)
                 sql_tuple_list.append(sql_tuple)
         elif category_result == "add_to_cart":
             for item in category_list[0:3]:
-                sql_tuple = (datenow_str, user, item, datenow_str_date)
+                sql_tuple = (datenow_str, user['cid'], item, datenow_str_date)
                 sql_tuple_list.append(sql_tuple)
         elif category_result == "checkout":
             for item in category_list[0:4]:
-                sql_tuple = (datenow_str, user, item, datenow_str_date)
+                sql_tuple = (datenow_str, user['cid'], item, datenow_str_date)
                 sql_tuple_list.append(sql_tuple)
     try:
         sql_91_mock_data = "INSERT INTO stylish.data91app (`created_at`, `cid`, `category`, `date`)VALUES (%s, %s, %s, %s)"    
@@ -86,7 +86,7 @@ def insert_data_for_91_dashboard():
     cursor = rds_DB.cursor()
     sql_tuple_list = []
     for number_mock_data in range(400):
-        datenow = datetime.now()
+        datenow = datetime.now(tz)
         datenow_str = datenow.strftime("%Y-%m-%d %H:%M:%S")
         datenow_str_date = datenow.strftime("%Y-%m-%d")
         random_str_first = "".join(random.choice(string.ascii_lowercase + string.digits)for _ in range(8))
