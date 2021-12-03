@@ -36,7 +36,7 @@ A travel hotel/flight ticket search website. This website collects famous travel
 * Test: Pytest
 # Architecture
 ### Web_side
-![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/skike_architecture_web.jpg)
+![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/readme.jpg)
 ### Data pipeline
 ![image](https://github.com/asd0300/skike/blob/master/Main_20211013_project/skike_report/skike_architecture_data_pipeline.jpg)
 # Database Schema
