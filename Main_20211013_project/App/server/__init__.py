@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_migrate import Migrate
 from flask_sqlalchemy import Model, SQLAlchemy
 from config import Config
@@ -19,6 +19,7 @@ jwt.init_app(app)
 
 @app.errorhandler(404)
 def server_error(error):
+    return render_template("error404.html")
     return "Page not found", 404
 
 @app.errorhandler(Exception)

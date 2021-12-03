@@ -14,7 +14,7 @@ import numpy
 default_args = {
     'owner': 'airflow2',
     'depends_on_past': False,
-    'start_date' : datetime(year=2021, month=12, day=2, hour=16, minute=30),
+    'start_date' : datetime(year=2021, month=12, day=1, hour=16, minute=30),
     'email' : ['fan0300@gmail.com'],
     'email_on_failure': True,
     'email_on_retry': True,

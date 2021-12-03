@@ -358,7 +358,7 @@ def get_flight_ticket_alter(data_query_time, low_price, criteria_token, flight_n
     "extensions": {
         "persistedQuery": {
         "version": 1,
-        "sha256Hash": "64cc674d9cb6d7c04d146b6ef3fb955f8f7646451a3ddb7e694969885118fe2b"
+        "sha256Hash": "b44346ceeb42be5ea900ba8ac033d12c1d69b5161bbce73c90907fdbb195acfa"
         }
     }
     })
