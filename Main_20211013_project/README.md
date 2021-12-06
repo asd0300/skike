@@ -1,8 +1,8 @@
 # Skike
 A travel hotel/flight ticket search website. This website collects famous travel information. and update with ETL flow every and provide clients the transit information from airport to the hotel.
 * Website Link: https://www.skike.site
-* Test account: test0@gmail.com
-* Test password: 1234
+* Test Account: test0@gmail.com
+* Test Password: 1234
 # Table of feature
 * [Technologies](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#technologies)
 * [Architecture](https://github.com/asd0300/skike/blob/master/Main_20211013_project/README.md#architecture)
