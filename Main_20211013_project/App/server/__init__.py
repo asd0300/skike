@@ -20,7 +20,7 @@ jwt.init_app(app)
 @app.errorhandler(404)
 def server_error(error):
     return render_template("error404.html")
-    return "Page not found", 404
+    # return "Page not found", 404
 
 @app.errorhandler(Exception)
 def handle_exception(e):

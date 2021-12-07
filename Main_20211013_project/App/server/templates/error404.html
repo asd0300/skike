@@ -36,43 +36,13 @@
               <li></li>
             </ul>
           </div>
-          {% if current_user.is_authenticated %}
-          <div class="div" style="width: 249px">
-            <a
-              href="{{url_for('user_page')}}"
-              onclick="return chk2000()"
-              style="margin-left: 60%"
-            >
-              <img
-                src="https://us.123rf.com/450wm/rastudio/rastudio1610/rastudio161000130/63343177-user-profile-with-minus-sign-vector-sketch-icon-isolated-on-background-hand-drawn-user-profile-with-.jpg?ver=6"
-                width="30"
-                height="30"
-                style="border-radius: 10px"
-              />
-            </a>
-            <a href="{{url_for('sign_out')}}" style="float: right">
-              <div style="float: right">log_out</div>
-            </a>
-          </div>
-          {%else%}
-          <div class="myAccount">
-            <div class="ctaGroup">
-              <a href="{{url_for('user_sign_in')}}">
-                <div class="cta">Sign In</div>
-              </a>
-              <a href="{{url_for('user_sign_up')}}">
-                <div class="cta active">Create Account</div>
-              </a>
-            </div>
-          </div>
-          {%endif%}
         </nav>
       </header>
       <div class="container">
         <div class="div" style="width: 249px; margin-left: 18%">
           <a href="{{url_for('main_index')}}" onclick="return chk2000()">
             <img
-              src="static/assets/cartoon/istockphoto-1011988208.jpg"
+              src="/static/assets/cartoon/istockphoto-1011988208.jpg"
               width="700"
               height="700"
               style="border-radius: 10px"

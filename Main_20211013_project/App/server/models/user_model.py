@@ -151,4 +151,5 @@ def get_user_page_data(conn,email):
     ]
     result = mycollection.aggregate(pipeline)
     results = [doc for doc in result]
+    print(results)
     return results

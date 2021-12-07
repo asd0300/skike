@@ -84,7 +84,7 @@
               <li></li>
             </ul>
           </div>
-          {% if current_user.is_authenticated %}
+          {% if email %}
           <div class="div" style="width: 249px;">
             <a href="{{url_for('user_page')}}" onclick="return chk2000()" style="margin-left:60%">
               <img

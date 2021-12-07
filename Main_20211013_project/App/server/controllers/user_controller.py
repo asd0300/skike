@@ -1,9 +1,10 @@
+from flask.globals import session
 from flask_login import LoginManager, UserMixin, login_user,\
     logout_user, login_required, current_user
 import bcrypt
 from datetime import datetime, timedelta, date
 from pymongo import MongoClient
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from server import app
 from server.models.user_model import check_exist_user, insert_register_data,\
     insert_signin_data, connect_skike_db, get_user_page_data
@@ -33,10 +34,9 @@ cursor.execute(sql_sub)
 emails = cursor.fetchall()
 emails = [item['email'] for item in emails]
 
-
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.session_protection = "strong"
+# login_manager.session_protection = "strong"
 login_manager.login_view = 'login'
 login_manager.login_message = 'check in'
 
@@ -66,7 +66,7 @@ def user_loader(email):
 
 @login_manager.request_loader
 def request_loader(request):
-    user_id = request.form.get('user_id')
+    user_id = request.form.get('email')
     if user_id not in emails:
         return
     user = User()
@@ -81,25 +81,27 @@ def request_loader(request):
 @app.route('/sign_out')
 def sign_out():
     # email = current_user.get_id()
-    logout_user()
+    # logout_user()
+    email = session['email']
+    session.clear()
     return redirect(url_for('user_sign_in'))
 
 
 @app.route('/admin/user_page/', methods=['GET'])
-@login_required
 def user_page():
     """user"""
-    email = current_user.get_id()
-    results = get_user_page_data(conn, email)
-    print(results)
-    return render_template(
-        'user_page.html',
-        korea_location_list=config.korea_location_list,
-        today=TODAY,
-        tomorrow=TOMORROW,
-        sql_favorite_result_hotel=results,
-        email=email)
-    return render_template('user_page.html')
+    email = session.get('email')
+    if email:
+        email = session['email']
+        results = get_user_page_data(conn, email)
+        print(session['email'])
+        return render_template(
+            'user_page.html',
+            korea_location_list=config.korea_location_list,
+            today=TODAY,
+            tomorrow=TOMORROW,
+            sql_favorite_result_hotel=results,
+            email=email)
 
 
 @app.route('/admin/user', methods=['GET'])
@@ -107,7 +109,7 @@ def user_sign_up():
     """director"""
     return render_template('user_register.html')
 
-
+@app.route('/')
 @app.route('/admin/user_login', methods=['GET'])
 def user_sign_in():
     """director"""
@@ -130,7 +132,8 @@ def register():
         if sign_up_data:
             error = "A person with this email or name \
                 already exists, please try another email name"
-            return render_template('user_register.html', message=error)
+            flash(error)
+            return redirect(url_for('user_sign_in'))
         if provider == "native":
             insert_register_data(
                 provider,
@@ -149,7 +152,7 @@ def register():
 def login():
     """login"""
     if request.method == 'GET':
-        return render_template('user_login.html')
+        return redirect(url_for('main_index'))
     if request.method == 'POST':
         user_details = request.form
         email = user_details['email']
@@ -157,11 +160,10 @@ def login():
         sign_data = insert_signin_data(email)
         if sign_data:
             if check_password(password_form, sign_data["password"]):
-                user = User()
-                user.id = email
-                login_user(user)
+                session['email'] = email
                 return redirect(url_for('main_index'))
-        error = "Can't recognite this user/id please try again"
-        return render_template(
-            'user_login.html',
-            message=error)
+        error = "Please check your email/password again"
+        session['m'] = "fail"
+        # return render_template('user_login.html',message=error)
+        flash(error)
+        return redirect(url_for('user_sign_in'))

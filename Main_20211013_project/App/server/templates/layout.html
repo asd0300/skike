@@ -18,7 +18,7 @@
       <header>
         <nav>
           <div class="menu">
-            <a href="/">
+            <a href="/admin/main_flight">
               <div class="logo"><span>Skike</span></div>
             </a>
             <ul>
@@ -26,7 +26,7 @@
               <li></li>
             </ul>
           </div>
-          {% if current_user.is_authenticated %}
+          {% if email %}
           <div class="div" style="width: 249px;">
             <a href="{{url_for('user_page')}}" onclick="return chk2000()" style="margin-left:60%">
               <img
@@ -61,7 +61,7 @@
 
         <div class="booking_info">
           <div class="opt">
-            <a href="/">
+            <a href="/admin/main_flight">
               <span class="active">Airplane</span>
             </a>
             <a href="/admin/main_hotel">
