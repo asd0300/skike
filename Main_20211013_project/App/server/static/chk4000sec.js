@@ -1,7 +1,7 @@
 function chk4000() {
   let timerInterval;
   Swal.fire({
-    title: "Auto close alert!",
+    title: "請稍等!",
     html: "I will close in <b></b> milliseconds.",
     timer: 3000,
     timerProgressBar: true,
