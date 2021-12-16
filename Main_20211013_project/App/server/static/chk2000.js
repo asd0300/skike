@@ -1,5 +1,4 @@
 function chk2000() {
-  console.log(123);
   let timerInterval;
   Swal.fire({
     title: "請稍等!",
